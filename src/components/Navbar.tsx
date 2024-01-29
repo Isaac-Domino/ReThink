@@ -3,6 +3,24 @@ import React from "react";
 import { Button } from "./ui/button";
 import { SignedIn, SignedOut, useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/router";
+import { Poppins } from 'next/font/google'
+import { Menu } from "lucide-react";
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: '400'
+})
+
+const LinkButton = ({ href, variant, text }: { href: string, variant: string | any, text: string }) => {
+    return  (
+     <Link href={href}>
+       <Button variant={variant} className="text-white font-medium sm:text-[18px] md:text-[22px]">
+          {text}
+       </Button>
+    </Link>
+    )
+}
 
 const Navbar = () => {
   const router = useRouter();
@@ -10,7 +28,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`max-w-5xl h-24 w-full mx-auto flex justify-between items-center ${
+      className={`w-full flex py-2 bg-slate-500 justify-between items-center ${
         router.pathname.includes("/login") ||
         router.pathname.includes("/register")
           ? "hidden"
@@ -18,28 +36,34 @@ const Navbar = () => {
       }`}
     >
       <Link href={"/"}>LOGO</Link>
-      <div>
+
+      {/**MENU FOR MOBILE PHONE */}
+      <Menu className="md:hidden block" color="white"/>
+
+      <div className="hidden md:flex">
+      {/**USER ALREADY LOGGED IN */}
         <SignedIn>
           <Link href={"/login"}>
-            <Button variant={"link"}>About</Button>
+            <Button variant={"link"} className="text-white">About</Button>
           </Link>
+
           <Link href={"/register"}>
             <Button
               variant={"destructive"}
+              className="text-white"
               onClick={() => signOut(() => router.push("/"))}
             >
               Logout
             </Button>
           </Link>
         </SignedIn>
-        {/* OPPOSITE 'TO */}
+
+
+        {/* User not authenticated */}
         <SignedOut>
-          <Link href={"/login"}>
-            <Button variant={"link"}>Login</Button>
-          </Link>
-          <Link href={"/register"}>
-            <Button variant={"default"}>Register</Button>
-          </Link>
+          <LinkButton href={"/login"} text="Log in" variant={'link'}/>
+         
+          <LinkButton href={"/login"} text="Sign up" variant={'link'}/>
         </SignedOut>
       </div>
     </nav>
