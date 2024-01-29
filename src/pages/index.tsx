@@ -1,10 +1,10 @@
 import React from "react";
-import Welcome from "./welcome";
+import Home from "./_home";
 
 const index = () => {
   return (
     <main>
-      <Welcome />
+      <Home />
     </main>
   );
 };
