@@ -1,0 +1,17 @@
+{
+  "id": "mig_cmr2tff8ajtugokq65ig",
+  "parentID": "mig_cmr2ssros04r9p5r4850",
+  "checksum": "1:84d505174082fedc3b34e3cbf6d62efe06eeba6a5c6432be4ebbe3dd5c2da371",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "category",
+          "type": "string",
+          "unique": true
+        },
+        "table": "notes"
+      }
+    }
+  ]
+}

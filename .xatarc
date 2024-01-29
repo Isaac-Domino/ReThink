@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://ReThink-ttkus6.ap-southeast-2.xata.sh/db/ReThink",
+  "codegen": {
+    "output": "src/lib/xata.ts"
+  }
+}
