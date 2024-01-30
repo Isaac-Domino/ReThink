@@ -28,14 +28,14 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-full flex py-2 bg-slate-500 justify-between items-center ${
+      className={`w-full flex py-2 justify-between items-center ${
         router.pathname.includes("/login") ||
         router.pathname.includes("/register")
           ? "hidden"
           : "flex"
       }`}
     >
-      <Link href={"/"}>LOGO</Link>
+      <Link href={"/"} className="text-white">LOGO</Link>
 
       {/**MENU FOR MOBILE PHONE */}
       <Menu className="md:hidden block" color="white"/>
