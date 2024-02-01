@@ -3,14 +3,14 @@ import React from "react";
 import { Button } from "./ui/button";
 import { SignedIn, SignedOut, useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/router";
-import { Poppins } from 'next/font/google'
 import { Menu } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
-const poppins = Poppins({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: '400'
-})
+
 
 const LinkButton = ({ href, variant, text }: { href: string, variant: string | any, text: string }) => {
     return  (
@@ -37,10 +37,9 @@ const Navbar = () => {
     >
       <Link href={"/"} className="text-white">LOGO</Link>
 
-      {/**MENU FOR MOBILE PHONE */}
-      <Menu className="md:hidden block" color="white"/>
+      
 
-      <div className="hidden md:flex">
+    <div className="flex">
       {/**USER ALREADY LOGGED IN */}
         <SignedIn>
           <Link href={"/login"}>
@@ -61,9 +60,27 @@ const Navbar = () => {
 
         {/* User not authenticated */}
         <SignedOut>
-          <LinkButton href={"/login"} text="Log in" variant={'link'}/>
+           <div className="hidden sm:block">
+              <LinkButton href={"/login"} text="Log in" variant={'link'}/>
+              <LinkButton href={"/register"} text="Sign up" variant={'link'}/>
+           </div>
+          
+        
+           <Popover>
+                 <PopoverTrigger className="block sm:hidden">
+                   <Menu 
+                     color="#ffff"
+                     size={32}
+                   />
+                 </PopoverTrigger>
+
+                 <PopoverContent className="bg-[#373363] flex flex-col gap-2 w-fit h-auto py-4">
+                   <LinkButton href={"/login"} text="Log in" variant={'link'}/>
          
-          <LinkButton href={"/login"} text="Sign up" variant={'link'}/>
+                   <LinkButton href={"/register"} text="Sign up" variant={'link'}/>
+                 </PopoverContent>
+            </Popover>
+
         </SignedOut>
       </div>
     </nav>

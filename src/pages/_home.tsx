@@ -86,6 +86,7 @@ const Home = () => {
         <div className="">
             <Navbar />
         
+        {/**HERO SECTION */}
         <Hero />
           
         <Image 

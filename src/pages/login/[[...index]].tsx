@@ -6,7 +6,7 @@ const LoginPage = () => {
     <main className="min-h-screen flex items-center justify-center">
       <SignIn
         path="/login"
-        afterSignInUrl={"/welcome"}
+        afterSignInUrl={"/create"}
         signUpUrl="/register"
         routing="path"
       />
