@@ -10,7 +10,7 @@ import { UserButton, useUser } from '@clerk/nextjs'
 
 export default function create() {
     const { isSignedIn, user } = useUser();
-
+ 
 
   return (
     <div className='px-5 md:px-[55px] w-full py-4 md:py-[24px]'>
