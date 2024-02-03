@@ -7,6 +7,7 @@ const NextThemeProvider = ({ children, ...props }: ThemeProviderProps) => {
 			{...props}
 			attribute="class"
 			enableSystem
+			defaultTheme="light"
 			disableTransitionOnChange
 		>
 			{children}

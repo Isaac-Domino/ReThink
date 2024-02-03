@@ -1,17 +1,21 @@
 'use client'
 
-
 import NavbarMain from '@/components/navbar-main'
-import React, { ReactHTMLElement, useRef } from 'react'
-import { Pencil, FolderClosed, FilePlus2, Menu, Bot, Send } from 'lucide-react'
+import React, { useRef, useState } from 'react'
+import { Pencil, FolderClosed, FilePlus2, Menu, Bot, Send, X } from 'lucide-react'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image from 'next/image' 
+import { motion } from "framer-motion"
 
-
+const menuVariants = {
+  clicked: { opacity: 1, x: -6, },
+  notclicked: { opacity: 0, x: "-100%",}
+}
 
 export default function Main() {
     const fileRef = useRef<HTMLInputElement>(null);
-
+    const [menuClick, setMenuClick] = useState<boolean>(false);
+    const [chatClick, setChatClick] = useState<boolean>(false);
 
    function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
       if(e.target.files) {
@@ -22,11 +26,10 @@ export default function Main() {
     
 
   return (  
-    <div className='w-full min-h-screen h-auto'>
+   <div className='w-full min-w-full overflow-x-hidden min-h-screen h-auto'>
         <NavbarMain />
     
-
-<main className='flex  flex-col md:flex-row items-start'>
+  <main className='flex  flex-col md:flex-row items-start'>
   {/**SIDEBAR */}
 
   <div className='border px-4 py-4 hidden md:block min-w-[200px] w-[250px] h-screen'> 
@@ -67,17 +70,119 @@ export default function Main() {
         </div>  
   </div>
 
-<div className='flex w-full mb-2 justify-between py-4 px-2 md:hidden items-center gap-4'>
-     <Menu className='md:hidden block'
+  {/**FOR MOBILE PHONES */}
+  <div className='flex w-full relative mb-2 justify-between py-4 px-2 md:hidden  items-center gap-4'>
+     <Menu 
+        className={`md:hidden block ${menuClick ? 'invisible' : 'visible'}`}
         size={32}
+        onClick={() => setMenuClick(prev => !prev)}
      />
           <Image 
             src={'/chat-icon.svg'}
             width={40}
             height={40}   
             alt='chat icon'
+            className={`${chatClick ? 'invisible' : 'visible'}`}
+            onClick={() => setChatClick(prev => !prev)}
           />  
-     </div>
+
+       <motion.div  
+          animate={menuClick ? "clicked" : 'notclicked'}
+          variants={menuVariants}
+          transition={{ type: "tween", delay: 0.1, ease: 'backInOut'}}
+          
+          className={`w-[220px] absolute top-0 border bg-slate-200 z-50 min-h-[1300px]`}>
+           <X 
+             className='absolute right-2 top-2'
+             size={24}
+             onClick={() => setMenuClick(prev => !prev)}
+            />
+
+             {/**DOCUMENT NAME */}
+      <div className='mt-[45px] mx-2'>
+         <div className='flex gap-2 items-center'>
+            <p>Doc name</p>
+            <Pencil />
+         </div>
+      </div>
+
+          <div className='mt-[160px] h-auto w-full px-2'>
+               {/**OPTIONS AVAILABLE */}
+           <div className=' flex flex-col gap-4'>
+                <Link className='flex gap-2' href={'/create'}>
+                  <FolderClosed />
+                   <span>My Archive</span>
+                </Link>
+
+                <div className='flex gap-2 cursor-pointer'
+                  onClick={() => fileRef?.current?.click()}
+                >
+                   <FilePlus2 />
+                   <span>Insert new document</span>
+                </div>
+                {/**HIDDEN INPUT TO OPEN FILE EXPLORER WHEN CLICKING THIS */}
+                <input 
+                  type="file" 
+                  ref={fileRef} 
+                  className='hidden'
+                  onChange={handleFileChange}
+                  accept=".doc, .pdf"
+                />
+
+          </div>   
+            </div>
+       </motion.div>
+
+       <motion.div
+          animate={chatClick ? { opacity: 1, x: 0 } : { opacity: 0, x: 200 }}
+          className={`w-[250px] absolute right-0 top-0 border bg-slate-200 z-50 min-h-[750px]`}>
+           <X 
+             className='absolute right-2 top-2'
+             size={24}
+             onClick={() => setChatClick(prev => !prev)}
+            />
+          {/**TOP */}
+          <div className='flex gap-2 items-center m-4'>
+            <Bot 
+            size={24}
+            className=''
+            /><span className='text-[20px]'>Chat</span>
+          </div>
+         <div className='absolute bottom-1 w-full max-h-[650px] overflow-y-auto h-auto px-2 py-4'>
+               <div className='flex flex-col gap-[24px] w-full'>
+                 {/**AI CHAT */} 
+                  <div className='bg-primaryColor text-wrap whitespace-normal break-words text-white w-fit p-2 rounded-md'>
+                     <p className='text-sm'>AI CHAT</p>
+                  </div>
+
+               {/**YOUR CHAT */} 
+               <div className='bg-[#3970b8] text-wrap whitespace-normal break-words self-end w-fit p-2 rounded-md text-white'>
+                     <p className='text-sm'> YOUR CHAT</p>
+                  </div>
+                  
+                  <div className='bg-[#3970b8] text-wrap whitespace-normal break-words self-end w-fit p-2 rounded-md text-white'>
+                     <p className='text-sm'> YOUR CHAT</p>
+                  </div>
+               </div>
+
+          {/**USER INPUTS HERE */}
+               <div className='flex mt-[45px] items-center gap-2 min-w-full'>
+                   <input
+                    type="text" 
+                    className='border-accentColor bg-white focus:outline-accentColor lg:flex-1 border rounded-full md:w-[160px] lg:w-[265px] w-[180px] h-[45px] indent-3' placeholder='Ask any question'/>
+                     <Send 
+                       color='#ffff'
+                       size={32}
+                       className='bg-secondaryColor w-[40px] h-auto md:w-[60px] lg:w-[40px] lg:h-auto rounded-lg p-2 hover:bg-[#5C87C7] cursor-pointer duration-200 ease-in-out'
+                     />
+                  
+               </div>
+          </div>
+       </motion.div>
+
+    </div>
+
+    
    
 
 
@@ -92,8 +197,7 @@ export default function Main() {
       </div>
 
       {/**CHAT BOX */}
-
-      <div className='border-[#C0BCD1] relative hidden md:block border w-[400px] min-h-screen'>
+      <div className='border-[#C0BCD1] relative hidden md:block border md:w-[500px] lg:w-[520px] min-h-screen'>
           {/**TOP */}
           <div className='flex gap-2 items-center m-4'>
             <Bot 
@@ -102,7 +206,7 @@ export default function Main() {
             /><span className='text-[20px]'>Chat</span>
           </div>
 
-          <div className='absolute border bottom-1 w-full max-h-[650px] overflow-y-auto h-auto px-2 py-4'>
+          <div className='absolute bottom-1 w-full max-h-[650px] overflow-y-auto h-auto px-2 py-4'>
                <div className='flex flex-col gap-[24px] w-full'>
                  {/**AI CHAT */} 
                   <div className='bg-primaryColor text-white w-fit p-2 rounded-md'>
@@ -119,13 +223,15 @@ export default function Main() {
                   </div>
                </div>
 
-               <div className='flex mt-[45px] items-center gap-2 w-full'>
+          {/**USER INPUTS HERE */}
+               <div className='flex mt-[45px] items-center gap-2 min-w-full'>
                    <input
                     type="text" 
-                    className='border-accentColor focus:outline-accentColor flex-1 border rounded-full min-w-[265px] h-[50px] indent-3' placeholder='Ask any question'/>
+                    className='border-accentColor bg-white focus:outline-accentColor lg:flex-1 border rounded-full md:w-[160px] lg:w-[265px] h-[50px] indent-3' placeholder='Ask any question'/>
                      <Send 
                        color='#ffff'
-                       className='bg-secondaryColor w-[40px] h-auto rounded-lg p-2 hover:bg-[#5C87C7] cursor-pointer duration-200 ease-in-out'
+                       size={32}
+                       className='bg-secondaryColor md:w-[60px] lg:w-[40px] lg:h-auto rounded-lg p-2 hover:bg-[#5C87C7] cursor-pointer duration-200 ease-in-out'
                      />
                   
                </div>

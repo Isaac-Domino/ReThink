@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={rubik.className}>
       <ClerkProvider>
-        <NextThemeProvider defaultTheme="light">
+        <NextThemeProvider>
           <Component {...pageProps} />
         </NextThemeProvider>
       </ClerkProvider>
