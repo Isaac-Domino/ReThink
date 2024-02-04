@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import { useUser } from '@clerk/nextjs'
 import { Poppins } from 'next/font/google'
 import Link from 'next/link'
 
@@ -28,7 +27,7 @@ export default function Hero() {
                          <button className="text-white text-center bg-accentColor w-[100px] sm:w-[145px] sm:h-[50px] 
                             rounded-sm shadow-md text-[18px] md:text-[22px] 
                              hover:bg-purple-500 transition-colors duration-150 ease-in-out h-[30px] items-center text-sm font-normal">
-                             <Link href={'/create'}>  
+                              <Link href={'/create'}>  
                                Get started  
                               </Link>
                          </button>

@@ -23,7 +23,6 @@ export default function Main() {
       }
    }
     
-    
 
   return (  
    <div className='w-full min-w-full overflow-x-hidden min-h-screen h-auto'>

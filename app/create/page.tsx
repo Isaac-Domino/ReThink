@@ -6,12 +6,12 @@ import React from 'react'
 import { Plus } from 'lucide-react'
 import Image from 'next/image'
 import Archive from '@/components/archive'
-import { UserButton, useUser } from '@clerk/nextjs'
 
-export default function create() {
-    const { isSignedIn, user } = useUser();
+import { useSession } from 'next-auth/react'
+
+export default function page() {
+    const { data: session } = useSession();
  
-
   return (
     <div className='px-5 md:px-[55px] w-full py-4 md:py-[24px]'>
        <nav className='flex justify-between items-center'>
@@ -25,8 +25,13 @@ export default function create() {
                   <Link href={'/'}>Home</Link>
                </li>
 
-           {isSignedIn || user ? 
-                <UserButton /> :
+           {session? 
+                  <Image 
+                    alt='Profile avatar'
+                    width={25}
+                    height={25}
+                    src={session.user?.image ? session.user?.image : '' }
+                  />:
                  <button className='bg-gradient-to-r from-violet-900 to-purple-500 hover:bg-violet-600 text-white px-3 rounded-sm py-2 '>
                   <Link href={'/login'}>Login</Link>
                </button>}
@@ -45,7 +50,7 @@ export default function create() {
                     <div className='flex items-start gap-8 flex-col'>
                       {/**CREATE BUTTON HERE */}
                      <div className='flex flex-col gap-2'>
-                        <button disabled={!isSignedIn || !user} className={`${!isSignedIn || !user ? 'bg-gray-500' : 'bg-[#4B3F94] hover:bg-violet-700'} text-center w-[50px] h-[50px] sm:w-[80px] sm:h-[80px] duration-200 ease-in-out text-white rounded-md text-[18px]`} type='button'>
+                        <button disabled={!session} className={`${!session ? 'bg-gray-500' : 'bg-[#4B3F94] hover:bg-violet-700'} text-center w-[50px] h-[50px] sm:w-[80px] sm:h-[80px] duration-200 ease-in-out text-white rounded-md text-[18px]`} type='button'>
                           <Plus 
                             size={32}
                             className='m-auto'
@@ -56,7 +61,7 @@ export default function create() {
 
 
                         {/**ARCHIVES LISTS */}
-                       {isSignedIn || user ?
+                       {session ?
                         <div className='border scroll-auto w-auto min-w-full max-w-[1180px] min-h-[700px]'>
                               {/**archive items */}
                               <div className='h-auto w-fit min-w-max'>
