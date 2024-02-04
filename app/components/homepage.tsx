@@ -1,12 +1,10 @@
-
+'use client'
 
 import Navbar from "@/components/Navbar";
-import Link from "next/link";
 import Image from 'next/image'
 import React, { useRef } from "react";
 import { CheckCircle2 } from 'lucide-react';
 import { motion, useScroll } from 'framer-motion'
-import { useInView } from 'react-intersection-observer';
 import Hero from "@/components/Hero";
 
 
@@ -69,12 +67,6 @@ const Home = () => {
     offset: ["0 1", "1.33 1"]
   });
 
-  const [itemRef, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.5,
-  });
-
-
   /**LANDING PAGE */
   return (
    <motion.div
@@ -125,7 +117,7 @@ const Home = () => {
                </div>
  
                <div className=" flex-1 w-auto h-auto">
-                 <p className="md:text-[36px] lg:text-[40px] text-lg leading-normal text-pretty text-[#362D73]">Working with AI to enhance your prompts and for accurate results.</p>
+                 <p className="md:text-[36px] dark:text-white lg:text-[40px] text-lg leading-normal text-pretty text-[#362D73]">Working with AI to enhance your prompts and for accurate results.</p>
                </div>
            </div>
         </motion.div>
@@ -135,7 +127,7 @@ const Home = () => {
 
         <div className="w-full mt-[20px] md:mt-[120px]">
            <section className="py-[35px] flex flex-col items-center gap-2">
-                <h1 className="text-primaryColor text-[25px] md:text-4xl">See features in action</h1>
+                <h1 className="text-primaryColor dark:text-white text-[25px] md:text-4xl">See features in action</h1>
 
                 <motion.div 
                        initial={{ opacity: 0, translateX: -1000 }}

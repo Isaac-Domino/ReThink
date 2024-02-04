@@ -61,7 +61,7 @@ export default function Main() {
                 <input 
                   type="file" 
                   ref={fileRef} 
-                  className='hidden'
+                  className='hidden dark:text-black'
                   onChange={handleFileChange}
                   accept=".doc, .pdf"
                 />

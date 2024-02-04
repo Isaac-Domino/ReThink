@@ -28,16 +28,16 @@ export default function Hero() {
                          <button className="text-white text-center bg-accentColor w-[100px] sm:w-[145px] sm:h-[50px] 
                             rounded-sm shadow-md text-[18px] md:text-[22px] 
                              hover:bg-purple-500 transition-colors duration-150 ease-in-out h-[30px] items-center text-sm font-normal">
-                             <Link href={'/create'}>  
-                               Get started  
-                              </Link>
+                             <Link href={'/archives'}>  
+                                Get started  
+                             </Link>
                          </button>
                  </div>
 
                 {/**RIGHT CONTENT */}
                 <div className="hidden md:block">
                     <Image 
-                      width={420}
+                      width={400}
                       height={300}
                       src={'/3d-casual-life-young-man-pointing-on-contract 1.svg'}
                       alt="3d image"      

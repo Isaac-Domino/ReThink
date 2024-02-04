@@ -7,13 +7,21 @@ import { Plus } from 'lucide-react'
 import Image from 'next/image'
 import Archive from '@/components/archive'
 import { UserButton, useUser } from '@clerk/nextjs'
+import { Metadata } from 'next'
+
+
+export const metadata: Metadata = {
+   title: "Your archives",
+   description: "documents"
+}
+
+
 
 export default function create() {
     const { isSignedIn, user } = useUser();
  
-
   return (
-    <div className='px-5 md:px-[55px] w-full py-4 md:py-[24px]'>
+    <div className='px-5 dark:text-white md:px-[55px] w-full py-4 md:py-[24px]'>
        <nav className='flex justify-between items-center'>
            <div className=''>
               Logo
@@ -21,12 +29,14 @@ export default function create() {
 
     {/**USER AUTHENTICATION */}
             <ul className='flex gap-4 items-center'>
-               <li className='font-medium text-[18px] md:text-[22px] text-primaryColor'>
+               <li className='font-medium dark:text-white text-[18px] md:text-[22px] text-primaryColor'>
                   <Link href={'/'}>Home</Link>
                </li>
 
            {isSignedIn || user ? 
-                <UserButton /> :
+                  <div className='dark:border-white bottom-1 w-auto h-auto rounded-full'>
+                     <UserButton /> 
+                  </div> :
                  <button className='bg-gradient-to-r from-violet-900 to-purple-500 hover:bg-violet-600 text-white px-3 rounded-sm py-2 '>
                   <Link href={'/login'}>Login</Link>
                </button>}
