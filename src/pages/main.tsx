@@ -2,15 +2,15 @@
 
 import NavbarMain from '@/components/navbar-main'
 import React, { useRef, useState } from 'react'
-import { Pencil, FolderClosed, FilePlus2, Menu, Bot, Send, X } from 'lucide-react'
+import { Pencil, FolderClosed, FilePlus2, Menu, Bot, Send, X, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
-import Image from 'next/image' 
 import { motion } from "framer-motion"
 
 const menuVariants = {
   clicked: { opacity: 1, x: -6, },
   notclicked: { opacity: 0, x: "-100%",}
 }
+
 
 export default function Main() {
     const fileRef = useRef<HTMLInputElement>(null);
@@ -23,7 +23,16 @@ export default function Main() {
       }
    }
     
-    
+    function handleMenuClick(e: React.MouseEvent) {
+       setMenuClick(prev => !prev)
+       
+       if(menuClick) {
+         setChatClick(false);
+       }
+    }
+
+
+    console.log(chatClick)
 
   return (  
    <div className='w-full min-w-full overflow-x-hidden min-h-screen h-auto'>
@@ -45,7 +54,7 @@ export default function Main() {
           </div>
 
       {/**OPTIONS AVAILABLE */}
-          <div className=' flex flex-col gap-4'>
+          <div className='text-gray-700 flex flex-col gap-4'>
                 <Link className='flex gap-2' href={'/create'}>
                   <FolderClosed />
                    <span>My Archive</span>
@@ -70,32 +79,31 @@ export default function Main() {
         </div>  
   </div>
 
-  {/**FOR MOBILE PHONES */}
+  {/**FOR SMALLER SCREENS */}
   <div className='flex w-full relative mb-2 justify-between py-4 px-2 md:hidden  items-center gap-4'>
-     <Menu 
+      <Menu 
         className={`md:hidden block ${menuClick ? 'invisible' : 'visible'}`}
         size={32}
         onClick={() => setMenuClick(prev => !prev)}
-     />
-          <Image 
-            src={'/chat-icon.svg'}
-            width={40}
-            height={40}   
-            alt='chat icon'
-            className={`${chatClick ? 'invisible' : 'visible'}`}
-            onClick={() => setChatClick(prev => !prev)}
-          />  
+      />
+
+         <MessageCircle 
+           onClick={() => setChatClick(prev => !prev)}
+           size={40}
+           fill='#A759C2'
+           color='#A759C2'   
+           className={`md:hidden block ${chatClick ? 'invisible' : 'visible'}`} 
+         />
 
        <motion.div  
           animate={menuClick ? "clicked" : 'notclicked'}
           variants={menuVariants}
           transition={{ type: "tween", delay: 0.1, ease: 'backInOut'}}
-          
           className={`w-[220px] absolute top-0 border bg-slate-200 z-50 min-h-[1300px]`}>
            <X 
              className='absolute right-2 top-2'
              size={24}
-             onClick={() => setMenuClick(prev => !prev)}
+             onClick={handleMenuClick}
             />
 
              {/**DOCUMENT NAME */}
@@ -134,8 +142,9 @@ export default function Main() {
        </motion.div>
 
        <motion.div
-          animate={chatClick ? { opacity: 1, x: 0 } : { opacity: 0, x: 200 }}
-          className={`w-[250px] absolute right-0 top-0 border bg-slate-200 z-50 min-h-[750px]`}>
+          animate={chatClick ? { opacity: 1, x: -6, } : { opacity: 0, x: 200 }}
+          transition={{ type: "tween", delay: 0.1, ease: 'backInOut'}}
+          className={`w-[250px] absolute right-0 top-0 border bg-slate-200 z-50 min-h-[1300px]`}>
            <X 
              className='absolute right-2 top-2'
              size={24}

@@ -13,10 +13,13 @@ export default function NavbarMain() {
            <div>
               ReThink
            </div>
-
+  
+           <div className='flex items-center justify-between gap-6'>
+           <Link href={'/'} className='text-md md:text-[20px]'>Home</Link>
            {user? <UserButton /> : 
              <Link href={'/login'} className='text-md md:text-[20px]' >Log in</Link>
-           }
+           }  
+          </div>  
         </nav>
     </div>
   )
