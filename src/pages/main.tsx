@@ -35,12 +35,11 @@ export default function Main() {
     console.log(chatClick)
 
   return (  
-   <div className='w-full min-w-full overflow-x-hidden min-h-screen h-auto'>
+   <div className='w-full min-w-full overflow-x-hidden h-auto md:min-h-screen'>
         <NavbarMain />
     
   <main className='flex  flex-col md:flex-row items-start'>
   {/**SIDEBAR */}
-
   <div className='border px-4 py-4 hidden md:block min-w-[200px] w-[250px] h-screen'> 
           {/**NAME OF THE DOCUMENT */}
 
@@ -142,9 +141,7 @@ export default function Main() {
        </motion.div>
 
        <motion.div
-          animate={chatClick ? { opacity: 1, x: -6, } : { opacity: 0, x: 200 }}
-          transition={{ type: "tween", delay: 0.1, ease: 'backInOut'}}
-          className={`w-[250px] absolute right-0 top-0 border bg-slate-200 z-50 min-h-[1300px]`}>
+          className={`w-[250px] absolute  ${chatClick ? 'right-0' : 'right-[-400px]'} duration-200 ease-linear top-0 border bg-slate-200 z-50 min-h-[1300px]`}>
            <X 
              className='absolute right-2 top-2'
              size={24}
@@ -196,8 +193,8 @@ export default function Main() {
 
 
       {/**DOCUMENT FILE */}
-      <div className='border-[#C0BCD1] px-2 md:px-[35px] overflow-y-auto border mx-auto md:w-[850px] min-w-[340px] sm:w-[600px] max-w-[760px] min-h-screen '>
-          <div className='border w-full h-screen'>
+      <div className='border-[#C0BCD1] px-2 md:px-[35px] overflow-y-auto border mx-auto md:w-[850px] min-w-[360px] sm:w-[600px] max-w-[760px] h-screen '>
+          <div className='border w-full h-auto'>
              {/**MAP THE DOCUMENTS HERE */}
              <div className='flex w-full flex-col gap-2 items-center'>
                    Images here
