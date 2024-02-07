@@ -1,7 +1,7 @@
 'use client'
 
 import NavbarMain from '@/components/navbar-main'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Pencil, FolderClosed, FilePlus2, Menu, Bot, Send, X, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from "framer-motion"
@@ -9,6 +9,8 @@ import { motion } from "framer-motion"
 const menuVariants = {
   clicked: { opacity: 1, x: -6, },
   notclicked: { opacity: 0, x: "-100%",}
+
+
 }
 
 
@@ -26,16 +28,15 @@ export default function Main() {
     function handleMenuClick(e: React.MouseEvent) {
        setMenuClick(prev => !prev)
        
-       if(menuClick) {
+       if(menuClick && chatClick) {
          setChatClick(false);
        }
     }
 
 
-    console.log(chatClick)
 
   return (  
-   <div className='w-full min-w-full overflow-x-hidden h-auto md:min-h-screen'>
+   <div className='w-full min-w-full overflow-x-hidden h-screen md:min-h-screen'>
         <NavbarMain />
     
   <main className='flex  flex-col md:flex-row items-start'>
@@ -79,7 +80,7 @@ export default function Main() {
   </div>
 
   {/**FOR SMALLER SCREENS */}
-  <div className='flex w-full relative mb-2 justify-between py-4 px-2 md:hidden  items-center gap-4'>
+  <div className='flex w-full  relative mb-2 justify-between py-4 px-2 md:hidden  items-center gap-4'>
       <Menu 
         className={`md:hidden block ${menuClick ? 'invisible' : 'visible'}`}
         size={32}
@@ -91,14 +92,14 @@ export default function Main() {
            size={40}
            fill='#A759C2'
            color='#A759C2'   
-           className={`md:hidden block ${chatClick ? 'invisible' : 'visible'}`} 
+           className={`md:hidden block ${chatClick && !menuClick? 'invisible' : 'visible'}`} 
          />
 
        <motion.div  
           animate={menuClick ? "clicked" : 'notclicked'}
           variants={menuVariants}
           transition={{ type: "tween", delay: 0.1, ease: 'backInOut'}}
-          className={`w-[220px] absolute top-0 border bg-slate-200 z-50 min-h-[1300px]`}>
+          className={`w-[220px] rounded-lg absolute top-0 border bg-white z-50 h-[680px]`}>
            <X 
              className='absolute right-2 top-2'
              size={24}
@@ -141,7 +142,7 @@ export default function Main() {
        </motion.div>
 
        <motion.div
-          className={`w-[250px] absolute  ${chatClick ? 'right-0' : 'right-[-400px]'} duration-200 ease-linear top-0 border bg-slate-200 z-50 min-h-[1300px]`}>
+          className={`w-[250px] absolute  ${chatClick && !menuClick? 'right-0' : 'right-[-400px]'} duration-200 ease-linear top-0 border bg-white rounded-lg z-50 h-[680px]`}>
            <X 
              className='absolute right-2 top-2'
              size={24}
@@ -154,6 +155,7 @@ export default function Main() {
             className=''
             /><span className='text-[20px]'>Chat</span>
           </div>
+
          <div className='absolute bottom-1 w-full max-h-[650px] overflow-y-auto h-auto px-2 py-4'>
                <div className='flex flex-col gap-[24px] w-full'>
                  {/**AI CHAT */} 
@@ -193,11 +195,11 @@ export default function Main() {
 
 
       {/**DOCUMENT FILE */}
-      <div className='border-[#C0BCD1] px-2 md:px-[35px] overflow-y-auto border mx-auto md:w-[850px] min-w-[360px] sm:w-[600px] max-w-[760px] h-screen '>
+      <div className='border-[#C0BCD1] px-2 md:px-[35px] overflow-y-auto border mx-auto md:w-[850px] min-w-[360px] sm:w-[600px] max-w-[760px] h-[500px] md:h-screen '>
           <div className='border w-full h-auto'>
              {/**MAP THE DOCUMENTS HERE */}
              <div className='flex w-full flex-col gap-2 items-center'>
-                   Images here
+                   document here
              </div>
           </div>
       </div>

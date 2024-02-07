@@ -16,7 +16,7 @@ export default function Hero() {
              {/**LEFT CONTENT */}
                <div className={`${poppins.className} text-center items-center md:items-start flex-1 mx-auto md:mx-0 w-[220px] sm:w-auto max-w-[650px] font-bold md:text-left flex flex-col gap-6`}> 
                  <div className="flex gap-2 flex-col">  
-                   <p className="text-[30px] leading-normal md:text-[42px] text-pretty">Re 
+                   <p className="text-[30px] leading-normal md:text-[40px] text-pretty">Re 
                    <span className="bg-gradient-to-b from-purple-500 via-purple-400 to-purple-200 text-transparent bg-clip-text">
                         Think
                    </span>- document content searcher</p>
@@ -26,10 +26,10 @@ export default function Hero() {
 
                     
                          <button className="text-white text-center bg-accentColor w-[100px] sm:w-[145px] sm:h-[50px] 
-                            rounded-sm shadow-md text-[18px] md:text-[22px] 
+                            rounded-sm shadow-md text-[18px] md:text-[20px] 
                              hover:bg-purple-500 transition-colors duration-150 ease-in-out h-[30px] items-center text-sm font-normal">
-                             <Link href={'/create'}>  
-                               Get started  
+                             <Link href={'/archives'}>  
+                               <span>Get started</span>
                               </Link>
                          </button>
                  </div>
@@ -37,9 +37,9 @@ export default function Hero() {
                 {/**RIGHT CONTENT */}
                 <div className="hidden md:block">
                     <Image 
-                      width={420}
+                      width={350}
                       height={300}
-                      src={'/3d-casual-life-young-man-pointing-on-contract 1.svg'}
+                      src={'/undraw-document.svg'}
                       alt="3d image"      
                       priority  
                     />

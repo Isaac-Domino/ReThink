@@ -95,8 +95,8 @@ const Home = () => {
           className="absolute h-[550px] sm:h-[500px] object-center bg-center w-full md:h-[700px] top-0 left-0 -z-10"
           quality={100}
           sizes="100vw"
-          width={2000}
-          height={1000}
+          width={500}
+          height={500}
           style={{
             objectFit: 'cover'
           }}
@@ -117,15 +117,15 @@ const Home = () => {
            <div className="flex gap-8 justify-between w-full h-auto items-center">
                <div className="flex-1 h-full">
                   <Image 
-                   width={350}
-                   height={400}
+                   width={300}
+                   height={300}
                    src={'/sammy-line-woman-on-skateboard-with-file-folders.gif'}
                    alt="animated gif"
                   />
                </div>
  
                <div className=" flex-1 w-auto h-auto">
-                 <p className="md:text-[36px] lg:text-[40px] text-lg leading-normal text-pretty text-[#362D73]">Working with AI to enhance your prompts and for accurate results.</p>
+                 <p className="md:text-[30px] lg:text-[35px] text-md leading-normal text-pretty text-[#362D73]">Working with AI to enhance your prompts and for accurate results.</p>
                </div>
            </div>
         </motion.div>
@@ -138,10 +138,10 @@ const Home = () => {
                 <h1 className="text-primaryColor text-[25px] md:text-4xl">See features in action</h1>
 
                 <motion.div 
-                       initial={{ opacity: 0, translateX: -1000 }}
-                       whileInView={{ opacity: 1, translateX: 0 }}
-                       viewport={{ once: true}}
-                       transition={{ delay: 0.6,  ease: "easeInOut", }} className="grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-[60px] px-[10px] md:p-[20px] lg:px-[30px] justify-around mx-auto grid-rows-2 items-center w-full">
+                       initial={{ opacity: 0}}
+                       viewport={{ once: true }}
+                       whileInView={{ opacity: 1}}
+                       transition={{ ease: 'linear', type:"spring", duration: 70,   delay: 1, }} className="grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-[60px] px-[10px] md:p-[20px] lg:px-[30px] justify-around mx-auto grid-rows-2 items-center w-full">
                     {/**MAPPING THE FEATURES HERE */}
                
                    {features.map((item, index) => (
@@ -167,32 +167,20 @@ const Home = () => {
         </div>
     </main>
 
-     <div className="w-full md:px-4 flex h-[700px] sm:h-[500px] md:h-[600px] bg-[#9A8DCD] mt-[175px]">
-        <div className="w-full justify-around flex flex-col md:flex-row items-center">
-         
-            <h1 className="text-white text-3xl mt-7 lg:text-5xl">Read, Search, Interact</h1>
+     <div className="w-full md:px-4 flex h-[500px] bg-[#9A8DCD] mt-[175px]">
+        <div className="w-full mt-[35px] flex flex-col md:flex-row md:justify-around items-center">   
+            <h1 className="text-white text-center text-3xl mt-7 lg:text-4xl">Read, Search, Interact</h1>
+            
       
-
-           <div className="flex flex-col sm:flex-row px-2 md:justify-around gap-2 sm:gap-6 md:gap-[20px] lg:gap-12 rounded-md w-auto ">
-             <Image 
-               width={470}
-               height={300}
+           <div className="flex mt-[40px] md:mt-[40px] items-center px-2 gap-2  sm:gap-6 md:gap-[20px] lg:gap-12 rounded-md w-auto">
+              <Image 
+               width={450}
+               height={500}
                sizes="100vw"
                src={'/Desktop - content.png'}
                alt="preview desktop"
-               className="self-start w-[300px] md:w-[420px] lg:w-[440px] xl:w-[490px] rounded-lg shadow-xl"
+               className="rounded-lg lg:w-[500px] shadow-xl"
                quality={100}
-             />
-
-           <Image 
-               width={200}
-               height={300}
-               sizes="100vw"
-               quality={100}
-               
-               src={'/Mobile.png'}
-               alt="preview desktop"
-               className="self-center w-[150px] md:w-[190px] lg:w-[220px] mt-[30px] rounded-lg shadow-xl"
              />
            </div>   
          </div>

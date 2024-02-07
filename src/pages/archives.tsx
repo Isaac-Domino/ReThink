@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 
 import Link from 'next/link'
@@ -21,9 +20,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
  
 export default function create() {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { isSignedIn, user } = useUser();
  
-
   return (
     <div className="px-5 md:px-[55px] w-full py-4 md:py-[24px]">
       <nav className="flex justify-between items-center">
