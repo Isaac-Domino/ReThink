@@ -1,6 +1,6 @@
 {
-  "databaseURL": "https://ReThink-ttkus6.ap-southeast-2.xata.sh/db/ReThink",
+  "databaseURL": "https://Rusty-Ramos-s-workspace-9h3m5o.ap-southeast-2.xata.sh/db/rethinkdb",
   "codegen": {
-    "output": "src/lib/xata.ts"
+    "output": "src/xata.ts"
   }
 }

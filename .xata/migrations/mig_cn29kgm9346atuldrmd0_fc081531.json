@@ -1,0 +1,11 @@
+{
+  "id": "mig_cn29kgm9346atuldrmd0",
+  "checksum": "1:fc08153154b9012e0d28a778e59986f2bf72cd056b5431b31e776f19484d7f83",
+  "operations": [
+    {
+      "addTable": {
+        "table": "Users"
+      }
+    }
+  ]
+}

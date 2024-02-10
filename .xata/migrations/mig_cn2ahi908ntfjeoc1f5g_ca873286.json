@@ -1,0 +1,16 @@
+{
+  "id": "mig_cn2ahi908ntfjeoc1f5g",
+  "parentID": "mig_cn2a8apbgckm25e60h5g",
+  "checksum": "1:ca873286873c4f76cf678b153037ad0d32b2377d76217865c9a5975656782171",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "document",
+          "type": "file[]"
+        },
+        "table": "document"
+      }
+    }
+  ]
+}
