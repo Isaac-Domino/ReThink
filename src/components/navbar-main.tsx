@@ -1,7 +1,7 @@
 import { UserButton, currentUser, useUser } from '@clerk/nextjs'
 import Link from 'next/link'
 import React from 'react'
-
+import Image from 'next/image';
 export default function NavbarMain() {
 
     const { user, isLoaded } = useUser();
@@ -11,7 +11,12 @@ export default function NavbarMain() {
          
          {/**LOGO HERE */}
            <div>
-              ReThink
+              <Image 
+                src={'/Logo black with text.png'}
+                width={50}
+                height={50}
+                alt='Logo black'
+              />
            </div>
   
            <div className='flex items-center justify-between gap-6'>

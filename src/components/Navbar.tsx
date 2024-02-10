@@ -9,7 +9,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-
+import Image from "next/image";
 
 
 const LinkButton = ({ href, variant, text }: { href: string, variant: string | any, text: string }) => {
@@ -28,14 +28,21 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-full flex py-2 justify-between items-center ${
+      className={`w-full  flex py-2 justify-between items-center ${
         router.pathname.includes("/login") ||
         router.pathname.includes("/register")
           ? "hidden"
           : "flex"
       }`}
     >
-      <Link href={"/"} className="text-white">LOGO</Link>
+      <div>
+         <Image 
+          width={50}
+          height={50}
+          alt={'Logo'}
+          src={'/Logo Black.png'}
+         />
+      </div>
 
       
 

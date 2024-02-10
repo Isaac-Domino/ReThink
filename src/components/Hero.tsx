@@ -16,12 +16,12 @@ export default function Hero() {
              {/**LEFT CONTENT */}
                <div className={`${poppins.className} text-center items-center md:items-start flex-1 mx-auto md:mx-0 w-[220px] sm:w-auto max-w-[650px] font-bold md:text-left flex flex-col gap-6`}> 
                  <div className="flex gap-2 flex-col">  
-                   <p className="text-[30px] leading-normal md:text-[40px] text-pretty">Re 
+                   <p className="text-[30px] leading-normal md:text-[35px] text-pretty">Re 
                    <span className="bg-gradient-to-b from-purple-500 via-purple-400 to-purple-200 text-transparent bg-clip-text">
                         Think
                    </span>- document content searcher</p>
                               
-                     <span className="text-pretty text-sm md:text-[18px] font-light"> Stop Wasting Time, ReThink Your PDF: Quickly Find Exactly What You Need</span>               
+                     <span className="text-pretty text-sm md:text-[17px] font-light"> Stop Wasting Time, ReThink Your PDF: Quickly Find Exactly What You Need</span>               
                    </div>
 
                     
