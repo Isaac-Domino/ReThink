@@ -1,27 +1,26 @@
 'use client'
 
 import NavbarMain from '@/components/navbar-main'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Pencil, FolderClosed, FilePlus2, Menu, Bot, Send, X, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from "framer-motion"
+import DocumentFile from '@/components/documentViewer'
 
 const menuVariants = {
   clicked: { opacity: 1, x: -6, },
   notclicked: { opacity: 0, x: "-100%",}
-
-
 }
-
-
 export default function Main() {
     const fileRef = useRef<HTMLInputElement>(null);
+    const [selectedFile, setSelectedFile] = useState<string | File | null>(null);
     const [menuClick, setMenuClick] = useState<boolean>(false);
     const [chatClick, setChatClick] = useState<boolean>(false);
 
-   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
       if(e.target.files) {
         console.log(e.target.files[0]);
+        setSelectedFile(e.target?.files[0]);
       }
    }
     
@@ -39,11 +38,10 @@ export default function Main() {
    <div className='w-full min-w-full overflow-x-hidden h-screen md:min-h-screen'>
         <NavbarMain />
     
-  <main className='flex  flex-col md:flex-row items-start'>
+        <main className='flex  flex-col md:flex-row items-start'>
   {/**SIDEBAR */}
   <div className='border px-4 py-4 hidden md:block min-w-[200px] w-[250px] h-screen'> 
           {/**NAME OF THE DOCUMENT */}
-
     <div className='h-full md:py-2 flex items-start justify-between flex-col'> 
        <div className='flex gap-2 items-center cursor-pointer'>
               <p className='text-[18px]'>Docname.pdf</p>
@@ -72,7 +70,7 @@ export default function Main() {
                   ref={fileRef} 
                   className='hidden'
                   onChange={handleFileChange}
-                  accept=".doc, .pdf"
+                  accept=".pdf"
                 />
 
           </div>   
@@ -134,7 +132,7 @@ export default function Main() {
                   ref={fileRef} 
                   className='hidden'
                   onChange={handleFileChange}
-                  accept=".doc, .pdf"
+                  accept=".pdf"
                 />
 
           </div>   
@@ -195,12 +193,10 @@ export default function Main() {
 
 
       {/**DOCUMENT FILE */}
-      <div className='border-[#C0BCD1] px-2 md:px-[35px] overflow-y-auto border mx-auto md:w-[850px] min-w-[360px] sm:w-[600px] max-w-[760px] h-[500px] md:h-screen '>
-          <div className='border w-full h-auto'>
+      <div className='border-[#C0BCD1]  px-2 md:px-[35px] overflow-y-auto border mx-auto md:w-[850px] min-w-[360px] sm:w-[600px] max-w-[760px] h-[500px] md:h-screen '>
+          <div className='w-full  h-full'>
              {/**MAP THE DOCUMENTS HERE */}
-             <div className='flex w-full flex-col gap-2 items-center'>
-                   document here
-             </div>
+               {selectedFile ? <DocumentFile selectedFile={selectedFile}/> : <p className='text-center m-auto'>Empty Document</p>}
           </div>
       </div>
 

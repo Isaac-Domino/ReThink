@@ -26,7 +26,12 @@ export default function create() {
   return (
     <div className="px-5 md:px-[55px] w-full py-4 md:py-[24px]">
       <nav className="flex justify-between items-center">
-        <div className="">Logo</div>
+          <Image 
+           width={50}
+           height={50}
+           src={'/Logo.png'}
+           alt={'Logo'}
+         />
 
         {/**USER AUTHENTICATION */}
         <ul className="flex gap-4 items-center">
