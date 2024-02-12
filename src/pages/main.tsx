@@ -35,11 +35,11 @@ export default function Main() {
        }
     }
 
-    function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-      if(e.target.files) {
-        console.log(e.target.files[0]);
-        setSelectedFile(e.target?.files[0]);
-      }
+    // function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    //   if(e.target.files) {
+    //     console.log(e.target.files[0]);
+    //     setSelectedFile(e.target?.files[0]);
+    //   }
    }
 
 

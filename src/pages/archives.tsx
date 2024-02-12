@@ -1,12 +1,12 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import React from 'react'
-import { Plus } from 'lucide-react'
-import Image from 'next/image'
-import Archive from '@/components/archive'
-import { UserButton, useUser } from '@clerk/nextjs'
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import React from "react";
+import { Plus } from "lucide-react";
+import Image from "next/image";
+import Archive from "@/components/archive";
+import { UserButton, useUser } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -15,23 +15,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
- 
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
 export default function create() {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { isSignedIn, user } = useUser();
- 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { isSignedIn, user } = useUser();
+
   return (
     <div className="px-5 md:px-[55px] w-full py-4 md:py-[24px]">
       <nav className="flex justify-between items-center">
-         <Image 
-           width={50}
-           height={50}
-           src={'/Logo.png'}
-           alt={'Logo'}
-         />
+        <Link href={"/"}>
+          <Image width={50} height={50} src={"/Logo.png"} alt={"Logo"} />
+        </Link>
 
         {/**USER AUTHENTICATION */}
         <ul className="flex gap-4 items-center">
@@ -42,9 +39,12 @@ export default function create() {
           {isSignedIn || user ? (
             <UserButton />
           ) : (
-            <button className="bg-gradient-to-r from-violet-900 to-purple-500 hover:bg-violet-600 text-white px-3 rounded-sm py-2 ">
+            <Button
+              variant={"link"}
+              className="bg-gradient-to-r from-violet-900 to-purple-500 hover:bg-violet-600 text-white px-3 rounded-sm py-2 "
+            >
               <Link href={"/login"}>Login</Link>
-            </button>
+            </Button>
           )}
         </ul>
       </nav>
@@ -105,7 +105,7 @@ export default function create() {
                       <Input
                         id="documnumberent"
                         value={0}
-                        type='number'
+                        type="number"
                         className="col-span-3"
                       />
                     </div>
@@ -116,17 +116,20 @@ export default function create() {
                       <Input
                         id="questions"
                         value={0}
-                        type='number'
+                        type="number"
                         className="col-span-3"
                       />
                     </div>
                   </div>
                   <DialogFooter>
-                  {/**AFTER SUBMITTING THE FORM THEN GO TO THE MAIN PAGE WITH 
-                   * THE DETAILS ENTERED BY THE USER */}
-                    <Button type="submit" className='bg-primaryColor
-                    hover:bg-violet-400 duration-200 ease-in-out'>
-                      <Link href={'/main'}>Save changes</Link>
+                    {/**AFTER SUBMITTING THE FORM THEN GO TO THE MAIN PAGE WITH
+                     * THE DETAILS ENTERED BY THE USER */}
+                    <Button
+                      type="submit"
+                      className="bg-primaryColor
+                    hover:bg-violet-400 duration-200 ease-in-out"
+                    >
+                      <Link href={"/main"}>Save changes</Link>
                     </Button>
                   </DialogFooter>
                 </DialogContent>
@@ -147,7 +150,6 @@ export default function create() {
                 </p>
               )}
             </div>
-
           </div>
         </div>
 
