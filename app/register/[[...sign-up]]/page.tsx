@@ -14,8 +14,16 @@ const RegisterPage = () => {
               className=""
            />
 
-       <div className="h-auto md:border p-12 rounded-lg shadow-sm">
+       <div className="h-auto p-12 rounded-lg shadow-sm">
          <SignUp
+            appearance={{
+              variables: {
+                colorPrimary: "#4D3FA3",
+                colorDanger: "red",
+                fontSmoothing: "antialiased",
+               colorSuccess: "green"
+              }
+            }}
            path="/register"
            afterSignUpUrl={"/login"}
            signInUrl="/login"

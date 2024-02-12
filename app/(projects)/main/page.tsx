@@ -7,6 +7,8 @@ import Link from 'next/link'
 import { motion } from "framer-motion"
 import DocumentFile from '@/components/documentViewer'
 
+
+
 const menuVariants = {
   clicked: { opacity: 1, x: -6, },
   notclicked: { opacity: 0, x: "-100%",}
@@ -115,7 +117,7 @@ export default function Main() {
           <div className='mt-[160px] h-auto w-full px-2'>
                {/**OPTIONS AVAILABLE */}
            <div className=' flex flex-col gap-4'>
-                <Link className='flex gap-2' href={'/create'}>
+                <Link className='flex gap-2' href={'/archives'}>
                   <FolderClosed />
                    <span>My Archive</span>
                 </Link>

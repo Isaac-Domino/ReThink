@@ -11,13 +11,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 
 
-
-const LinkButton = ({ href, variant, text }: { href: string, variant: string | any, text: string }) => {
+const LinkButton = ({ href, variant, text, className }: { href: string, variant: string | any, text: string, className?: string }) => {
     return  (
      <Link href={href}>
-       <Button variant={variant} className="text-white font-medium sm:text-[18px] md:text-[22px]">
+       <Button variant={variant} className={`text-white font-medium sm:text-[16px] md:text-[20px] ${className}`}>
           {text}
        </Button>
     </Link>
@@ -38,16 +38,30 @@ const Navbar = () => {
           : "flex"
       }`}
     >
-      <Link href={"/"} className="text-white">LOGO</Link>
+       <div>
+        <Link href={'/'}>
+         <Image 
+          width={45}
+          height={45}
+          alt={'Logo'}
+          src={'/Logo white.png'}         
+         />
+        </Link>
+      </div>
 
-      
 
+  
     <div className="flex">
       {/**USER ALREADY LOGGED IN */}
         <SignedIn>
-          <Link href={"/login"}>
+        {pathname?.includes('/about') ? 
+           <Link href={"/"}>
+            <Button variant={"link"} className="text-white">Home</Button>
+           </Link> :
+          <Link href={"/about"}>
             <Button variant={"link"} className="text-white">About</Button>
-          </Link>
+        </Link>  
+         }
 
           <Link href={"/register"}>
             <Button
@@ -64,8 +78,8 @@ const Navbar = () => {
         {/* User not authenticated */}
         <SignedOut>
            <div className="hidden sm:block">
+              <LinkButton className={`${pathname?.includes('/about') ? 'invisible' : 'visible'}`} href={'/about'} text="About" variant={'link'}/>
               <LinkButton href={"/login"} text="Log in" variant={'link'}/>
-              <LinkButton href={"/register"} text="Sign up" variant={'link'}/>
            </div>
           
         
@@ -79,7 +93,7 @@ const Navbar = () => {
 
                  <PopoverContent className="bg-[#373363] flex flex-col gap-2 w-fit h-auto py-4">
                    <LinkButton href={"/login"} text="Log in" variant={'link'}/>
-         
+                   <LinkButton href={"/about"} text="About" variant={'link'}/>
                    <LinkButton href={"/register"} text="Sign up" variant={'link'}/>
                  </PopoverContent>
             </Popover>

@@ -4,7 +4,6 @@ import React, { useState, useCallback } from 'react'
 import { pdfjs, Document, Page } from 'react-pdf'
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
-import type { PDFDocumentProxy } from 'pdfjs-dist';
 import { useResizeObserver } from '@wojtekmaj/react-hooks'
 
 

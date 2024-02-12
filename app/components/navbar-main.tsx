@@ -12,10 +12,10 @@ export default function NavbarMain() {
          {/**LOGO HERE */}
            <div>
               <Image 
-                src={'/Logo black with text.png'}
-                width={50}
-                height={50}
-                alt='Logo black'
+                src={'/Logo white with text.png'}
+                width={45}
+                height={45}
+                alt='Logo white'
               />
            </div>
   
