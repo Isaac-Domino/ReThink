@@ -5,7 +5,11 @@ const nextConfig = {
     config.resolve.alias.canvas = false;
  
     return config;
-},
+   },
+   output: 'standalone',
+   experimental: {
+    serverComponentsExternalPackages: ['sharp', 'onnxruntime-node'],
+   },
 }
 
 module.exports = nextConfig
