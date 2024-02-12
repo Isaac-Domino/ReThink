@@ -12,14 +12,14 @@ import {
 import Image from "next/image";
 
 
-const LinkButton = ({ href, variant, text }: { href: string, variant: string | any, text: string }) => {
-    return  (
-     <Link href={href}>
-       <Button variant={variant} className="text-white font-medium sm:text-[18px] md:text-[22px]">
-          {text}
-       </Button>
-    </Link>
-    )
+const LinkButton = ({ href, variant, text, className }: { href: string, variant: string | any, text: string, className?: string }) => {
+  return  (
+   <Link href={href}>
+     <Button variant={variant} className={`text-white font-medium sm:text-[16px] md:text-[20px] ${className}`}>
+        {text}
+     </Button>
+  </Link>
+  )
 }
 
 const Navbar = () => {
@@ -73,8 +73,8 @@ const Navbar = () => {
         {/* User not authenticated */}
         <SignedOut>
            <div className="hidden sm:block">
+              <LinkButton className={`${router.pathname?.includes('/about') ? 'invisible' : 'visible'}`} href={'/about'} text="About" variant={'link'}/>
               <LinkButton href={"/login"} text="Log in" variant={'link'}/>
-              <LinkButton href={"/register"} text="Sign up" variant={'link'}/>
            </div>
           
         

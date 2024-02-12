@@ -1,10 +1,9 @@
-'use client'
+
 
 import React, { useCallback, useState } from 'react'
 import { pdfjs, Document, Page } from 'react-pdf'
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
-import type { PDFDocumentProxy } from 'pdfjs-dist';
 import { useResizeObserver } from '@wojtekmaj/react-hooks'
 
 
@@ -16,9 +15,8 @@ const options = {
 };
 
 
-const maxWidth = 800;
+const maxWidth = 1290;
 const resizeObserverOptions = {};
-
 
 
 export default function DocumentFile({ selectedFile }: any) {
@@ -45,12 +43,13 @@ export default function DocumentFile({ selectedFile }: any) {
   
        
   return (
-    <div className='w-full h-auto relative'>
+    <div ref={setContainerRef} className='w-full h-auto relative'>
      <Document
        file={selectedFile}
        onLoadSuccess={onDocumentLoadSuccess}
        loading={() => <p>Loading document</p>}
        className={'absolute top-0 left-0'}
+       options={options}
     >
       {Array.from(new Array(numPages), (el, index) => (
         <Page

@@ -19,7 +19,7 @@ export default function about() {
              <div key={item.id} className='mx-auto mt-[55px] max-w-[700px] leading-5 text-white flex items-center flex-col gap-8 px-auto '>
                 <h1>{item.title}</h1>
   
-                <div className='border-gray-200 border rounded-lg shadow-md shadow-violet-300 w-auto px-4 py-2 min-h-auto'>
+                <div className='border-gray-200 border rounded-lg shadow-md shadow-violet-400 w-auto px-4 py-2 min-h-auto'>
                     <p className='text-ellipsis md:text-[22px] leading-8'>{item.desc}</p>
                 </div>
              </div>   

@@ -15,7 +15,7 @@ const RegisterPage = () => {
            />
 
        <div className="h-auto p-12 rounded-lg shadow-sm">
-         <SignUp
+       <SignUp
             appearance={{
               variables: {
                 colorPrimary: "#4D3FA3",

@@ -8,7 +8,7 @@ export const aboutContent = [
     {
         id: 2,
         title: 'How it is useful?',
-        desc: "The feature is useful for deep scanning large pdf files and much more convenient for working with a bunch of pages manually, as well as for getting more insights into a particular topic."
+        desc: "The feature is useful for deep scanning large pdf files and much more convenient for working with a bunch of pages manually, as well as for getting more insights into a particular area."
     },
     {
         id: 3,

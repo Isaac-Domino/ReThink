@@ -15,20 +15,20 @@ const LoginPage = () => {
            />
 
       <div className="h-auto p-12 rounded-lg shadow-sm">
-       <SignIn
-        appearance={{
-          variables: {
-            colorPrimary: "#166792",
-            colorDanger: "red",
-            fontSmoothing: "antialiased",
-           colorSuccess: "green"
-          }
-        }}
-        path="/login"
-        afterSignInUrl={"/archives"}
-        signUpUrl="/register"
-        routing="path"
-      />
+         <SignIn
+            appearance={{
+              variables: {
+                colorPrimary: "#166792",
+                colorDanger: "red",
+                fontSmoothing: "antialiased",
+               colorSuccess: "green"
+              }
+            }}
+            path="/login"
+            afterSignInUrl={"/archives"}
+            signUpUrl="/register"
+            routing="path"
+          />
          </div>
        </div>
     </main>

@@ -132,7 +132,7 @@ const Home = () => {
                 <h1 className="text-primaryColor text-[25px] md:text-4xl">See features in action</h1>
 
                 <motion.div 
-                       initial={{ opacity: .50, x: -100}}
+                       initial={{ opacity: .50, x:600}}
                        viewport={{ once: true }}
                        whileInView={{ opacity: 1, x: 0}}
                        transition={{ ease: 'linear', type:"spring",}} 
