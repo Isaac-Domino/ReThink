@@ -8,7 +8,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import Image from "next/image";
 
 
@@ -36,27 +36,27 @@ const Navbar = () => {
       }`}
     >
       <div>
-         <Image 
-          width={45}
-          height={45}
-          alt={'Logo'}
-          src={'/Logo white.png'}
-         />
+        <Link href={"/"}>
+          <Image width={45} height={45} alt={"Logo"} src={"/Logo white.png"} />
+        </Link>
       </div>
 
-      
-
-    <div className="flex">
-      {/**USER ALREADY LOGGED IN */}
+      <div className="flex">
+        {/**USER ALREADY LOGGED IN */}
         <SignedIn>
-         {router.pathname.includes('/about') ? 
-           <Link href={"/"}>
-            <Button variant={"link"} className="text-white">Home</Button>
-          </Link> :
-          <Link href={"/about"}>
-            <Button variant={"link"} className="text-white">About</Button>
-        </Link>  
-        }
+          {router.pathname.includes("/about") ? (
+            <Link href={"/"}>
+              <Button variant={"link"} className="text-white">
+                Home
+              </Button>
+            </Link>
+          ) : (
+            <Link href={"/about"}>
+              <Button variant={"link"} className="text-white">
+                About
+              </Button>
+            </Link>
+          )}
 
           <Link href={"/register"}>
             <Button
@@ -69,12 +69,11 @@ const Navbar = () => {
           </Link>
         </SignedIn>
 
-
         {/* User not authenticated */}
         <SignedOut>
            <div className="hidden sm:block">
-              <LinkButton className={`${router.pathname?.includes('/about') ? 'invisible' : 'visible'}`} href={'/about'} text="About" variant={'link'}/>
               <LinkButton href={"/login"} text="Log in" variant={'link'}/>
+              <LinkButton href={"/register"} text="Sign up" variant={'link'}/>
            </div>
           
         
