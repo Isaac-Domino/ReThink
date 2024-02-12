@@ -11,6 +11,7 @@ import Hero from "@/components/Hero";
 
 
 
+
 const features = [
   {
     icon: 
@@ -196,6 +197,9 @@ const Home = () => {
             </div>
          </div>
      </div>
+
+
+    
   </motion.div> 
   );
 };
