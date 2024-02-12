@@ -69,11 +69,6 @@ const Home = () => {
     offset: ["0 1", "1.33 1"]
   });
 
-  const [itemRef, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.5,
-  });
-
 
   /**LANDING PAGE */
   return (
@@ -111,8 +106,8 @@ const Home = () => {
          }}
          transition={{ ease: 'linear',  delay: 1, }}
          
-        className="w-full mt-[190px] 
-        h-[400px] my-auto items-center flex mb-6"
+        className="w-full mt-[100px] 
+        h-[350px] my-auto items-center flex mb-6"
         >
            <div className="flex gap-8 justify-between w-full h-auto items-center">
                <div className="flex-1 h-full">
@@ -132,15 +127,16 @@ const Home = () => {
 
 
         {/**THIRD CONTENT*/}
-        <div className="w-full mt-[20px] md:mt-[120px]">
+        <div className="w-full mt-[80px]">
            <section className="py-[35px] flex flex-col items-center gap-2">
                 <h1 className="text-primaryColor text-[25px] md:text-4xl">See features in action</h1>
 
                 <motion.div 
-                       initial={{ opacity: .50}}
+                       initial={{ opacity: .50, x: -100}}
                        viewport={{ once: true }}
-                       whileInView={{ opacity: 1}}
-                       transition={{ ease: 'linear', type:"spring", duration: 70, }} className="grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-[60px] px-[10px] md:p-[20px] lg:px-[30px] justify-around mx-auto grid-rows-2 items-center w-full">
+                       whileInView={{ opacity: 1, x: 0}}
+                       transition={{ ease: 'linear', type:"spring",}} 
+                       className="grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-[35px] px-[10px] md:p-[20px] lg:px-[30px] justify-around mx-auto grid-rows-2 items-center w-full">
                     {/**MAPPING THE FEATURES HERE */}
                
                    {features.map((item, index) => (
@@ -168,10 +164,10 @@ const Home = () => {
         </div>
     </main>
 
-     <div className="w-full md:px-4 flex h-[400px] sm:h-[420px] lg:h-[500px] bg-[#9A8DCD] mt-[175px]">
+     <div className="w-full md:px-4 flex h-[400px] sm:h-[420px] lg:h-[500px] bg-[#9A8DCD] mt-[85px]">
         <div className="w-full mt-[25px]">   
           <div className="flex flex-col gap-[20px] items-center mx-auto w-auto ">
-            <h1 className="text-white leading-relaxed text-center text-3xl mt-7 lg:text-4xl">Read, Search,<br /> Interact</h1>
+            <h1 className="text-white leading-relaxed text-center text-3xl mt-7 lg:text-4xl">Read, Search, Interact</h1>
             
       
             <div className="flex mt-[25px]  items-center px-2 gap-4 md:gap-6 rounded-md w-auto">

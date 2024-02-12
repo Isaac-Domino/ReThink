@@ -16,7 +16,8 @@ const rubik = Rubik({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={rubik.className}>
-      <ClerkProvider>
+      <ClerkProvider
+      >
         <NextThemeProvider>
           <Component {...pageProps} />
         </NextThemeProvider>

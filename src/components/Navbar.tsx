@@ -37,10 +37,10 @@ const Navbar = () => {
     >
       <div>
          <Image 
-          width={50}
-          height={50}
+          width={45}
+          height={45}
           alt={'Logo'}
-          src={'/Logo Black.png'}
+          src={'/Logo white.png'}
          />
       </div>
 
@@ -49,9 +49,14 @@ const Navbar = () => {
     <div className="flex">
       {/**USER ALREADY LOGGED IN */}
         <SignedIn>
-          <Link href={"/login"}>
+         {router.pathname.includes('/about') ? 
+           <Link href={"/"}>
+            <Button variant={"link"} className="text-white">Home</Button>
+          </Link> :
+          <Link href={"/about"}>
             <Button variant={"link"} className="text-white">About</Button>
-          </Link>
+        </Link>  
+        }
 
           <Link href={"/register"}>
             <Button

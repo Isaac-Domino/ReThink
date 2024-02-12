@@ -12,10 +12,6 @@ import dynamic from 'next/dynamic'
 import DocumentFile from '@/components/document'
 
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.js',
-  import.meta.url,
-).toString();
 
 const menuVariants = {
   clicked: { opacity: 1, x: -6, },
