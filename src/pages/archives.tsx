@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function create() {
+export default function archives() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { isSignedIn, user } = useUser();
 

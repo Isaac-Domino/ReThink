@@ -107,15 +107,13 @@ const Home = () => {
 
           {/**HERO SECTION */}
           <Hero />
-
           <Image
             src={"/backround gradient.png"}
             alt="background"
-            className="absolute h-[550px] sm:h-[500px] object-center bg-center w-full md:h-[700px] top-0 left-0 -z-10"
+            className="absolute h-[450px] md:h-[500px] lg:h-[570px] object-bottom bg-center w-full top-[-70px] left-0 -z-10"
             quality={100}
-            sizes="100vw"
-            width={400}
-            height={400}
+            width={700}
+            height={300}
             style={{
               objectFit: "cover",
             }}
@@ -129,21 +127,22 @@ const Home = () => {
             opacity: scrollYProgress,
           }}
           transition={{ ease: "linear", delay: 1 }}
-          className="w-full mt-[140px] 
-           h-[350px] items-center flex mb-6"
+          className="w-full mt-[50px] 
+           h-auto  items-center flex mb-2"
         >
-          <div className="flex gap-8 justify-between w-full h-auto items-center">
-            <div className="flex-1 h-full">
+          <div className="flex gap-2 justify-evenly w-full h-auto items-center">
+            <div className="h-full flex-1">
               <Image
-                width={350}
-                height={300}
+                width={300}
+                height={200}
                 src={"/sammy-line-woman-on-skateboard-with-file-folders.gif"}
                 alt="animated gif"
+                className=""  
               />
             </div>
 
-            <div className=" flex-1 w-auto h-auto">
-              <p className="md:text-[30px] text-md leading-normal text-[#2e2b41]">
+             <div className=" flex-1 w-auto h-auto">
+              <p className="md:text-[30px] sm:text-[25px] text-md leading-normal text-[#2e2b41]">
                 Working with AI to enhance your prompts and for accurate
                 results.
               </p>      
@@ -153,7 +152,7 @@ const Home = () => {
         </motion.div>
 
         {/**THIRD CONTENT*/}
-        <div className="w-full mt-[80px]">
+        <div className="w-full mt-[25px] md:mt-[40px]">
           <section className="py-[35px] flex flex-col items-center gap-2">
             <h1 className="text-primaryColor text-[25px] md:text-4xl">
               See features in action
@@ -189,7 +188,7 @@ const Home = () => {
         </div>
       </main>
 
-      <div className="w-full md:px-4 flex h-[400px] sm:h-[420px] lg:h-[500px] bg-[#9A8DCD] mt-[85px]">
+      <div className="w-full md:px-4 flex h-[400px] sm:h-[420px] lg:h-[500px] bg-[#9A8DCD] mt-[55px]">
         <div className="w-full mt-[25px]">
           <div className="flex flex-col gap-[20px] items-center mx-auto w-auto ">
             <h1 className="text-white leading-relaxed text-center text-3xl mt-7 lg:text-4xl">

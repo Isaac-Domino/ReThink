@@ -9,11 +9,8 @@ import dynamic from 'next/dynamic'
 import { File } from 'buffer'
 import { useAuth, useClerk } from '@clerk/nextjs'
 import { useRouter } from 'next/router'
+import DocumentFile from '@/components/document'
 
-
-const Document = dynamic(() => import('@/components/document'), {
-  ssr: false,
-})
 
 const menuVariants = {
   clicked: { opacity: 1, x: -6, },
@@ -207,7 +204,7 @@ return (
         <div className="w-full  h-full">
           {/**MAP THE DOCUMENTS HERE */}
           {selectedFile ? (
-            <Document selectedFile={selectedFile} />
+            <DocumentFile selectedFile={selectedFile} />
           ) : (
             <p className="text-center m-auto">Empty Document</p>
           )}
