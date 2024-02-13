@@ -27,7 +27,7 @@ export default function create() {
     <div className="px-5 md:px-[55px] w-full py-4 md:py-[24px]">
       <nav className="flex justify-between items-center">
         <Link href={"/"}>
-          <Image width={50} height={50} src={"/Logo.png"} alt={"Logo"} />
+          <Image width={45} height={45} src={"/Logo.png"} alt={"Logo"} />
         </Link>
 
         {/**USER AUTHENTICATION */}
@@ -40,8 +40,8 @@ export default function create() {
             <UserButton />
           ) : (
             <Button
-              variant={"link"}
-              className="bg-gradient-to-r from-violet-900 to-purple-500 hover:bg-violet-600 text-white px-3 rounded-sm py-2 "
+              variant={"default"}
+              className="bg-gradient-to-r hover:opacity-80 duration-150 ease-in-out from-violet-900 to-purple-500 hover:bg-violet-600 text-white px-3 rounded-sm py-2 "
             >
               <Link href={"/login"}>Login</Link>
             </Button>
@@ -170,7 +170,7 @@ export default function create() {
           height={100}
           quality={100}
           sizes="100vw"
-          className="absolute left-2 bottom-0 w-[70px] md:w-auto"
+          className="absolute left-2 bottom-0 "
         />
       </div>
     </div>

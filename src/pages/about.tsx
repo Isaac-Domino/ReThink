@@ -3,6 +3,7 @@
 import Hero from '@/components/Hero'
 import Navbar from '@/components/Navbar'
 import NavbarMain from '@/components/navbar-main'
+import StickyNavbar from '@/components/stickyNavbar'
 import { aboutContent } from '@/lib/about'
 import React from 'react'
 
@@ -10,9 +11,8 @@ import React from 'react'
 
 export default function about() {
   return (
-    <div className='min-h-screen relative w-full bg-gradient-to-tl to-violet-600 from-purple-100'>
+    <div className='min-h-screen pb-[55px] relative w-full bg-gradient-to-tl to-violet-600 from-purple-100'>
        <div className='w-full pt-[14px] px-2 sm:px-8 md:px-[60px] py-4 lg:px-[90px]'>
-
          <Navbar />
           {/**HOW TO USE */}
           {aboutContent.map((item) => (

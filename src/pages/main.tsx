@@ -1,5 +1,5 @@
 import NavbarMain from '@/components/navbar-main'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Pencil, FolderClosed, FilePlus2, Menu, Bot, Send, X, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from "framer-motion"
@@ -7,6 +7,8 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import dynamic from 'next/dynamic'
 import { File } from 'buffer'
+import { useAuth, useClerk } from '@clerk/nextjs'
+import { useRouter } from 'next/router'
 
 
 const Document = dynamic(() => import('@/components/document'), {
@@ -23,7 +25,12 @@ export default function Main() {
     const [selectedFile, setSelectedFile] = useState<File | null | any>();
     const [menuClick, setMenuClick] = useState<boolean>(false);
     const [chatClick, setChatClick] = useState<boolean>(false);
+    const { userId } = useAuth()
+    const router = useRouter()
 
+  useEffect(() => {
+    if(!userId) router.push('/login');
+   },)
 
     function handleMenuClick() {
        setMenuClick(prev => !prev)
@@ -56,7 +63,7 @@ return (
 
           {/**OPTIONS AVAILABLE */}
           <div className="text-gray-700 flex flex-col gap-4">
-            <Link className="flex gap-2" href={"/create"}>
+            <Link className="flex gap-2" href={"/archives"}>
               <FolderClosed />
               <span>My Archive</span>
             </Link>
@@ -164,7 +171,7 @@ return (
           <div className="absolute bottom-1 w-full max-h-[650px] overflow-y-auto h-auto px-2 py-4">
             <div className="flex flex-col gap-[24px] w-full">
               {/**AI CHAT */}
-              <div className="bg-primaryColor text-wrap whitespace-normal break-words text-white w-fit p-2 rounded-md">
+              <div className="bg-[#8768a5] text-wrap whitespace-normal break-words text-white w-fit p-2 rounded-md">
                 <p className="text-sm">AI CHAT</p>
               </div>
 
@@ -218,16 +225,16 @@ return (
         <div className="absolute bottom-1 w-full max-h-[650px] overflow-y-auto h-auto px-2 py-4">
           <div className="flex flex-col gap-[24px] w-full">
             {/**AI CHAT */}
-            <div className="bg-primaryColor text-white w-fit p-2 rounded-md">
+            <div className="bg-[#8768a5] text-white w-fit p-2 rounded-md">
               <p>AI CHAT</p>
             </div>
 
             {/**YOUR CHAT */}
-            <div className="bg-[#3970b8] self-end w-fit p-2 rounded-md text-white">
+            <div className="bg-[#5484c4] self-end w-fit p-2 rounded-md text-white">
               <p>YOUR CHAT</p>
             </div>
 
-            <div className="bg-[#3970b8] self-end w-fit p-2 rounded-md text-white">
+            <div className="bg-[#5484c4] self-end w-fit p-2 rounded-md text-white">
               <p>YOUR CHAT</p>
             </div>
           </div>

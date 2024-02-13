@@ -1,11 +1,16 @@
 import { SignIn } from "@clerk/nextjs";
 import React from "react";
 import Image from "next/image";
-const LoginPage = () => {
-  return (
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
-    <main className="min-h-screen w-auto flex items-center justify-center">
-       <div className="flex flex-col md:flex-row w-full min-h-screen justify-between items-center mx-[55px] ">
+
+const LoginPage = () => {
+  const router = useRouter();
+ 
+  return (
+  <main className="min-h-screen w-full flex items-center justify-center">
+      <div className="flex flex-col md:flex-row w-full min-h-screen justify-evenly items-center mx-[100px] ">
            <Image 
               src={'/Sign in.svg'}
               width={500}
@@ -14,7 +19,7 @@ const LoginPage = () => {
               className=""
            />
 
-      <div className="h-auto p-12 rounded-lg shadow-sm">
+      <div className="h-auto rounded-lg shadow-sm">
          <SignIn
             appearance={{
               variables: {
@@ -24,10 +29,10 @@ const LoginPage = () => {
                colorSuccess: "green"
               }
             }}
+            redirectUrl={'/archives'}
             path="/login"
-            afterSignInUrl={"/archives"}
             signUpUrl="/register"
-            routing="path"
+            routing="virtual"
           />
          </div>
        </div>

@@ -4,8 +4,8 @@ import Image from "next/image";
 
 const RegisterPage = () => {
   return (
-    <main className="min-h-screen w-auto flex items-center justify-center">
-       <div className="flex flex-col md:flex-row w-full min-h-screen justify-between items-center mx-[55px] ">
+    <main className="min-h-screen w-full flex items-center justify-center">
+       <div className="flex flex-col md:flex-row w-full min-h-screen justify-evenly items-center mx-[100px] ">
            <Image 
               src={'/Sign up.svg'}
               width={500}
@@ -24,10 +24,10 @@ const RegisterPage = () => {
                colorSuccess: "green"
               }
             }}
-           path="/register"
-           afterSignUpUrl={"/login"}
-           signInUrl="/login"
-           routing="path"
+            redirectUrl={'/archives'}
+            path="/register"     
+            signInUrl="/login"
+            routing="virtual"
          />
          </div>
        </div>

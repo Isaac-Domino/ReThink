@@ -4,8 +4,9 @@ import Image from "next/image";
 import React, { useRef } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { motion, useScroll } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import { useInView, InView } from "react-intersection-observer";
 import Hero from "@/components/Hero";
+import StickyNavbar from "@/components/stickyNavbar";
 
 const features = [
   {
@@ -77,12 +78,18 @@ const features = [
 ];
 
 const Home = () => {
-  const ref = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: scrollRef,
     offset: ["0 1", "1.33 1"],
   });
 
+  const { inView, ref } = useInView({
+    threshold: 0,
+  });
+
+
+  console.log(inView.toString())
   /**LANDING PAGE */
   return (
     <motion.div
@@ -90,9 +97,13 @@ const Home = () => {
       animate={{ opacity: 1 }}
       transition={{ ease: "easeOut", type: "tween" }}
     >
+      <StickyNavbar inView={inView}/>
+
       <main className="w-full z-10 px-2 sm:px-8 md:px-[60px] py-4 lg:px-[90px] min-w-full h-auto min-h-screen relative">
-        <div className="">
-          <Navbar />
+        <div >
+           <div  ref={ref} >
+            <Navbar />
+           </div> 
 
           {/**HERO SECTION */}
           <Hero />
@@ -113,13 +124,13 @@ const Home = () => {
 
         {/**SECOND CONTENT */}
         <motion.div
-          ref={ref}
+          ref={scrollRef}
           style={{
             opacity: scrollYProgress,
           }}
           transition={{ ease: "linear", delay: 1 }}
-          className="w-full mt-[100px] 
-        h-[350px] my-auto items-center flex mb-6"
+          className="w-full mt-[140px] 
+           h-[350px] items-center flex mb-6"
         >
           <div className="flex gap-8 justify-between w-full h-auto items-center">
             <div className="flex-1 h-full">
@@ -135,7 +146,8 @@ const Home = () => {
               <p className="md:text-[30px] text-md leading-normal text-[#2e2b41]">
                 Working with AI to enhance your prompts and for accurate
                 results.
-              </p>
+              </p>      
+                  
             </div>
           </div>
         </motion.div>
@@ -186,7 +198,7 @@ const Home = () => {
 
             <div className="flex mt-[25px]  items-center px-2 gap-4 md:gap-6 rounded-md w-auto">
               <Image
-                width={420}
+                width={450}
                 height={400}
                 src={"/Desktop - content.png"}
                 alt="preview desktop"

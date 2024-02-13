@@ -10,7 +10,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import Image from "next/image";
-
+import { useInView } from "react-intersection-observer";
 
 const LinkButton = ({ href, variant, text, className }: { href: string, variant: string | any, text: string, className?: string }) => {
   return  (
@@ -28,7 +28,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-full  flex py-2 justify-between items-center ${
+      className={`w-full top-0 z-10 flex py-2 justify-between items-center ${
         router.pathname.includes("/login") ||
         router.pathname.includes("/register")
           ? "hidden"
@@ -44,19 +44,11 @@ const Navbar = () => {
       <div className="flex">
         {/**USER ALREADY LOGGED IN */}
         <SignedIn>
-          {router.pathname.includes("/about") ? (
-            <Link href={"/"}>
-              <Button variant={"link"} className="text-white">
-                Home
-              </Button>
-            </Link>
-          ) : (
-            <Link href={"/about"}>
-              <Button variant={"link"} className="text-white">
-                About
-              </Button>
-            </Link>
-          )}
+          {router.pathname.includes("/about") ?      
+             <LinkButton variant={"link"} href={'/'} text="Home" className="" />
+           : 
+            <LinkButton variant={"link"} href={'/about'} text="About" className="" />
+          }
 
           <Link href={"/register"}>
             <Button
@@ -72,8 +64,12 @@ const Navbar = () => {
         {/* User not authenticated */}
         <SignedOut>
            <div className="hidden sm:block">
+             {router.pathname.includes("/about") ?      
+             <LinkButton variant={"link"} href={'/'} text="Home" className="" />
+               : 
+              <LinkButton variant={"link"} href={'/about'} text="About" className="" />
+             }
               <LinkButton href={"/login"} text="Log in" variant={'link'}/>
-              <LinkButton href={"/register"} text="Sign up" variant={'link'}/>
            </div>
           
         
