@@ -1,37 +1,27 @@
-'use client'
-
-import React, { useState } from 'react'
-import axios from 'axios'
-
-
-
-export default function Page() {
+'use client';
  
-    const [upload, setUpload] = useState<File | null>(null);
-    const [ answer, setAnswer ] = useState('')
+import { useChat } from 'ai/react'; 
+ 
+export default function Page() {
+  const { messages, input, handleInputChange, handleSubmit } = useChat();
 
-  async function handleSubmit() {
-     const response = await axios({
-       data: upload,
-       method: 'POST', 
-       url: '/api/huggingface',
-       headers: {"Content-Type": 'application/json'}
-     })
-
-     setAnswer(response.data.dataAnswer);
-     console.log(response.data.dataAnswer);
-     console.log("Submitted");
-  }
-  
- console.log(upload)
   return (
-    <div>
-       <form onSubmit={handleSubmit}>
-          <input onChange={(e) => setUpload(e.target?.files ? e.target.files[0] : null)} type="file" placeholder='Insert file'/>
-          <button className='bg-slate-700 text-white' type='submit' onSubmit={handleSubmit}>Submit</button>
-       </form>
-
-       <p>Answer: {answer}</p>
+    <div className="flex flex-col text-black w-full max-w-md py-24 mx-auto stretch">
+      {messages.map(m => (
+        <div key={m.id} className="whitespace-pre-wrap">
+          {m.role === 'user' ? 'User: ' : 'AI: '}
+          {m.content}
+        </div>
+      ))}
+ 
+      <form onSubmit={handleSubmit}>
+        <input
+          className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl"
+          value={input}
+          placeholder="Say something..."
+          onChange={handleInputChange}
+        />
+      </form>
     </div>
-  )
+  );
 }

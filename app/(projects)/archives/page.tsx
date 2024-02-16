@@ -1,12 +1,14 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 
 import Link from 'next/link'
-import React from 'react'
+import React, { ChangeEvent, FormEvent,useEffect,useState } from 'react'
 import { Plus } from 'lucide-react'
 import Image from 'next/image'
 import Archive from '@/components/archive'
-import { UserButton, useUser } from '@clerk/nextjs'
+import { UserButton, useAuth, useUser } from '@clerk/nextjs'
 import { Button } from "@/components/ui/button"
+import axios from 'axios';
 import {
   Dialog,
   DialogContent,
@@ -18,10 +20,60 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { redirect, useRouter } from 'next/navigation'
+
  
-export default function create() {
+type documentType = {
+  userId: string | null | undefined,
+  name: string,
+  number_of_documents: number,
+  number_of_questions: number 
+}
+
+
+export default function archives() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { isSignedIn, user } = useUser();
+    const { isSignedIn, user, } = useUser();
+    const { userId, sessionId} = useAuth();
+    const router = useRouter();
+
+    const [data, setData] = useState<documentType>({
+       userId: userId as string,
+       name: '',
+       number_of_documents: 0,
+       number_of_questions: 0
+    })
+
+     // Update data state when userId changes
+  useEffect(() => {
+    if (userId) {
+      setData(prev => ({
+        ...prev,
+        userId: userId
+      }));
+    }
+  }, [userId]);
+  
+    console.log("userId", data.userId)
+    
+    function handleSubmit (e: FormEvent<HTMLFormElement>) {
+      e.preventDefault(); 
+      console.log("submitted: ", data)
+      axios.post('/api/sample', data).then(response => {
+          console.log(response)
+          router.push('/main')
+      }).catch((err) =>{
+        console.log(err);
+      })
+  }
+
+   function handleDataValue(e: ChangeEvent<HTMLInputElement>) {
+      const { name, value } = e.target
+      setData(prev => ({
+        ...prev,
+        [name]: value
+      }))
+   }
  
   return (
     <div className="px-5 md:px-[55px] w-full py-4 md:py-[24px]">
@@ -32,6 +84,7 @@ export default function create() {
            src={'/Logo.png'}
            alt={'Logo'}
          />
+         
 
         {/**USER AUTHENTICATION */}
         <ul className="flex gap-4 items-center">
@@ -59,7 +112,7 @@ export default function create() {
           {/**ARCHIVES */}
           <div className="w-full h-auto">
             <div className="flex items-start gap-8 flex-col">
-              <Dialog>
+               <Dialog>
                 <DialogTrigger asChild>
                   {/**CREATE BUTTON HERE */}
                   <div className="flex flex-col gap-2">
@@ -80,6 +133,7 @@ export default function create() {
                   </div>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
+                 <form onSubmit={handleSubmit}>
                   <DialogHeader>
                     <DialogTitle>Create new document</DialogTitle>
                     <DialogDescription>
@@ -94,7 +148,9 @@ export default function create() {
                       </Label>
                       <Input
                         id="name"
-                        value="document name"
+                        value={data?.name}
+                        onChange={handleDataValue}
+                        name='name'
                         className="col-span-3"
                       />
                     </div>
@@ -103,10 +159,12 @@ export default function create() {
                         Number of document
                       </Label>
                       <Input
-                        id="documnumberent"
-                        value={0}
-                        type='number'
-                        className="col-span-3"
+                         id="number_of_documents"
+                         value={Number(data?.number_of_documents)}
+                         onChange={handleDataValue}
+                         name='number_of_documents'
+                         className="col-span-3"
+                         type='number '
                       />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
@@ -114,23 +172,27 @@ export default function create() {
                         Number of questions
                       </Label>
                       <Input
-                        id="questions"
-                        value={0}
-                        type='number'
-                        className="col-span-3"
+                         id="questions"
+                         value={Number(data?.number_of_questions)}
+                         onChange={handleDataValue}
+                         name='number_of_questions'
+                         className="col-span-3"
+                         type='nnumber'
                       />
                     </div>
                   </div>
                   <DialogFooter>
                   {/**AFTER SUBMITTING THE FORM THEN GO TO THE MAIN PAGE WITH 
                    * THE DETAILS ENTERED BY THE USER */}
-                    <Button type="submit" className='bg-primaryColor
+                     <Button type="submit" className='bg-primaryColor
                     hover:bg-violet-400 duration-200 ease-in-out'>
-                      <Link href={'/main'}>Save changes</Link>
+                        Save Changes
                     </Button>
-                  </DialogFooter>
+                   </DialogFooter>
+                  </form>
                 </DialogContent>
               </Dialog>
+
 
               {/**ARCHIVES LISTS */}
               {isSignedIn || user ? (

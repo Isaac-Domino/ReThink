@@ -1,12 +1,11 @@
 'use client'
 
 import NavbarMain from '@/components/navbar-main'
-import React, { useRef, useState } from 'react'
+import React, { ReactEventHandler, useRef, useState, useEffect } from 'react'
 import { Pencil, FolderClosed, FilePlus2, Menu, Bot, Send, X, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from "framer-motion"
 import DocumentFile from '@/components/documentViewer'
-
 
 
 const menuVariants = {
@@ -21,7 +20,6 @@ export default function Main() {
 
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
       if(e.target.files) {
-        console.log(e.target.files[0]);
         setSelectedFile(e.target?.files[0]);
       }
    }
@@ -32,6 +30,10 @@ export default function Main() {
        if(menuClick && chatClick) {
          setChatClick(false);
        }
+    }
+
+    function handleSubmit(e: InputEvent) {
+          console.log("My file:", e);
     }
 
 
@@ -67,14 +69,16 @@ export default function Main() {
                    <span>Insert new document</span>
                 </div>
                 {/**HIDDEN INPUT TO OPEN FILE EXPLORER WHEN CLICKING THIS */}
-                <input 
+                <form
+                  onSubmit={() => handleSubmit}>
+                 <input 
                   type="file" 
                   ref={fileRef} 
                   className='hidden'
                   onChange={handleFileChange}
                   accept=".pdf"
                 />
-
+              </form>
           </div>   
         </div>  
   </div>
@@ -129,13 +133,18 @@ export default function Main() {
                    <span>Insert new document</span>
                 </div>
                 {/**HIDDEN INPUT TO OPEN FILE EXPLORER WHEN CLICKING THIS */}
-                <input 
-                  type="file" 
-                  ref={fileRef} 
-                  className='hidden'
-                  onChange={handleFileChange}
-                  accept=".pdf"
-                />
+               <form
+                onSubmit={(e) => handleSubmit}
+                >
+                  <input 
+                    type="file" 
+                    ref={fileRef} 
+                    className='hidden'
+                    onChange={handleFileChange}
+                    accept=".pdf"
+
+                  />
+               </form>
 
           </div>   
             </div>

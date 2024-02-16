@@ -1,0 +1,18 @@
+{
+  "id": "mig_cn7gr7vatig29eq8glb0",
+  "parentID": "mig_cn7gr09u2kslv9ddsj5g",
+  "checksum": "1:14febe91e4ee937e4fc8465af217dde81477473277a6bbd7b0efbf8e9b088607",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "name",
+          "type": "string",
+          "notNull": true,
+          "defaultValue": "null"
+        },
+        "table": "document"
+      }
+    }
+  ]
+}

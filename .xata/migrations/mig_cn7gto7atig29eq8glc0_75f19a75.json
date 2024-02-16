@@ -1,0 +1,18 @@
+{
+  "id": "mig_cn7gto7atig29eq8glc0",
+  "parentID": "mig_cn7gr7vatig29eq8glb0",
+  "checksum": "1:75f19a75501c3e2751c10f2a8cd5bb089beb9d319c8c7bc2cc7a2d211be4dcf7",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "number_of_questions",
+          "type": "int",
+          "notNull": true,
+          "defaultValue": "0"
+        },
+        "table": "document"
+      }
+    }
+  ]
+}

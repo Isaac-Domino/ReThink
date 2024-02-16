@@ -7,28 +7,31 @@ import type {
 } from "@xata.io/client";
 
 const tables = [
+  { name: "questions", columns: [{ name: "question", type: "string" }] },
+  { name: "Response", columns: [] },
   {
     name: "document",
     columns: [
-      { name: "document", type: "file[]" },
-      { name: "docname", type: "string", unique: true },
-      { name: "userid", type: "string", notNull: true, defaultValue: "null" },
-      { name: "questions", type: "link", link: { table: "questions" } },
+      { name: "name", type: "string", notNull: true, defaultValue: "null" },
+      {
+        name: "number_of_questions",
+        type: "int",
+        notNull: true,
+        defaultValue: "0",
+      },
+      {
+        name: "number_of_documents",
+        type: "int",
+        notNull: true,
+        defaultValue: "0",
+      },
+      { name: "user_id", type: "string", unique: true },
     ],
   },
-  {
-    name: "questions",
-    columns: [{ name: "question", type: "string" }],
-    revLinks: [{ column: "questions", table: "document" }],
-  },
-  { name: "Response", columns: [] },
 ] as const;
 
 export type SchemaTables = typeof tables;
 export type InferredTypes = SchemaInference<SchemaTables>;
-
-export type Document = InferredTypes["document"];
-export type DocumentRecord = Document & XataRecord;
 
 export type Questions = InferredTypes["questions"];
 export type QuestionsRecord = Questions & XataRecord;
@@ -36,10 +39,13 @@ export type QuestionsRecord = Questions & XataRecord;
 export type Response = InferredTypes["Response"];
 export type ResponseRecord = Response & XataRecord;
 
+export type Document = InferredTypes["document"];
+export type DocumentRecord = Document & XataRecord;
+
 export type DatabaseSchema = {
-  document: DocumentRecord;
   questions: QuestionsRecord;
   Response: ResponseRecord;
+  document: DocumentRecord;
 };
 
 const DatabaseClient = buildClient();

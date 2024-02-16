@@ -1,0 +1,18 @@
+{
+  "id": "mig_cn7gtunatig29eq8gld0",
+  "parentID": "mig_cn7gto7atig29eq8glc0",
+  "checksum": "1:15a105819d070163d48070ad8c83f1e2a54667445f6106f56d13c2feb65849bd",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "number_of_documents",
+          "type": "int",
+          "notNull": true,
+          "defaultValue": "0"
+        },
+        "table": "document"
+      }
+    }
+  ]
+}

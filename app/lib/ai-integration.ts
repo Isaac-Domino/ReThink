@@ -1,10 +1,11 @@
-import { pipeline } from '@xenova/transformers'
+import { ChatOpenAI } from "@langchain/openai";
 
+const chatModel = new ChatOpenAI({
+   openAIApiKey: process.env.OPENAI_API_KEY2
+});
 
-export async function documentResponse() {
-    const pipe = await pipeline('document-question-answering', "impira/layoutlm-document-qa");
-
-    let result = await pipe("/Logo.png", "whats the color of logo?");
-    console.log(result);  // Outputs
-     
+export async function getResponse () {
+    const aiChat = await chatModel.invoke("What is NextJs?");
+    
+    return aiChat.content;
 }
