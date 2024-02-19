@@ -25,7 +25,9 @@ const tables = [
         notNull: true,
         defaultValue: "0",
       },
-      { name: "user_id", type: "string", unique: true },
+      { name: "user_id", type: "string" },
+      { name: "document", type: "file[]" },
+      { name: "uid", type: "string", unique: true },
     ],
   },
 ] as const;

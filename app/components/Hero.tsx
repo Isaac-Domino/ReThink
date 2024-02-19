@@ -27,7 +27,7 @@ export default function Hero() {
                          <button className="text-white text-center bg-accentColor w-[100px] sm:w-[145px] sm:h-[50px] 
                             rounded-sm shadow-md text-[18px] md:text-[20px] 
                              hover:bg-purple-500 transition-colors duration-150 ease-in-out h-[30px] items-center text-sm font-normal">
-                             <Link href={'/archives'}>  
+                              <Link href={'/archives'}>  
                                <span>Get started</span>
                               </Link>
                          </button>

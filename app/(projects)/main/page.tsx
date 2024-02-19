@@ -6,7 +6,9 @@ import { Pencil, FolderClosed, FilePlus2, Menu, Bot, Send, X, MessageCircle } fr
 import Link from 'next/link'
 import { motion } from "framer-motion"
 import DocumentFile from '@/components/documentViewer'
-
+import { useQuery } from '@tanstack/react-query'
+import { useDropzone } from 'react-dropzone'
+import { revalidatePath } from 'next/cache'
 
 const menuVariants = {
   clicked: { opacity: 1, x: -6, },
@@ -14,13 +16,26 @@ const menuVariants = {
 }
 export default function Main() {
     const fileRef = useRef<HTMLInputElement>(null);
-    const [selectedFile, setSelectedFile] = useState<string | File | null>(null);
+    const [selectedFile, setSelectedFile] = useState< File | null>(null);
     const [menuClick, setMenuClick] = useState<boolean>(false);
     const [chatClick, setChatClick] = useState<boolean>(false);
 
+    const {acceptedFiles, getRootProps, getInputProps, isDragActive} = useDropzone({
+      accept: {
+        'application/pdf': ['.pdf']
+      },
+      maxFiles: 1,
+      onDrop: async () => {
+          console.log("ACCEPTED FILE:", acceptedFiles);
+          revalidatePath('/main')
+      }
+   });
+
+   
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
       if(e.target.files) {
         setSelectedFile(e.target?.files[0]);
+        console.log(e.target.files[0])
       }
    }
     
@@ -62,23 +77,15 @@ export default function Main() {
                    <span>My Archive</span>
                 </Link>
 
-                <div className='flex gap-2 cursor-pointer'
-                  onClick={() => fileRef?.current?.click()}
+                <div 
+                 {...getRootProps({className: 'flex gap-2 cursor-pointer'})}
                 >
+                  <input 
+                    {...getInputProps()}
+                  />
                    <FilePlus2 />
-                   <span>Insert new document</span>
+                   <span>Insert new document</span>   
                 </div>
-                {/**HIDDEN INPUT TO OPEN FILE EXPLORER WHEN CLICKING THIS */}
-                <form
-                  onSubmit={() => handleSubmit}>
-                 <input 
-                  type="file" 
-                  ref={fileRef} 
-                  className='hidden'
-                  onChange={handleFileChange}
-                  accept=".pdf"
-                />
-              </form>
           </div>   
         </div>  
   </div>
@@ -126,26 +133,17 @@ export default function Main() {
                    <span>My Archive</span>
                 </Link>
 
-                <div className='flex gap-2 cursor-pointer'
-                  onClick={() => fileRef?.current?.click()}
-                >
-                   <FilePlus2 />
-                   <span>Insert new document</span>
-                </div>
-                {/**HIDDEN INPUT TO OPEN FILE EXPLORER WHEN CLICKING THIS */}
-               <form
-                onSubmit={(e) => handleSubmit}
+                <div 
+                 {...getRootProps({className: 'flex gap-2 cursor-pointer'})}
                 >
                   <input 
-                    type="file" 
-                    ref={fileRef} 
-                    className='hidden'
-                    onChange={handleFileChange}
-                    accept=".pdf"
-
+                    {...getInputProps()}
                   />
-               </form>
-
+                   <FilePlus2 />
+                   <span>Insert new document</span>   
+                </div>
+                {/**HIDDEN INPUT TO OPEN FILE EXPLORER WHEN CLICKING THIS */}
+                              
           </div>   
             </div>
        </motion.div>
@@ -206,8 +204,8 @@ export default function Main() {
       {/**DOCUMENT FILE */}
       <div className='border-[#C0BCD1]  px-2 md:px-[35px] overflow-y-auto border mx-auto md:w-[850px] min-w-[360px] sm:w-[600px] max-w-[760px] h-[500px] md:h-screen '>
           <div className='w-full  h-full'>
-             {/**MAP THE DOCUMENTS HERE */}
-               {selectedFile ? <DocumentFile selectedFile={selectedFile}/> : <p className='text-center m-auto'>Empty Document</p>}
+             {/**MAP THE DOCUMENTS HERE   */}
+            {acceptedFiles.length ? <DocumentFile selectedFile={acceptedFiles[0]}/> : <p className='text-center m-auto'>Empty Document</p>}   
           </div>
       </div>
 
