@@ -34,7 +34,7 @@ const LoginPage = () => {
               }}
               redirectUrl={"/archives"}
               path="/login"
-              signUpUrl="/register"
+              // signUpUrl="/register"
               routing="virtual"
             />
           </div>

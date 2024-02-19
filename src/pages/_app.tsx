@@ -17,7 +17,13 @@ const rubik = Rubik({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={rubik.className}>
-      <ClerkProvider>
+      <ClerkProvider
+        appearance={{
+          elements: {
+            footer: "hidden",
+          },
+        }}
+      >
         <NextThemeProvider>
           <Component {...pageProps} />
           <Footer />

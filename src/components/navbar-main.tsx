@@ -32,7 +32,7 @@ export default function NavbarMain() {
               href={router.pathname.includes("/login") ? "/register" : "/login"}
               className="text-md md:text-[20px]"
             >
-              {router.pathname.includes("/register") ? "Register" : "Login"}
+              {router.pathname.includes("/register") ? "Login" : "Register"}
             </Link>
           )}
         </div>
