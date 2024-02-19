@@ -7,7 +7,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export async function GET(req: NextApiRequest, res: NextApiResponse) {
     /*const { userId } = auth();
-
     const res = await xata.db.document.filter('user_id', userId).getFirst();
 
     return NextResponse.json(res); */
@@ -15,15 +14,15 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
     const xata = getXataClient();
   
     if (!userId) {
-      return res.status(400).json({ error: 'Missing userId' });
+      return NextResponse.json({ error: 'Missing userId' }, { status: 400 });
     }
   
     try {
       const document = await xata.db.document.filter('user_id', userId).getFirst();
-      return res.status(200).json(document);  
+      return NextResponse.json(document, { status: 200 });
     } catch (error) {
-         console.error(error);
-         return res.status(500).json({ error: 'Failed to fetch document' });
+      console.error(error);
+      return NextResponse.json({ error: 'Failed to fetch document' }, { status: 500 });
     }
 }
 

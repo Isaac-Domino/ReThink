@@ -7,18 +7,26 @@ import axios from 'axios';
 
 const xata = getXataClient();
 
-export async function generateStaticParams() {
+type idString = {
+  id: string,
+}
+/*export async function generateStaticParams() {
    try { 
-     const res = await fetch(`/api/main`);
-     return {
-      slug: res.id 
-     } 
+     const res = await axios.get('/api/fetchdata');
+
+      const data = res.data;
+
+     return data.map((item: { id: string}) => ({
+      params: {
+        slug: item.id,
+      },
+    }));
 
    } catch (error) {
      console.error(error);
-     return [];
+     return[];
    }
-}
+} */
 
 
 async function getData(id: string) {
@@ -36,6 +44,7 @@ export default async function page({ params }: { params: { slug: string } }) {
         DISPLAY USER INFO: {data?.name}
         <p>{data?.user_id}</p>
         <p>{data?.id}</p>
+        <p>{data?.uid}</p>
     </div>
   )
 }
