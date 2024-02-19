@@ -12,29 +12,35 @@ import {
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 
-const LinkButton = ({ href, variant, text, className }: { href: string, variant: string | any, text: string, className?: string }) => {
-  return  (
-   <Link href={href}>
-     <Button variant={variant} className={`text-white font-medium sm:text-[16px] md:text-[20px] ${className}`}>
+const LinkButton = ({
+  href,
+  variant,
+  text,
+  className,
+}: {
+  href: string;
+  variant: string | any;
+  text: string;
+  className?: string;
+}) => {
+  return (
+    <Link href={href}>
+      <Button
+        variant={variant}
+        className={`text-white font-medium sm:text-[16px] md:text-[20px] ${className}`}
+      >
         {text}
-     </Button>
-  </Link>
-  )
-}
+      </Button>
+    </Link>
+  );
+};
 
 const Navbar = () => {
   const router = useRouter();
   const { signOut } = useClerk();
 
   return (
-    <nav
-      className={`w-full top-0 z-10 flex py-2 justify-between items-center ${
-        router.pathname.includes("/login") ||
-        router.pathname.includes("/register")
-          ? "hidden"
-          : "flex"
-      }`}
-    >
+    <nav className="w-full text-white top-0 z-10 flex py-2 justify-between items-center">
       <div>
         <Link href={"/"}>
           <Image width={45} height={45} alt={"Logo"} src={"/Logo white.png"} />
@@ -44,11 +50,16 @@ const Navbar = () => {
       <div className="flex">
         {/**USER ALREADY LOGGED IN */}
         <SignedIn>
-          {router.pathname.includes("/about") ?      
-             <LinkButton variant={"link"} href={'/'} text="Home" className="" />
-           : 
-            <LinkButton variant={"link"} href={'/about'} text="About" className="" />
-          }
+          {router.pathname.includes("/about") ? (
+            <LinkButton variant={"link"} href={"/"} text="Home" className="" />
+          ) : (
+            <LinkButton
+              variant={"link"}
+              href={"/about"}
+              text="About"
+              className=""
+            />
+          )}
 
           <Link href={"/register"}>
             <Button
@@ -63,31 +74,36 @@ const Navbar = () => {
 
         {/* User not authenticated */}
         <SignedOut>
-           <div className="hidden sm:block">
-             {router.pathname.includes("/about") ?      
-             <LinkButton variant={"link"} href={'/'} text="Home" className="" />
-               : 
-              <LinkButton variant={"link"} href={'/about'} text="About" className="" />
-             }
-              <LinkButton href={"/login"} text="Log in" variant={'link'}/>
-           </div>
-          
-        
-           <Popover>
-                 <PopoverTrigger className="block sm:hidden">
-                   <Menu 
-                     color="#ffff"
-                     size={32}
-                   />
-                 </PopoverTrigger>
+          <div className="hidden text-white sm:block">
+            {router.pathname.includes("/about") ? (
+              <LinkButton
+                variant={"link"}
+                href={"/"}
+                text="Home"
+                className=""
+              />
+            ) : (
+              <LinkButton
+                variant={"link"}
+                href={"/about"}
+                text="About"
+                className=""
+              />
+            )}
+            <LinkButton href={"/login"} text="Log in" variant={"link"} />
+          </div>
 
-                 <PopoverContent className="bg-[#373363] flex flex-col gap-2 w-fit h-auto py-4">
-                   <LinkButton href={"/login"} text="Log in" variant={'link'}/>
-         
-                   <LinkButton href={"/register"} text="Sign up" variant={'link'}/>
-                 </PopoverContent>
-            </Popover>
+          <Popover>
+            <PopoverTrigger className="block sm:hidden">
+              <Menu color="#ffff" size={32} />
+            </PopoverTrigger>
 
+            <PopoverContent className="bg-[#373363] flex flex-col gap-2 w-fit h-auto py-4">
+              <LinkButton href={"/login"} text="Log in" variant={"link"} />
+
+              <LinkButton href={"/register"} text="Sign up" variant={"link"} />
+            </PopoverContent>
+          </Popover>
         </SignedOut>
       </div>
     </nav>
