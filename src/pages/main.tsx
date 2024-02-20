@@ -117,8 +117,10 @@ return (
           {/**DOCUMENT NAME */}
           <div className="mt-[45px] mx-2">
             <div className="flex gap-2 items-center">
-              <p>Doc name</p>
-              <Pencil />
+              <p className='text-gray-500'>Doc name</p>
+              <Pencil 
+                
+              />
             </div>
           </div>
 

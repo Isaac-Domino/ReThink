@@ -43,7 +43,9 @@ const Navbar = () => {
     <nav className="w-full text-white top-0 z-10 flex py-2 justify-between items-center">
       <div>
         <Link href={"/"}>
-          <Image width={45} height={45} alt={"Logo"} src={"/Logo white.png"} />
+          <Image width={45} height={45} alt={"Logo"} src={"/Logo white.png"} 
+           className="w-[40px] h-auto md:w-auto"
+          />
         </Link>
       </div>
 
@@ -51,20 +53,23 @@ const Navbar = () => {
         {/**USER ALREADY LOGGED IN */}
         <SignedIn>
           {router.pathname.includes("/about") ? (
-            <LinkButton variant={"link"} href={"/"} text="Home" className="" />
+            <LinkButton 
+            variant={"link"} 
+            href={"/"} text="Home"  
+            className="font-light text-[16px] md:text-[18px]"/>
           ) : (
             <LinkButton
               variant={"link"}
               href={"/about"}
               text="About"
-              className=""
+              className="font-light text-[16px] md:text-[18px]"
             />
           )}
 
           <Link href={"/register"}>
             <Button
               variant={"destructive"}
-              className="text-white"
+              className="text-white px-3 py-1"
               onClick={() => signOut(() => router.push("/"))}
             >
               Logout
@@ -80,27 +85,35 @@ const Navbar = () => {
                 variant={"link"}
                 href={"/"}
                 text="Home"
-                className=""
+                className="font-light text-[16px] md:text-[18px]"
               />
             ) : (
               <LinkButton
                 variant={"link"}
                 href={"/about"}
                 text="About"
-                className=""
+                className="font-light text-[16px] md:text-[18px]"
               />
             )}
-            <LinkButton href={"/login"} text="Log in" variant={"link"} />
+            <LinkButton 
+             className="font-light text-[16px] md:text-[18px]"
+             href={"/login"} 
+             text="Log in" 
+             variant={"link"} />
           </div>
 
+{/**FOR SMALLER SCREEN VIEW */}
           <Popover>
             <PopoverTrigger className="block sm:hidden">
               <Menu color="#ffff" size={32} />
             </PopoverTrigger>
 
             <PopoverContent className="bg-[#373363] flex flex-col gap-2 w-fit h-auto py-4">
-              <LinkButton href={"/login"} text="Log in" variant={"link"} />
-
+              <LinkButton 
+                href={"/login"} 
+                text="Log in"  
+                variant={"link"}      
+                />
               <LinkButton href={"/register"} text="Sign up" variant={"link"} />
             </PopoverContent>
           </Popover>

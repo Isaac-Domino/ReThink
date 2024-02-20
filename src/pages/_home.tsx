@@ -88,8 +88,6 @@ const Home = () => {
     threshold: 0,
   });
 
-
-  console.log(inView.toString())
   /**LANDING PAGE */
   return (
     <motion.div
@@ -101,7 +99,7 @@ const Home = () => {
 
       <main className="w-full z-10 px-2 sm:px-8 md:px-[60px] py-4 lg:px-[90px] min-w-full h-auto min-h-screen relative">
         <div >
-           <div  ref={ref} >
+           <div ref={ref} >
             <Navbar />
            </div> 
 
@@ -110,10 +108,10 @@ const Home = () => {
           <Image
             src={"/backround gradient.png"}
             alt="background"
-            className="absolute h-[450px] md:h-[500px] lg:h-[570px] object-bottom bg-center w-full top-[-70px] left-0 -z-10"
+            className="absolute h-[550px] md:h-[640px]  object-bottom bg-center w-full top-[-70px] left-0 -z-10"
             quality={100}
-            width={700}
-            height={300}
+            width={800}
+            height={500}
             style={{
               objectFit: "cover",
             }}
@@ -127,13 +125,13 @@ const Home = () => {
             opacity: scrollYProgress,
           }}
           transition={{ ease: "linear", delay: 1 }}
-          className="w-full mt-[50px] 
+          className="w-full mt-[130px] md:mt-[200px] 
            h-auto  items-center flex mb-2"
         >
-          <div className="flex gap-2 justify-evenly w-full h-auto items-center">
+          <div className="flex gap-2 px-8 justify-evenly w-full h-auto items-center">
             <div className="h-full flex-1">
               <Image
-                width={300}
+                width={280}
                 height={200}
                 src={"/sammy-line-woman-on-skateboard-with-file-folders.gif"}
                 alt="animated gif"
@@ -141,7 +139,7 @@ const Home = () => {
               />
             </div>
 
-             <div className=" flex-1 w-auto h-auto">
+             <div className="flex-1 max-w-[500px] h-auto">
               <p className="md:text-[30px] sm:text-[25px] text-md leading-normal text-[#2e2b41]">
                 Working with AI to enhance your prompts and for accurate
                 results.
@@ -152,9 +150,9 @@ const Home = () => {
         </motion.div>
 
         {/**THIRD CONTENT*/}
-        <div className="w-full mt-[25px] md:mt-[40px]">
-          <section className="py-[35px] flex flex-col items-center gap-2">
-            <h1 className="text-primaryColor text-[25px] md:text-4xl">
+        <div className="w-full border mt-[35px] rounded-lg">
+          <section className="py-[35px] flex flex-col items-center gap-6">
+            <h1 className="text-primaryColor font-medium text-[25px] md:text-4xl">
               See features in action
             </h1>
 
@@ -168,7 +166,7 @@ const Home = () => {
                
                    {features.map((item, index) => (
                       <div
-                        key={index} className="p-[16px] flex justify-between items-center border-[#A781F5] border h-[90px] rounded-lg">
+                        key={index} className="p-[16px] shadow-md flex justify-between items-center border-[#A781F5] border h-[90px] rounded-lg">
                     
                        <div className="flex w-[250px] sm:w-[350px] md:w-[500px] max-w-[400px] gap-4 items-center">
                            <div>
@@ -188,10 +186,10 @@ const Home = () => {
         </div>
       </main>
 
-      <div className="w-full md:px-4 flex h-[400px] sm:h-[420px] lg:h-[500px] bg-[#9A8DCD] mt-[55px]">
+      <div className="w-full md:px-4 flex h-[400px] sm:h-[420px] lg:h-[470px] bg-[#9A8DCD] mt-[55px]">
         <div className="w-full mt-[25px]">
-          <div className="flex flex-col gap-[20px] items-center mx-auto w-auto ">
-            <h1 className="text-white leading-relaxed text-center text-3xl mt-7 lg:text-4xl">
+          <div className="flex flex-col gap-[20px] md:gap-[40px] items-center mx-auto w-auto ">
+            <h1 className="text-white leading-relaxed font-normal text-center text-3xl mt-7 lg:text-4xl">
               Read, Search, Interact
             </h1>
 

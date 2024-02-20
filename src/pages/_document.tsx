@@ -1,3 +1,4 @@
+import { Toaster } from '@/components/ui/toaster'
 import { Html, Head, Main, NextScript } from 'next/document'
 import dynamic from 'next/dynamic'
 

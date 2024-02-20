@@ -50,7 +50,7 @@ export default function archives() {
       </nav>
 
       {/**ARCHIVES */}
-      <div className="border-gray-20 shadow-lg border-[1px] rounded-md relative w-full min-h-screen mt-[50px] md:mt-[90px] mx-auto">
+      <div className="border-gray-20 shadow-lg border-[1px] rounded-md relative w-full max-w-[1250px] min-h-[700px] mt-[50px] md:mt-[90px] mx-auto">
         <div className="flex w-auto mt-[50px] mx-[10px] my-[15px] p-2 md:p-6 gap-8 items-start flex-col">
           <h3 className="self-center sm:text-[25px] md:text-[27px]">
             Your archives
@@ -69,12 +69,12 @@ export default function archives() {
                         !isSignedIn || !user
                           ? "bg-gray-500"
                           : "bg-[#4B3F94] hover:bg-violet-700"
-                      } text-center w-[50px] h-[50px] sm:w-[80px] sm:h-[80px] duration-200 ease-in-out text-white rounded-md text-[18px]`}
+                      } text-center w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] duration-200 ease-in-out text-white rounded-md text-[18px]`}
                       type="button"
                     >
                       <Plus size={32} className="m-auto" />
                     </button>
-                    <span className="text-[#55545E] font-medium ">
+                    <span className="text-[#55545E] text-[16px] font-medium ">
                       Create new
                     </span>
                   </div>
@@ -137,7 +137,7 @@ export default function archives() {
 
               {/**ARCHIVES LISTS */}
               {isSignedIn || user ? (
-                <div className="border scroll-auto w-auto min-w-full max-w-[1180px] min-h-[700px]">
+                <div className="border scroll-auto w-auto min-w-full max-w-[1180px] min-h-[650px]">
                   {/**archive items */}
                   <div className="h-auto w-fit min-w-max">
                     {/**START MAPPING ITEMS HERE */}
@@ -157,7 +157,7 @@ export default function archives() {
         <Image
           src={"/book.svg"}
           alt="book avatar"
-          width={100}
+          width={90}
           height={50}
           quality={100}
           className="absolute top-1 right-2 w-[50px] md:w-auto"
@@ -166,7 +166,7 @@ export default function archives() {
         <Image
           src={"/woman-with-book.svg"}
           alt="book avatar"
-          width={100}
+          width={90}
           height={100}
           quality={100}
           sizes="100vw"

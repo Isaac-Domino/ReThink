@@ -22,7 +22,7 @@ export default function NavbarMain() {
         </div>
 
         <div className="flex items-center justify-between gap-6">
-          <Link href={"/"} className="text-md md:text-[20px]">
+          <Link href={"/"} className="text-sm font-light md:text-[18px]">
             Home
           </Link>
           {user && isLoaded ? (
@@ -30,7 +30,7 @@ export default function NavbarMain() {
           ) : (
             <Link
               href={router.pathname.includes("/login") ? "/register" : "/login"}
-              className="text-md md:text-[20px]"
+              className="text-md font-light md:text-[18px]"
             >
               {router.pathname.includes("/register") ? "Login" : "Register"}
             </Link>
