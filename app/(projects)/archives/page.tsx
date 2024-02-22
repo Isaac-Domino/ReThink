@@ -3,7 +3,7 @@
 
 import Link from 'next/link'
 import React, { ChangeEvent, FormEvent,useEffect,useState } from 'react'
-import { Plus } from 'lucide-react'
+import { Inbox, Loader2, Plus, Trash } from 'lucide-react'
 import Image from 'next/image'
 import Archive from '@/components/archive'
 import { UserButton, useAuth, useUser } from '@clerk/nextjs'
@@ -26,7 +26,10 @@ import { redirect, useRouter } from 'next/navigation'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useDropzone } from 'react-dropzone'
 import { useToast } from '@/components/ui/use-toast'
-import { isObj } from 'openai/core.mjs'
+import { File } from 'buffer'
+import { useEdgeStore } from '@/lib/edgestore'
+
+
 
  
 type documentType = {
@@ -34,7 +37,9 @@ type documentType = {
   userId: string | null | undefined,
   name: string,
   number_of_documents: number,
-  number_of_questions: number 
+  number_of_questions: number,
+  file: globalThis.File[],
+  url: string,
 }
 
 
@@ -45,36 +50,91 @@ export default function archives() {
     const router = useRouter();
     const { toast } = useToast();
     const randomUUID = crypto.randomUUID().toString();
-    const [linkID, setlinkID] = useState('');
-    
-    const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
-       accept: {
-         'application/pdf': ['.pdf']
-       },
-       maxFiles: 1,
-    });
-   
+    const [uploading, setUploading ] = useState<boolean>(false);
+    const { edgestore } = useEdgeStore();
+    const [progressBar, setProgressBar] = useState<number>(0);
+    const [ existedFile, setExistedFile ] = useState<boolean>(false);
+    const [ filename, setFileName ] = useState<string>('');
+
     const [data, setData] = useState<documentType>({
-       id: '',
-       userId: userId as string,
-       name: '',
-       number_of_documents: 0,
-       number_of_questions: 0
-    })
-
-    const { mutate } = useMutation({
-       mutationFn: async (item: documentType) => axios.post('/api/sample', item),
-       onError: (err) => {
-         console.log(err.message);
-       },
-       onSuccess: () => {
-        console.log('Success');
-       }
-    })
+      id: '',
+      userId: userId as string,
+      name: '',
+      number_of_documents: 0,
+      number_of_questions: 0,
+      file: [],
+      url: ''
+   })
 
 
-     console.log("Files: ", acceptedFiles)
+    const { mutate, isPending } = useMutation({
+      mutationFn: async (item: documentType) => axios.post('/api/sample', item),
+      onError: (err) => {
+        console.log(err.message);
+      },
+      onSuccess: () => {
+       console.log('Success');
+      }
+   })
 
+    
+    const {getRootProps, getInputProps } = useDropzone({
+      accept: {
+        'application/pdf': ['.pdf']
+      },
+      maxFiles: 1,
+      onDrop: async (acceptedFiles) => {   
+        const file = acceptedFiles[0]
+        setData(prev => ({
+          ...prev,
+          file: [file]
+        }))
+
+        if (file.size > 10 * 1024 * 1024) {
+          // bigger than 10mb!
+          alert('File is too large, minimum of 10mb');
+          return;
+        }
+        try {
+          if (!file) {
+            console.log("Something went wrong");
+            return;
+          }
+          setUploading(true);
+          //const data = await uploadToS3(file);
+          console.log("meow", data);
+
+
+        {/**EDGESTORE */}
+          const res = await edgestore.publicFiles.upload({
+            file,
+            onProgressChange: (progress) => {
+              // you can use this to show a progress bar
+              console.log(progress);
+              setProgressBar(progress);
+            },
+          }) 
+          setExistedFile(true)
+          setFileName(file.name);
+
+          setData(prev => ({
+            ...prev,
+            url: res.url,
+          }))
+
+          console.log('RES:', res);
+          console.log('DATA URL', data.url);
+
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setUploading(false);
+        }
+      },
+      }
+   )
+   
+  
      // Update data state when userId changes
   useEffect(() => {
     if (userId) {
@@ -84,39 +144,41 @@ export default function archives() {
       }));
     }
   }, [userId]);
+    
+  console.log(data);
   
-    console.log("userId", data.userId)
-      
-    
-    
     function handleSubmit (e: FormEvent<HTMLFormElement>) {
       e.preventDefault(); 
       console.log("submitted: ", data)
 
-      /* if(data) {
-         axios.post('/api/sample', data).then(response => {
-          console.log(response)
-          router.push(`/main`)
-         }).catch((err) =>{
-        console.log(err);
-        })
-       } */       
-       setData(prev => ({
-        ...prev,
-          id: randomUUID //ex. fgjdjkhgshgjg
-        })) 
-      
-       mutate(data, {
-         onSuccess: (result) => { 
-           setlinkID(result.data.id);
-           toast({title: "Successful", content: "added document to the database"})
-           router.push(`/main/${result.data.id}`)
-         },
-         onError: (err) => {
-            toast({title: "Error", content: err.message})
-         }
-       })
-     }
+      try {
+        setData(prev => ({
+          ...prev,
+            id: randomUUID //ex. fgjdjkhgshgjg
+          })) 
+  
+           setUploading(true);
+            console.log("meow", data);
+            if (!data) {
+              console.log("Something went wrong");
+              return;
+            }
+        
+            
+         mutate(data, {
+           onSuccess: (result) => { 
+             toast({title: "Successful", content: "added document to the database"})
+             router.push(`/main/${result.data.id}`)
+           },
+           onError: (err) => {
+              toast({title: "Error", content: err.message})
+           }
+         })
+      }
+      catch(error) {
+        console.log(error);
+      }
+  }
 
    function handleDataValue(e: ChangeEvent<HTMLInputElement>) {
       const { name, value } = e.target
@@ -222,24 +284,60 @@ export default function archives() {
                           onChange={handleDataValue}
                           name="number_of_questions"
                           className="col-span-3"
-                          type="nnumber"
+                          type="number"
                         />
                       </div>
 
-                      <div>
-                        <section className="container">
-                          <div {...getRootProps({ className: "dropzone" })}>
-                            <input {...getInputProps()} />
-                            <p>
-                              Drag n drop some files here, or click to select
-                              files
-                            </p>
-                          </div>
-                          <aside>
-                            <h4>Files</h4>
+                   {/** DROP ZONE FILES**/}
+                      <div className="p-2 bg-white rounded-xl">
+                        <div
+                          {...getRootProps({
+                            className:
+                              "border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 flex justify-center items-center flex-col",
+                          })}
+                        >
+                          <input {...getInputProps()} />
+
+                          { filename ? (
+                            <div className='flex items-center gap-6 '>
+                               <p className='mt-2 text-sm text-slate-400'>
+                                  {filename}
+                               </p>
+
+                               <Trash 
+                                  className='text-slate-400' size={18}
+                                  onClick={ async () => setFileName('')}
+                                />
+                            </div>
+                          )
                             
-                          </aside>
-                        </section>
+                          : uploading ? (
+                            <>
+                              {/* loading state */}
+                              <Loader2 className="h-10 w-10 text-violet-500 animate-spin" />
+                              <p className="mt-2 text-sm text-slate-400">
+                                 Loading
+                              </p>
+
+                               <div className='h-[6px] w-44 border rounded overflow-hidden'>
+                                  <div
+                                   className='h-full bg-primaryColor transition-all duration-200'
+                                   style={{
+                                     width: `${progressBar}%`
+                                   }}
+                                  />
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <Inbox className="w-10 h-10 text-violet-500" />
+                              <p className="mt-2 text-sm text-slate-400">
+                                Insert Document Here
+                              </p>
+                            </>
+                          )}
+
+                        </div>
                       </div>
                     </div>
                     <DialogFooter>

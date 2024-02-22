@@ -4,6 +4,7 @@ import { Rubik } from "next/font/google"
 import '@/styles/globals.css'
 import '@/styles/typography.css'
 import ReactQueryProvider from "../providers/QueryProvider"
+import { EdgeStoreProvider } from "./lib/edgestore"
 
 
 /**DEFAULT FONT */
@@ -23,7 +24,9 @@ export default function RootLayout({
             <body className={rubik.className}>
               <ReactQueryProvider>
                  <NextThemeProvider> 
-                   {children}
+                    <EdgeStoreProvider>
+                           {children}
+                    </EdgeStoreProvider>
                  </NextThemeProvider>
                </ReactQueryProvider> 
             </body> 

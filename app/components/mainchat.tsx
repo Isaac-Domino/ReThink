@@ -14,7 +14,7 @@ const menuVariants = {
   clicked: { opacity: 1, x: -6, },
   notclicked: { opacity: 0, x: "-100%",}
 }
-export default function Main() {
+export default function Mainchat() {
     const fileRef = useRef<HTMLInputElement>(null);
     const [selectedFile, setSelectedFile] = useState< File | null>(null);
     const [menuClick, setMenuClick] = useState<boolean>(false);
@@ -26,12 +26,12 @@ export default function Main() {
       },
       maxFiles: 1,
       onDrop: async () => {
-          console.log("ACCEPTED FILE:", acceptedFiles);
+          console.log("ACCEPTED FILE:", acceptedFiles);      
       }
    });
 
    
-    function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
       if(e.target.files) {
         setSelectedFile(e.target?.files[0]);
         console.log(e.target.files[0])

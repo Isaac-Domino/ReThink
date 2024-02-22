@@ -4,6 +4,7 @@ import { getXataClient } from '../../../../src/xata';
 import  { currentUser, auth } from '@clerk/nextjs/server'
 import { GetStaticPropsContext } from 'next';
 import axios from 'axios';
+import Mainchat from '@/components/mainchat';
 
 const xata = getXataClient();
 
@@ -40,11 +41,6 @@ export default async function page({ params }: { params: { slug: string } }) {
     const data =  await getData(slug);
 
   return (
-    <div>
-        DISPLAY USER INFO: {data?.name}
-        <p>{data?.user_id}</p>
-        <p>{data?.id}</p>
-        <p>{data?.uid}</p>
-    </div>
+      <Mainchat />
   )
 }

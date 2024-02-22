@@ -27,7 +27,9 @@ const tables = [
       },
       { name: "user_id", type: "string" },
       { name: "document", type: "file[]" },
-      { name: "uid", type: "string", unique: true },
+      { name: "uid", type: "string" },
+      { name: "document_vector", type: "vector", vector: { dimension: 1536 } },
+      { name: "file_link", type: "string" },
     ],
   },
 ] as const;
