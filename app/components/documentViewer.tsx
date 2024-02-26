@@ -5,6 +5,7 @@ import { pdfjs, Document, Page } from 'react-pdf'
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import { useResizeObserver } from '@wojtekmaj/react-hooks'
+import { savedDataDbType } from '../../types';
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
@@ -18,7 +19,7 @@ const maxWidth = 1290;
 const resizeObserverOptions = {};
 
 
-export default function DocumentFile({ selectedFile }: any) {
+export default function DocumentFile({ selectedFile }: { selectedFile: any}) {
     const [numPages, setNumPages] = useState(null);
     const [containerWidth, setContainerWidth] = useState<number>();
     const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);

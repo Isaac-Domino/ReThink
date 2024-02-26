@@ -5,6 +5,7 @@ import  { currentUser, auth } from '@clerk/nextjs/server'
 import { GetStaticPropsContext } from 'next';
 import axios from 'axios';
 import Mainchat from '@/components/mainchat';
+import { savedDataDbType } from '../../../../types';
 
 const xata = getXataClient();
 
@@ -40,7 +41,9 @@ export default async function page({ params }: { params: { slug: string } }) {
     const { slug } = params;
     const data =  await getData(slug);
 
-  return (
-      <Mainchat />
-  )
+    if (!data) {
+      return <div>Loading...</div>;
+    }
+  
+    return <Mainchat data={data} />;
 }

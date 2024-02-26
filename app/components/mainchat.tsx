@@ -9,12 +9,13 @@ import DocumentFile from '@/components/documentViewer'
 import { useQuery } from '@tanstack/react-query'
 import { useDropzone } from 'react-dropzone'
 import { revalidatePath } from 'next/cache'
+import { savedDataDbType } from '../../types'
 
 const menuVariants = {
   clicked: { opacity: 1, x: -6, },
   notclicked: { opacity: 0, x: "-100%",}
 }
-export default function Mainchat() {
+export default function Mainchat({ data }: { data: savedDataDbType }) {
     const fileRef = useRef<HTMLInputElement>(null);
     const [selectedFile, setSelectedFile] = useState< File | null>(null);
     const [menuClick, setMenuClick] = useState<boolean>(false);
@@ -62,7 +63,7 @@ export default function Mainchat() {
           {/**NAME OF THE DOCUMENT */}
     <div className='h-full md:py-2 flex items-start justify-between flex-col'> 
        <div className='flex gap-2 items-center cursor-pointer'>
-              <p className='text-[18px]'>Docname.pdf</p>
+              <p className='text-[18px]'>{data.name}</p>
               <Pencil 
                 color='black'
                 size={24}
@@ -204,7 +205,7 @@ export default function Mainchat() {
       <div className='border-[#C0BCD1]  px-2 md:px-[35px] overflow-y-auto border mx-auto md:w-[850px] min-w-[360px] sm:w-[600px] max-w-[760px] h-[500px] md:h-screen '>
           <div className='w-full  h-full'>
              {/**MAP THE DOCUMENTS HERE   */}
-            {acceptedFiles.length ? <DocumentFile selectedFile={acceptedFiles[0]}/> : <p className='text-center m-auto'>Empty Document</p>}   
+            {data.file_link ? <DocumentFile selectedFile={data.file_link}/> : <p className='text-center m-auto'>Empty Document</p>}   
           </div>
       </div>
 

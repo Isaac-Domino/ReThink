@@ -26,14 +26,10 @@ import { redirect, useRouter } from 'next/navigation'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useDropzone } from 'react-dropzone'
 import { useToast } from '@/components/ui/use-toast'
-import { File } from 'buffer'
 import { useEdgeStore } from '@/lib/edgestore'
-
-
 
  
 type documentType = {
-  id: string,
   userId: string | null | undefined,
   name: string,
   number_of_documents: number,
@@ -57,7 +53,6 @@ export default function archives() {
     const [ filename, setFileName ] = useState<string>('');
 
     const [data, setData] = useState<documentType>({
-      id: '',
       userId: userId as string,
       name: '',
       number_of_documents: 0,
@@ -77,7 +72,7 @@ export default function archives() {
       }
    })
 
-    
+   
     const {getRootProps, getInputProps } = useDropzone({
       accept: {
         'application/pdf': ['.pdf']
@@ -147,28 +142,23 @@ export default function archives() {
     
   console.log(data);
   
-    function handleSubmit (e: FormEvent<HTMLFormElement>) {
+   async function handleSubmit (e: FormEvent<HTMLFormElement>) {
       e.preventDefault(); 
       console.log("submitted: ", data)
 
-      try {
-        setData(prev => ({
-          ...prev,
-            id: randomUUID //ex. fgjdjkhgshgjg
-          })) 
-  
+       try {
            setUploading(true);
             console.log("meow", data);
             if (!data) {
               console.log("Something went wrong");
               return;
             }
-        
-            
+         
          mutate(data, {
            onSuccess: (result) => { 
              toast({title: "Successful", content: "added document to the database"})
              router.push(`/main/${result.data.id}`)
+             console.log('RESULT FROM MUTATION', result.data)
            },
            onError: (err) => {
               toast({title: "Error", content: err.message})
