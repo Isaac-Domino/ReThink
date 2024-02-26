@@ -12,7 +12,7 @@ const poppins = Poppins( {
 
 export default function Hero() {
   return (
-       <section className="mt-[40px] text-white  flex items-center justify-evenly px-2 py-2  w-full">
+       <section className="mt-[80px] text-white  flex items-center justify-evenly px-2 py-2  w-full">
              {/**LEFT CONTENT */}
                <div className={`${poppins.className} text-center items-center md:items-start flex-1 mx-auto md:mx-0 w-[220px] sm:w-auto max-w-[650px] font-bold md:text-left flex flex-col gap-6`}> 
                  <div className="flex gap-2 flex-col max-w-[550px]">  
@@ -37,7 +37,7 @@ export default function Hero() {
                 {/**RIGHT CONTENT */}
                 <div className="hidden md:block">
                     <Image 
-                      width={300}
+                      width={320}
                       height={300}
                       src={'/undraw-document.svg'}
                       alt="3d image"      

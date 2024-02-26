@@ -1,9 +1,11 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
-import { SignedIn, SignedOut, useClerk } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, UserProfile, useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/router";
 import { Menu } from "lucide-react";
+import { dark, neobrutalism } from '@clerk/themes'
+
 import {
   Popover,
   PopoverContent,
@@ -43,8 +45,12 @@ const Navbar = () => {
     <nav className="w-full text-white top-0 z-10 flex py-2 justify-between items-center">
       <div>
         <Link href={"/"}>
-          <Image width={45} height={45} alt={"Logo"} src={"/Logo white.png"} 
-           className="w-[40px] h-auto md:w-auto"
+          <Image
+            width={45}
+            height={45}
+            alt={"Logo"}
+            src={"/Logo white.png"}
+            className="w-[40px] h-auto md:w-auto"
           />
         </Link>
       </div>
@@ -52,7 +58,7 @@ const Navbar = () => {
       <div className="flex">
         {/**USER ALREADY LOGGED IN */}
         <SignedIn>
-          {router.pathname.includes("/about") ? (
+          {/**{router.pathname.includes("/about") ? (
             <LinkButton 
             variant={"link"} 
             href={"/"} text="Home"  
@@ -64,17 +70,32 @@ const Navbar = () => {
               text="About"
               className="font-light text-[16px] md:text-[18px]"
             />
-          )}
+          )} */}
+          <div className="flex gap-4 items-center justify-between">
+            <UserButton 
+                 afterSignOutUrl="/" 
+                 appearance={{
+                  variables: {
+                    colorPrimary: "#166792",
+                    colorDanger: "red",
+                    fontSmoothing: "antialiased",
+                    colorSuccess: "green",
+                  },
+                  baseTheme: dark,
+                }}
+                showName={true}
+            />
 
-          <Link href={"/register"}>
-            <Button
-              variant={"destructive"}
-              className="text-white px-3 py-1"
-              onClick={() => signOut(() => router.push("/"))}
-            >
-              Logout
-            </Button>
-          </Link>
+           {/* <Link href={"/"}>
+              <Button
+                variant={"default"}
+                className="text-white bg-violet-400 hover:bg-white hover:text-violet-400 transition-all duration-150 px-3 py-1"
+                onClick={() => signOut(() => router.push("/"))}
+              >
+                Logout
+              </Button>
+            </Link> */}
+          </div>
         </SignedIn>
 
         {/* User not authenticated */}
@@ -95,25 +116,22 @@ const Navbar = () => {
                 className="font-light text-[16px] md:text-[18px]"
               />
             )}
-            <LinkButton 
-             className="font-light text-[16px] md:text-[18px]"
-             href={"/login"} 
-             text="Log in" 
-             variant={"link"} />
+            <LinkButton
+              className="font-light text-[16px] md:text-[18px]"
+              href={"/login"}
+              text="Log in"
+              variant={"link"}
+            />
           </div>
 
-{/**FOR SMALLER SCREEN VIEW */}
+          {/**FOR SMALLER SCREEN VIEW */}
           <Popover>
             <PopoverTrigger className="block sm:hidden">
               <Menu color="#ffff" size={32} />
             </PopoverTrigger>
 
             <PopoverContent className="bg-[#373363] flex flex-col gap-2 w-fit h-auto py-4">
-              <LinkButton 
-                href={"/login"} 
-                text="Log in"  
-                variant={"link"}      
-                />
+              <LinkButton href={"/login"} text="Log in" variant={"link"} />
               <LinkButton href={"/register"} text="Sign up" variant={"link"} />
             </PopoverContent>
           </Popover>

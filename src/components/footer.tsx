@@ -40,7 +40,7 @@ const Footer = () => {
   };
   return (
     <main
-      className={`w-full bg-[#24202b] text-xs md:text-[18px] text-white py-8 px-2 md:px-12  ${
+      className={`w-full relative bottom-0 bg-[#24202b] text-gray-400 text-xs md:text-[18px] py-8 px-2 md:px-12  ${
         router.pathname.includes("/login") ||
         router.pathname.includes("/register") ||
         router.pathname.includes("/main")
@@ -48,14 +48,14 @@ const Footer = () => {
           : "flex"
       }`}
     >
-      <div className="w-full grid grid-cols-1 gap-4 sm,:gap-0 sm:flex sm:flex-row  sm:justify-between md:items-center">
-        <div className="flex flex-col gap-4 md:gap-[35px] items-start">
-          <div className="flex md:flex-row items-center gap-2">
+      <div className="w-full flex flex-col gap-4 sm:gap-0 sm:flex sm:flex-row sm:justify-between md:items-center">
+        <div className="flex  flex-col gap-4 md:gap-[35px] items-center md:items-start">
+          <div className="flex flex-row items-center gap-2">
             <Link href={"/"} className="flex gap-2">
               <InstagramIcon
-                className="border border-white p-1 rounded-full"
+                className="border  border-gray-400 p-1 rounded-full"
                 size={30}
-                color="#ffff"
+                
               />
             </Link>
             <Link
@@ -63,26 +63,26 @@ const Footer = () => {
               className="flex gap-2"
             >
               <FacebookIcon
-                className="border border-white p-1 rounded-full"
+                className="border border-gray-400 p-1 rounded-full"
                 size={30}
-                color="#ffff"
+                
               />
             </Link>
 
             <Link href={"/"} className="flex gap-2 ">
               <MailIcon
-                className="border border-white p-1 rounded-full"
+                className="border border-gray-400 p-1 rounded-full"
                 size={30}
-                color="#ffff"
+                
               />
             </Link>
 
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Phone
-                  className="border cursor-pointer border-white p-1  rounded-full"
+                  className="border cursor-pointer border-gray-400 p-1  rounded-full"
                   size={30}
-                  color="#ffff"
+                  
                 />
               </AlertDialogTrigger>
               <AlertDialogContent>
@@ -113,11 +113,11 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flex md:justify-center md:flex-row ">
-          <div className="flex flex-row md:flex-row md:self-start items-start text-white">
+        <div className="flex justify-evenly md:justify-center items-center flex-col md:flex-row ">
+          <div className="flex flex-row items-center text-white">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="link" className="text-white">
+                <Button variant="link" className="text-gray-400 ">
                   Disclaimer
                 </Button>
               </AlertDialogTrigger>
@@ -149,7 +149,7 @@ const Footer = () => {
 
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="link" className="text-white">
+                <Button variant="link" className="text-gray-400 ">
                   Terms and Condition
                 </Button>
               </AlertDialogTrigger>
@@ -215,7 +215,7 @@ const Footer = () => {
             <div className="items-center ">
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="link" className="text-white">
+                  <Button variant="link" className="text-gray-400 ">
                     How to Use
                   </Button>
                 </AlertDialogTrigger>

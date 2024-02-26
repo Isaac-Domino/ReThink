@@ -7,6 +7,9 @@ import { motion, useScroll } from "framer-motion";
 import { useInView, InView } from "react-intersection-observer";
 import Hero from "@/components/Hero";
 import StickyNavbar from "@/components/stickyNavbar";
+import About from "@/components/about";
+
+
 
 const features = [
   {
@@ -105,8 +108,9 @@ const Home = () => {
 
           {/**HERO SECTION */}
           <Hero />
-          <Image
-            src={"/backround gradient.png"}
+
+         {/** <Image
+            src={"/bg-new.svg"}
             alt="background"
             className="absolute h-[550px] md:h-[640px]  object-bottom bg-center w-full top-[-70px] left-0 -z-10"
             quality={100}
@@ -115,7 +119,16 @@ const Home = () => {
             style={{
               objectFit: "cover",
             }}
-          />
+          />*/} 
+
+          <div className="w-full absolute top-0 left-0 
+          h-[400px] sm:h-[470px]
+          md:h-[520px] lg:h-[600px] 
+          bg-gradient-to-br from-[#4d7cb1]
+           to-[#4D3FA3] 
+          -z-10">
+             
+          </div>
         </div>
 
         {/**SECOND CONTENT */}
@@ -125,21 +138,20 @@ const Home = () => {
             opacity: scrollYProgress,
           }}
           transition={{ ease: "linear", delay: 1 }}
-          className="w-full mt-[130px] md:mt-[200px] 
-           h-auto  items-center flex mb-2"
+          className="w-full mt-[130px] md:mt-[220px] 
+           h-auto items-center flex mb-10"
         >
-          <div className="flex gap-2 px-8 justify-evenly w-full h-auto items-center">
-            <div className="h-full flex-1">
+          <div className="flex gap-4 px-2 justify-between w-full h-auto items-center">
+            <div className="h-auto w-auto">
               <Image
-                width={280}
-                height={200}
+                width={300}
+                height={300}
                 src={"/sammy-line-woman-on-skateboard-with-file-folders.gif"}
-                alt="animated gif"
-                className=""  
+                alt="animated gif" 
               />
             </div>
 
-             <div className="flex-1 max-w-[500px] h-auto">
+             <div className=" max-w-[600px] h-auto">
               <p className="md:text-[30px] sm:text-[25px] text-md leading-normal text-[#2e2b41]">
                 Working with AI to enhance your prompts and for accurate
                 results.
@@ -150,9 +162,9 @@ const Home = () => {
         </motion.div>
 
         {/**THIRD CONTENT*/}
-        <div className="w-full border mt-[35px] rounded-lg">
+        <div className="w-full border mt-[95px] rounded-lg">
           <section className="py-[35px] flex flex-col items-center gap-6">
-            <h1 className="text-primaryColor font-medium text-[25px] md:text-4xl">
+            <h1 className="text-primaryColor font-medium text-[28px] md:text-[40px]">
               See features in action
             </h1>
 
@@ -174,7 +186,7 @@ const Home = () => {
                            </div>
                            <div className="flex flex-col">
                               <h3 className="text-[18px] md:text-xl">{item.title}</h3>
-                              <span className="font-light text-[13px]  lg:text-[14px]">{item.description}</span>
+                              <span className="font-light text-[13px] lg:text-[14px]">{item.description}</span>
                            </div>
                        </div>
 
@@ -184,16 +196,21 @@ const Home = () => {
             </motion.div>
           </section>
         </div>
+
+        {/**ABOUT CONTENT */}
+        <div className="md:mt-[105px]">
+           <About />
+        </div>
       </main>
 
-      <div className="w-full md:px-4 flex h-[400px] sm:h-[420px] lg:h-[470px] bg-[#9A8DCD] mt-[55px]">
-        <div className="w-full mt-[25px]">
-          <div className="flex flex-col gap-[20px] md:gap-[40px] items-center mx-auto w-auto ">
+      <div className="w-full md:px-4 flex h-[400px] sm:h-[440px] lg:h-[500px] bg-[#9A8DCD] mt-[75px]">
+        <div className="w-full mt-[25px] ">
+          <div className="flex flex-col  gap-[20px] md:gap-[40px] items-center mx-auto w-auto ">
             <h1 className="text-white leading-relaxed font-normal text-center text-3xl mt-7 lg:text-4xl">
               Read, Search, Interact
             </h1>
 
-            <div className="flex mt-[25px]  items-center px-2 gap-4 md:gap-6 rounded-md w-auto">
+            <div className="flex mt-[25px] mb-[45px]  items-center px-2 gap-4 md:gap-6 rounded-md w-auto">
               <Image
                 width={450}
                 height={400}

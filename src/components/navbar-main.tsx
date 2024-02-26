@@ -3,6 +3,11 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { dark } from "@clerk/themes";
+
+
+
+
 export default function NavbarMain() {
   const { user, isLoaded } = useUser();
   const router = useRouter();
@@ -26,7 +31,12 @@ export default function NavbarMain() {
             Home
           </Link>
           {user && isLoaded ? (
-            <UserButton />
+           <UserButton 
+           afterSignOutUrl="/main" 
+           appearance={{
+            baseTheme: dark,
+          }}
+       />
           ) : (
             <Link
               href={router.pathname.includes("/login") ? "/register" : "/login"}
