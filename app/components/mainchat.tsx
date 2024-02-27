@@ -6,20 +6,53 @@ import { Pencil, FolderClosed, FilePlus2, Menu, Bot, Send, X, MessageCircle } fr
 import Link from 'next/link'
 import { motion } from "framer-motion"
 import DocumentFile from '@/components/documentViewer'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useDropzone } from 'react-dropzone'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { savedDataDbType } from '../../types'
+import { getXataClient } from '../../src/xata'
+import axios from 'axios'
+import { toast } from 'sonner'
 
 const menuVariants = {
   clicked: { opacity: 1, x: -6, },
   notclicked: { opacity: 0, x: "-100%",}
 }
-export default function Mainchat({ data }: { data: savedDataDbType }) {
+export default function Mainchat( { data } : { data:  savedDataDbType} ) {
     const fileRef = useRef<HTMLInputElement>(null);
     const [selectedFile, setSelectedFile] = useState< File | null>(null);
     const [menuClick, setMenuClick] = useState<boolean>(false);
     const [chatClick, setChatClick] = useState<boolean>(false);
+    const [editing, setEditing] = useState<boolean>(false);
+    const [newName, setNewName] = useState<string>('');
+    const inputRef = useRef<HTMLInputElement>(null!);
+
+
+    const {mutate, isPending } = useMutation({
+       mutationFn: async ({ item, id }: { item: string, id: string}) => axios.put('/api/sample', {item, id}),
+       
+       onSuccess: (res) =>  {
+         console.log(res);
+       },
+       onError: (err) => {
+         console.log(err);
+       }
+    });
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(e.target as Node)) {
+        setEditing(false);
+      }
+    };
+
+     // Attach click event listener to detect clicks outside the input field
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
 
     const {acceptedFiles, getRootProps, getInputProps, isDragActive} = useDropzone({
       accept: {
@@ -32,13 +65,7 @@ export default function Mainchat({ data }: { data: savedDataDbType }) {
    });
 
    
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-      if(e.target.files) {
-        setSelectedFile(e.target?.files[0]);
-        console.log(e.target.files[0])
-      }
-   }
-    
+ 
     function handleMenuClick(e: React.MouseEvent) {
        setMenuClick(prev => !prev)
        
@@ -47,28 +74,51 @@ export default function Mainchat({ data }: { data: savedDataDbType }) {
        }
     }
 
-    function handleSubmit(e: InputEvent) {
-          console.log("My file:", e);
+   function handleChangeName(e: React.FormEvent) {
+       e.preventDefault();
+      
+       setEditing(false);
+       
+       mutate({ item: newName, id: data.id }, {
+         onSuccess: (res) => {
+           toast.success("Updated document name")
+           console.log("RES: ", res)
+         },
+         onError: (err) => {
+           toast.error("Error updating document name: "+err.message);
+         }
+       })
     }
 
-
-
-  return (  
-   <div className='w-full min-w-full overflow-x-hidden h-screen md:min-h-screen'>
+return (  
+  <div className='w-full min-w-full overflow-x-hidden h-screen md:min-h-screen'>
         <NavbarMain />
     
-        <main className='flex  flex-col md:flex-row items-start'>
+<main className='flex  flex-col md:flex-row items-start'>
   {/**SIDEBAR */}
-  <div className='border px-4 py-4 hidden md:block min-w-[200px] w-[250px] h-screen'> 
-          {/**NAME OF THE DOCUMENT */}
+  <div className='border px-4 relative py-4 hidden md:block min-w-[200px] w-[250px] h-screen'> 
+    {/**NAME OF THE DOCUMENT */}
     <div className='h-full md:py-2 flex items-start justify-between flex-col'> 
-       <div className='flex gap-2 items-center cursor-pointer'>
+       {!editing ? 
+        <div className='flex gap-2 max-w-full items-center cursor-pointer'>
               <p className='text-[18px]'>{data.name}</p>
               <Pencil 
                 color='black'
-                size={24}
+                size={18}
+                onClick={() => setEditing(true)}
               />
-          </div>
+          </div> : 
+          <form onSubmit={handleChangeName} className='flex gap-2 items-center max-w-full cursor-pointer'>
+             <input type="text" 
+               placeholder={data.name}
+               value={newName}
+               onChange={(e) => setNewName(e.target.value)}
+               ref={inputRef}
+               className='bg-transparent border-1 border w-full'
+             />
+          </form>
+
+        }
 
       {/**OPTIONS AVAILABLE */}
           <div className='text-gray-700 flex flex-col gap-4'>
@@ -86,6 +136,8 @@ export default function Mainchat({ data }: { data: savedDataDbType }) {
                    <FilePlus2 />
                    <span>Insert new document</span>   
                 </div>
+
+                <p>MY ID: {data.id}</p>
           </div>   
         </div>  
   </div>
@@ -120,8 +172,11 @@ export default function Mainchat({ data }: { data: savedDataDbType }) {
              {/**DOCUMENT NAME */}
       <div className='mt-[45px] mx-2'>
          <div className='flex gap-2 items-center'>
-            <p>Doc name</p>
-            <Pencil />
+             <p className='text-[18px]'>{data.name}</p>
+              <Pencil 
+                color='black'
+                size={18}
+              />
          </div>
       </div>
 

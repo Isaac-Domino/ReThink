@@ -7,9 +7,8 @@ import { Inbox, Loader2, Plus, Trash } from 'lucide-react'
 import Image from 'next/image'
 import Archive from '@/components/archive'
 import { UserButton, useAuth, useUser } from '@clerk/nextjs'
+import { toast } from 'sonner';
 
-
-import { Button } from "@/components/ui/button"
 import axios from 'axios';
 import {
   Dialog,
@@ -24,113 +23,51 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { redirect, useRouter } from 'next/navigation'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useDropzone } from 'react-dropzone'
 import { useToast } from '@/components/ui/use-toast'
-import { useEdgeStore } from '@/lib/edgestore'
 
- 
+
+import { UploadButton, UploadDropzone } from "@/lib/uploadthing"; 
+import "@uploadthing/react/styles.css";
+
 type documentType = {
   userId: string | null | undefined,
   name: string,
-  number_of_documents: number,
-  number_of_questions: number,
   file: globalThis.File[],
   url: string,
+  file_key: string
 }
 
+
+export function formatURLparams(url: string ) { 
+   const lastIndex = url?.substring(0, url.lastIndexOf('.'));
+   return lastIndex;
+}
 
 export default function archives() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { isSignedIn, user, } = useUser();
     const { userId } = useAuth();
     const router = useRouter();
-    const { toast } = useToast();
-    const randomUUID = crypto.randomUUID().toString();
     const [uploading, setUploading ] = useState<boolean>(false);
-    const { edgestore } = useEdgeStore();
-    const [progressBar, setProgressBar] = useState<number>(0);
-    const [ existedFile, setExistedFile ] = useState<boolean>(false);
-    const [ filename, setFileName ] = useState<string>('');
-
     const [data, setData] = useState<documentType>({
       userId: userId as string,
       name: '',
-      number_of_documents: 0,
-      number_of_questions: 0,
       file: [],
-      url: ''
+      url: '',
+      file_key: ''
    })
-
 
     const { mutate, isPending } = useMutation({
       mutationFn: async (item: documentType) => axios.post('/api/sample', item),
       onError: (err) => {
         console.log(err.message);
       },
+      
       onSuccess: () => {
        console.log('Success');
       }
    })
 
-   
-    const {getRootProps, getInputProps } = useDropzone({
-      accept: {
-        'application/pdf': ['.pdf']
-      },
-      maxFiles: 1,
-      onDrop: async (acceptedFiles) => {   
-        const file = acceptedFiles[0]
-        setData(prev => ({
-          ...prev,
-          file: [file]
-        }))
-
-        if (file.size > 10 * 1024 * 1024) {
-          // bigger than 10mb!
-          alert('File is too large, minimum of 10mb');
-          return;
-        }
-        try {
-          if (!file) {
-            console.log("Something went wrong");
-            return;
-          }
-          setUploading(true);
-          //const data = await uploadToS3(file);
-          console.log("meow", data);
-
-
-        {/**EDGESTORE */}
-          const res = await edgestore.publicFiles.upload({
-            file,
-            onProgressChange: (progress) => {
-              // you can use this to show a progress bar
-              console.log(progress);
-              setProgressBar(progress);
-            },
-          }) 
-          setExistedFile(true)
-          setFileName(file.name);
-
-          setData(prev => ({
-            ...prev,
-            url: res.url,
-          }))
-
-          console.log('RES:', res);
-          console.log('DATA URL', data.url);
-
-        } catch (error) {
-          console.log(error);
-        } finally {
-          setUploading(false);
-        }
-      },
-      }
-   )
-   
-  
-     // Update data state when userId changes
   useEffect(() => {
     if (userId) {
       setData(prev => ({
@@ -140,7 +77,7 @@ export default function archives() {
     }
   }, [userId]);
     
-  console.log(data);
+  console.log('DATA: ', data)
   
    async function handleSubmit (e: FormEvent<HTMLFormElement>) {
       e.preventDefault(); 
@@ -153,15 +90,15 @@ export default function archives() {
               console.log("Something went wrong");
               return;
             }
-         
+            
          mutate(data, {
            onSuccess: (result) => { 
-             toast({title: "Successful", content: "added document to the database"})
+             
              router.push(`/main/${result.data.id}`)
              console.log('RESULT FROM MUTATION', result.data)
            },
            onError: (err) => {
-              toast({title: "Error", content: err.message})
+              console.log(err)
            }
          })
       }
@@ -172,9 +109,10 @@ export default function archives() {
 
    function handleDataValue(e: ChangeEvent<HTMLInputElement>) {
       const { name, value } = e.target
+      const formattedValue = value.replace(/[^a-zA-Z_\-]/g, '');  //empty string on numbers and other characters that are not hypens and underscores
       setData(prev => ({
         ...prev,
-        [name]: value
+        [name]: formattedValue
       }))
    }
  
@@ -230,6 +168,7 @@ export default function archives() {
                   </div>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
+
                   <form onSubmit={handleSubmit}>
                     <DialogHeader>
                       <DialogTitle>Create new document</DialogTitle>
@@ -238,6 +177,7 @@ export default function archives() {
                         youre done.
                       </DialogDescription>
                     </DialogHeader>
+
                     <div className="grid gap-4 py-4">
                       <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="name" className="text-right">
@@ -249,97 +189,50 @@ export default function archives() {
                           onChange={handleDataValue}
                           name="name"
                           className="col-span-3"
-                        />
+                        />             
                       </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="number" className="text-right">
-                          Number of document
-                        </Label>
-                        <Input
-                          id="number_of_documents"
-                          value={Number(data?.number_of_documents)}
-                          onChange={handleDataValue}
-                          name="number_of_documents"
-                          className="col-span-3"
-                          type="number "
-                        />
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="questions" className="text-right">
-                          Number of questions
-                        </Label>
-                        <Input
-                          id="questions"
-                          value={Number(data?.number_of_questions)}
-                          onChange={handleDataValue}
-                          name="number_of_questions"
-                          className="col-span-3"
-                          type="number"
-                        />
-                      </div>
-
-                   {/** DROP ZONE FILES**/}
+                      {data.name.length < 6 && <p className='w-full text-center font-light text-[12px] text-red-500'>The length of document must be 6 characters long and with no special characters or numbers</p>}
+              
+                      {/** DROP ZONE FILES**/}
                       <div className="p-2 bg-white rounded-xl">
-                        <div
-                          {...getRootProps({
-                            className:
-                              "border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 flex justify-center items-center flex-col",
-                          })}
-                        >
-                          <input {...getInputProps()} />
-
-                          { filename ? (
-                            <div className='flex items-center gap-6 '>
-                               <p className='mt-2 text-sm text-slate-400'>
-                                  {filename}
-                               </p>
-
-                               <Trash 
-                                  className='text-slate-400' size={18}
-                                  onClick={ async () => setFileName('')}
-                                />
-                            </div>
-                          )
+                        <div>
+                          {data.name.length >= 6  && 
+                          <UploadDropzone
+                            endpoint="documentUploader"
+                          
+                            onClientUploadComplete={(res) => {
+                              // Do something with the response
+                              console.log("File key: ", res[0].key);
+                              
+                              toast.loading("Please wait....")
+                              mutate({
+                                ...data, // Preserve other properties from the current state
+                                url: res[0].url,
+                                file_key: res[0].key
+                              }, 
+                                
+                              {
+                                onSuccess: (result) => { 
+                                  toast.success("Successful")
+                                  router.push(`/main/${formatURLparams(res[0].key)}`)
+                                  console.log('RESULT FROM MUTATION', result.data)
+                                },
+                                onError: (err) => {
+                                   toast.error("Error "+ err.message);
+                                },
+                              })
+                            }}
+                            onUploadError={(error: Error) => {
+                              // Do something with the error.
+                              toast.error(`ERROR! ${error.message}`);
+                            }}  
                             
-                          : uploading ? (
-                            <>
-                              {/* loading state */}
-                              <Loader2 className="h-10 w-10 text-violet-500 animate-spin" />
-                              <p className="mt-2 text-sm text-slate-400">
-                                 Loading
-                              </p>
-
-                               <div className='h-[6px] w-44 border rounded overflow-hidden'>
-                                  <div
-                                   className='h-full bg-primaryColor transition-all duration-200'
-                                   style={{
-                                     width: `${progressBar}%`
-                                   }}
-                                  />
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <Inbox className="w-10 h-10 text-violet-500" />
-                              <p className="mt-2 text-sm text-slate-400">
-                                Insert Document Here
-                              </p>
-                            </>
-                          )}
-
+                          /> }
                         </div>
                       </div>
                     </div>
                     <DialogFooter>
-                      {/**AFTER SUBMITTING THE FORM THEN GO TO THE MAIN PAGE WITH
-                       * THE DETAILS ENTERED BY THE USER */}
-                      <Button
-                        type="submit"
-                        className="bg-primaryColor
-                    hover:bg-violet-400 duration-200 ease-in-out"
-                      >
-                        Save Changes
-                      </Button>
+                      <p className='text-center w-full text-gray-400 font-medium text-[12px]'>Upload the document to proceed</p>
                     </DialogFooter>
                   </form>
                 </DialogContent>

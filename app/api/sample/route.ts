@@ -11,9 +11,8 @@ const xata = getXataClient();
 const documentData = z.object({
    userId: z.string(),
    name: z.string(),
-   documents: z.coerce.number(),
-   questions: z.coerce.number(),
    url: z.string(),
+   file_key: z.string(),
 })
 
 //storing document to the database
@@ -25,31 +24,25 @@ export async function POST(req: Request, res: Response) {
     }
      try
       {
-          const { name, number_of_documents, number_of_questions, url } = await req.json();
-          const documents = Number(number_of_documents);
-          const questions = Number(number_of_questions);
-
+          const { name,  url, file_key } = await req.json();
+        
           documentData.safeParse({
            userId: userId,
            name: name,
-           documents: number_of_documents,
-           questions: number_of_questions,
            url: url,
+           file_key: file_key
          })
            
-          console.log("TYPE: ", typeof documents)
-
           const result = await xata.db.document.create({
             user_id: userId,
             name: name,
-            number_of_documents: documents,
-            number_of_questions: questions,
             file_link: url,
+            file_key: file_key
          })
 
          if(result) {
-            await loadPDFFromEdgeStore(result);
-            console.log('SUCCESSFULLY LOAD PDF FROM EDGESTORE');
+            //await loadPDFFromEdgeStore(result);
+            //console.log('SUCCESSFULLY LOAD PDF FROM EDGESTORE');
          }
            console.log("Successfully created data to the database", result);  
            //return NextResponse.json(result, { status: 200});
@@ -61,5 +54,29 @@ export async function POST(req: Request, res: Response) {
 
       return NextResponse.json(err)
      }
+}
+
+
+
+export async function PUT(req: Request, res: Response) {
+  const { userId } = auth();
+
+    if(!userId) {
+      return NextResponse.json({message: "User not authenticated"}, { status: 401 });
+  
+    }
+
+    try { 
+      const { item, id } = await req.json();
+
+      const res = await xata.db.document.update(id, {
+         name: item
+      })
+
+      return NextResponse.json(res, { status: 200});
+    }
+    catch(err) {
+      return NextResponse.json(err, { status: 400});
+    }
 }
 

@@ -13,23 +13,12 @@ const tables = [
     name: "document",
     columns: [
       { name: "name", type: "string", notNull: true, defaultValue: "null" },
-      {
-        name: "number_of_questions",
-        type: "int",
-        notNull: true,
-        defaultValue: "0",
-      },
-      {
-        name: "number_of_documents",
-        type: "int",
-        notNull: true,
-        defaultValue: "0",
-      },
       { name: "user_id", type: "string" },
       { name: "document", type: "file[]" },
       { name: "uid", type: "string" },
       { name: "document_vector", type: "vector", vector: { dimension: 1536 } },
       { name: "file_link", type: "string" },
+      { name: "file_key", type: "string" },
     ],
   },
 ] as const;
