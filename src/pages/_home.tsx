@@ -123,8 +123,8 @@ const Home = () => {
 
           <div className="w-full absolute top-0 left-0 
           h-[400px] sm:h-[470px]
-          md:h-[520px] lg:h-[600px] 
-          bg-gradient-to-br from-[#4d7cb1]
+          md:h-[570px] lg:h-[640px] 
+          bg-gradient-to-br from-[#4d7cb1] 
            to-[#4D3FA3] 
           -z-10">
              
@@ -139,7 +139,7 @@ const Home = () => {
           }}
           transition={{ ease: "linear", delay: 1 }}
           className="w-full mt-[130px] md:mt-[220px] 
-           h-auto items-center flex mb-10"
+           h-auto items-center flex mb-4"
         >
           <div className="flex gap-4 px-2 justify-between w-full h-auto items-center">
             <div className="h-auto w-auto">
@@ -162,23 +162,24 @@ const Home = () => {
         </motion.div>
 
         {/**THIRD CONTENT*/}
-        <div className="w-full border mt-[95px] rounded-lg">
+        <div className="w-full mt-[70px] rounded-lg">
           <section className="py-[35px] flex flex-col items-center gap-6">
-            <h1 className="text-primaryColor font-medium text-[28px] md:text-[40px]">
+            <h2 className="text-primaryColor font-medium text-[28px] md:text-[35px]">
               See features in action
-            </h1>
+            </h2>
 
                 <motion.div 
                        initial={{ opacity: .50, x:600}}
-                       viewport={{ once: true }}
+                       viewport={{ once: true, }}
                        whileInView={{ opacity: 1, x: 0}}
-                       transition={{ ease: 'linear', type:"spring",}} 
+                       transition={{ type:"spring" }} 
                        className="grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-[35px] px-[10px] md:p-[20px] lg:px-[30px] justify-around mx-auto grid-rows-2 items-center w-full">
                     {/**MAPPING THE FEATURES HERE */}
                
                    {features.map((item, index) => (
                       <div
-                        key={index} className="p-[16px] shadow-md flex justify-between items-center border-[#A781F5] border h-[90px] rounded-lg">
+                        key={index} className="p-[16px]
+                         shadow-md flex bg-violet-100  justify-between items-center h-[90px] rounded-lg">
                     
                        <div className="flex w-[250px] sm:w-[350px] md:w-[500px] max-w-[400px] gap-4 items-center">
                            <div>
@@ -198,7 +199,7 @@ const Home = () => {
         </div>
 
         {/**ABOUT CONTENT */}
-        <div className="md:mt-[105px]">
+        <div className="md:mt-[55px]">
            <About />
         </div>
       </main>

@@ -12,7 +12,7 @@ export default function NavbarMain() {
   const { user, isLoaded } = useUser();
   const router = useRouter();
   return (
-    <div className="w-full bg-[#6B5DC0] h-[60px] flex items-center">
+    <div className="w-full bg-[#7173b9] h-[60px] flex items-center">
       <nav className="px-[12px] md:px-12 text-white py-2 flex justify-between items-center w-full">
         {/**LOGO HERE */}
         <div>
@@ -27,20 +27,20 @@ export default function NavbarMain() {
         </div>
 
         <div className="flex items-center justify-between gap-6">
-          <Link href={"/"} className="text-sm font-light md:text-[18px]">
+          <Link href={"/"} className="text-sm font-normal md:text-[18px]">
             Home
           </Link>
           {user && isLoaded ? (
            <UserButton 
-           afterSignOutUrl="/main" 
-           appearance={{
+            afterSignOutUrl="/main" 
+            appearance={{
             baseTheme: dark,
           }}
        />
           ) : (
             <Link
               href={router.pathname.includes("/login") ? "/register" : "/login"}
-              className="text-md font-light md:text-[18px]"
+              className="text-md font-normal md:text-[18px]"
             >
               {router.pathname.includes("/register") ? "Login" : "Register"}
             </Link>

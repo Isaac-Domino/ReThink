@@ -16,7 +16,7 @@ const LoginPage = () => {
         <div className="flex flex-col md:flex-row w-full min-h-screen justify-evenly items-center mx-[100px] ">
           <Image
             src={"/Sign in.svg"}
-            width={500}
+            width={550}
             height={500}
             alt="Sign in svg"
             className=""
@@ -32,7 +32,7 @@ const LoginPage = () => {
                   colorSuccess: "green",
                 },
               }}
-              redirectUrl={"/archives"}
+              redirectUrl={"/projects"}
               path="/login"
               // signUpUrl="/register"
               routing="virtual"

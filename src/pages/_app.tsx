@@ -8,6 +8,8 @@ import Navbar from "@/components/Navbar";
 import { Rubik } from "next/font/google";
 import Footer from "@/components/footer";
 
+import { Toaster } from "sonner";
+
 /**DEFAULT FONT */
 const rubik = Rubik({
   subsets: ["latin"],
@@ -25,7 +27,12 @@ export default function App({ Component, pageProps }: AppProps) {
         }}
       >
         <NextThemeProvider>
-          <Component {...pageProps} />
+           
+               <Component {...pageProps} />
+                   <Toaster 
+                        position="top-center"
+                        closeButton={true}
+                      />
           <Footer />
         </NextThemeProvider>
       </ClerkProvider>

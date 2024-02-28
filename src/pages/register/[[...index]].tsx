@@ -13,13 +13,13 @@ const RegisterPage = () => {
         <div className="flex flex-col md:flex-row w-full min-h-screen justify-evenly items-center mx-[100px] ">
           <Image
             src={"/Sign up.svg"}
-            width={500}
-            height={500}
+            width={400}
+            height={300}
             alt="Sign up svg"
             className=""
           />
 
-          <div className="h-auto p-12 rounded-lg shadow-sm">
+          <div className="h-auto rounded-lg shadow-sm">
             <SignUp
               appearance={{
                 variables: {

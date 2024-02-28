@@ -22,13 +22,24 @@ export default function Main() {
     const [selectedFile, setSelectedFile] = useState<File | null | any>();
     const [menuClick, setMenuClick] = useState<boolean>(false);
     const [chatClick, setChatClick] = useState<boolean>(false);
-    const { userId } = useAuth()
-    const router = useRouter()
+    const [editing, setEditing] = useState<boolean>(false);
+    const [newName, setNewName] = useState<string>('');
+    const inputRef = useRef<HTMLInputElement>(null!);
 
+  
+   const handleClickOutside = (e: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(e.target as Node)) {
+        setEditing(false);
+      }
+    };
+
+     // Attach click event listener to detect clicks outside the input field
   useEffect(() => {
-    if(!userId) router.push('/login');
-   },)
-
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);   
     function handleMenuClick() {
        setMenuClick(prev => !prev)
        
@@ -50,36 +61,37 @@ return (
 
     <main className="flex  flex-col md:flex-row items-start">
       {/**SIDEBAR */}
-      <div className="border px-4 py-4 hidden md:block min-w-[200px] w-[250px] h-screen">
+      <div className="border  px-4 py-4 hidden md:block min-w-[200px] w-[250px] h-screen">
         {/**NAME OF THE DOCUMENT */}
-        <div className="h-full md:py-2 flex items-start justify-between flex-col">
-          <div className="flex gap-2 items-center cursor-pointer">
-            <p className="text-[18px]">Docname.pdf</p>
-            <Pencil color="black" size={24} />
-          </div>
+        <div className="h-full py-3 flex items-start justify-between flex-col">
+          {!editing ? (
+            <div className="flex gap-2 max-w-full items-center cursor-pointer">
+              <p className="text-[18px]">sample name</p>
+              <Pencil
+                color="black"
+                size={18}
+                onClick={() => setEditing(true)}
+              />
+            </div>
+          ) : (
+            <form className="flex gap-2 items-center max-w-full cursor-pointer">
+              <input
+                type="text"
+                placeholder="sample name"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                ref={inputRef}
+                className="bg-transparent border-1 border w-full"
+              />
+            </form>
+          )}
 
           {/**OPTIONS AVAILABLE */}
           <div className="text-gray-700 flex flex-col gap-4">
-            <Link className="flex gap-2" href={"/archives"}>
+            <Link className="flex gap-2" href={"/projects"}>
               <FolderClosed />
               <span>My Archive</span>
             </Link>
-
-            <div
-              className="flex gap-2 cursor-pointer"
-              onClick={() => fileRef?.current?.click()}
-            >
-              <FilePlus2 />
-              <span>Insert new document</span>
-            </div>
-            {/**HIDDEN INPUT TO OPEN FILE EXPLORER WHEN CLICKING THIS */}
-            <input
-              type="file"
-              ref={fileRef}
-              className="hidden"
-              onChange={handleFileChange}
-              accept=".pdf"
-            />
           </div>
         </div>
       </div>
@@ -106,7 +118,7 @@ return (
           animate={menuClick ? "clicked" : "notclicked"}
           variants={menuVariants}
           transition={{ type: "tween", delay: 0.1, ease: "backInOut" }}
-          className={`w-[220px] rounded-lg absolute top-0 border bg-white z-50 h-[680px]`}
+          className={`w-[200px] rounded-lg absolute top-0 border bg-white z-50 h-[680px]`}
         >
           <X
             className="absolute right-2 top-2"
@@ -116,37 +128,36 @@ return (
 
           {/**DOCUMENT NAME */}
           <div className="mt-[45px] mx-2">
-            <div className="flex gap-2 items-center">
-              <p className='text-gray-500'>Doc name</p>
-              <Pencil 
-                
-              />
-            </div>
+            {!editing ? (
+              <div className="flex gap-2 max-w-full items-center cursor-pointer">
+                <p className="text-[18px]">sample name</p>
+                <Pencil
+                  color="black"
+                  size={18}
+                  onClick={() => setEditing(true)}
+                />
+              </div>
+            ) : (
+              <form className="flex gap-2 items-center max-w-full cursor-pointer">
+                <input
+                  type="text"
+                  placeholder="sample name"
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  ref={inputRef}
+                  className="bg-transparent border-1 border w-full"
+                />
+              </form>
+            )}
           </div>
 
-          <div className="mt-[160px] h-auto w-full px-2">
+          <div className="mt-[50px] h-auto w-full px-2">
             {/**OPTIONS AVAILABLE */}
-            <div className=" flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
               <Link className="flex gap-2" href={"/archives"}>
                 <FolderClosed />
                 <span>My Archive</span>
               </Link>
-
-              <div
-                className="flex gap-2 cursor-pointer"
-                onClick={() => fileRef?.current?.click()}
-              >
-                <FilePlus2 />
-                <span>Insert new document</span>
-              </div>
-              {/**HIDDEN INPUT TO OPEN FILE EXPLORER WHEN CLICKING THIS */}
-              <input
-                type="file"
-                ref={fileRef}
-                className="hidden"
-                onChange={handleFileChange}
-                accept=".pdf"
-              />
             </div>
           </div>
         </motion.div>
@@ -154,7 +165,7 @@ return (
         <motion.div
           className={`w-[250px] absolute  ${
             chatClick && !menuClick ? "right-0" : "right-[-400px]"
-          } duration-200 ease-linear top-0 border bg-white rounded-lg z-50 h-[680px]`}
+          } duration-200 bg-[#f8f6fa] ease-linear top-0 border rounded-lg z-50 h-[680px]`}
         >
           <X
             className="absolute right-2 top-2"
@@ -163,8 +174,8 @@ return (
           />
           {/**TOP */}
           <div className="flex gap-2 items-center m-4">
-            <Bot size={24} className="" />
-            <span className="text-[20px]">Chat</span>
+             <Bot size={24} className="text-violet-600" />
+             <span className="text-[20px] text-violet-700">Chat</span>
           </div>
 
           <div className="absolute bottom-1 w-full max-h-[650px] overflow-y-auto h-auto px-2 py-4">
@@ -214,11 +225,11 @@ return (
       </div>
 
       {/**CHAT BOX */}
-      <div className="border-[#C0BCD1] relative hidden md:block border md:w-[500px] lg:w-[520px] min-h-screen">
+      <div className="border-[#C0BCD1] bg-[#f8f6fa] relative hidden md:block border md:w-[480px] min-h-screen">
         {/**TOP */}
         <div className="flex gap-2 items-center m-4">
-          <Bot size={24} className="" />
-          <span className="text-[20px]">Chat</span>
+          <Bot size={24} className="text-violet-600" />
+          <span className="text-[20px] text-violet-700">Chat</span>
         </div>
 
         <div className="absolute bottom-1 w-full max-h-[650px] overflow-y-auto h-auto px-2 py-4">
@@ -233,8 +244,10 @@ return (
               <p>YOUR CHAT</p>
             </div>
 
-            <div className="bg-[#5484c4] self-end w-fit p-2 rounded-md text-white">
-              <p>YOUR CHAT</p>
+            <div className="bg-[#5484c4] max-w-[400px] self-end w-fit p-2 rounded-md text-white">
+              <span className="text-start overflow-wrap break-word overflow-wrap">
+                YOUR CHAT
+              </span>
             </div>
           </div>
 
@@ -255,4 +268,4 @@ return (
       </div>
     </main>
   </div>
-)}
+);}

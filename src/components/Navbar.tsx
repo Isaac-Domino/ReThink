@@ -46,11 +46,11 @@ const Navbar = () => {
       <div>
         <Link href={"/"}>
           <Image
-            width={45}
-            height={45}
+            width={35}
+            height={35}
             alt={"Logo"}
             src={"/Logo white.png"}
-            className="w-[40px] h-auto md:w-auto"
+            className=""
           />
         </Link>
       </div>
@@ -58,19 +58,6 @@ const Navbar = () => {
       <div className="flex">
         {/**USER ALREADY LOGGED IN */}
         <SignedIn>
-          {/**{router.pathname.includes("/about") ? (
-            <LinkButton 
-            variant={"link"} 
-            href={"/"} text="Home"  
-            className="font-light text-[16px] md:text-[18px]"/>
-          ) : (
-            <LinkButton
-              variant={"link"}
-              href={"/about"}
-              text="About"
-              className="font-light text-[16px] md:text-[18px]"
-            />
-          )} */}
           <div className="flex gap-4 items-center justify-between">
             <UserButton 
                  afterSignOutUrl="/" 
@@ -85,39 +72,14 @@ const Navbar = () => {
                 }}
                 showName={true}
             />
-
-           {/* <Link href={"/"}>
-              <Button
-                variant={"default"}
-                className="text-white bg-violet-400 hover:bg-white hover:text-violet-400 transition-all duration-150 px-3 py-1"
-                onClick={() => signOut(() => router.push("/"))}
-              >
-                Logout
-              </Button>
-            </Link> */}
           </div>
         </SignedIn>
 
         {/* User not authenticated */}
         <SignedOut>
           <div className="hidden text-white sm:block">
-            {router.pathname.includes("/about") ? (
-              <LinkButton
-                variant={"link"}
-                href={"/"}
-                text="Home"
-                className="font-light text-[16px] md:text-[18px]"
-              />
-            ) : (
-              <LinkButton
-                variant={"link"}
-                href={"/about"}
-                text="About"
-                className="font-light text-[16px] md:text-[18px]"
-              />
-            )}
             <LinkButton
-              className="font-light text-[16px] md:text-[18px]"
+              className="font-normal text-[16px] md:text-[18px]"
               href={"/login"}
               text="Log in"
               variant={"link"}
