@@ -9,6 +9,7 @@ import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { extractRouterConfig } from 'uploadthing/server';
 import { ourFileRouter } from "./api/uploadthing/core"
 import { Toaster } from "sonner"
+import Footer from "./components/footer"
 
 /**DEFAULT FONT */
 const rubik = Rubik({
@@ -31,6 +32,7 @@ export default function RootLayout({
                      routerConfig={extractRouterConfig(ourFileRouter)}
                      />
                            {children}
+                          <Footer />
                           <Toaster 
                             position="top-center"
                             closeButton={true}

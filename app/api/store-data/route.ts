@@ -4,7 +4,7 @@ import { redirect } from "next/dist/server/api-utils";
 import { z } from 'zod';
 import { NextApiRequest, NextApiResponse } from "next";
 import { auth, currentUser } from "@clerk/nextjs";
-import { loadPDFFromEdgeStore } from "@/lib/pinecone";
+import { loadFileUrlToPinecone } from "@/lib/pinecone";
 
 const xata = getXataClient();
 
@@ -20,11 +20,11 @@ export async function POST(req: Request, res: Response) {
     const { userId } = auth();
 
     if(!userId) {
-      return NextResponse.json({message: "User not authenticated"}, { status: 401 });
+      return NextResponse.json({ message: "User not authenticated" }, { status: 401 });
     }
      try
       {
-          const { name,  url, file_key } = await req.json();
+          const { name, url, file_key } = await req.json();
         
           documentData.safeParse({
            userId: userId,
@@ -40,14 +40,11 @@ export async function POST(req: Request, res: Response) {
             file_key: file_key
          })
 
-         if(result) {
-            //await loadPDFFromEdgeStore(result);
-            //console.log('SUCCESSFULLY LOAD PDF FROM EDGESTORE');
+         if(result.file_key) {
+           await loadFileUrlToPinecone(file_key);
          }
            console.log("Successfully created data to the database", result);  
-           //return NextResponse.json(result, { status: 200});
-
-           return NextResponse.json(result, {status: 200})
+           return NextResponse.json(result , {status: 200})
          }
       catch(err) {
       console.log(err)
@@ -57,13 +54,11 @@ export async function POST(req: Request, res: Response) {
 }
 
 
-
 export async function PUT(req: Request, res: Response) {
   const { userId } = auth();
 
     if(!userId) {
       return NextResponse.json({message: "User not authenticated"}, { status: 401 });
-  
     }
 
     try { 

@@ -6,6 +6,7 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import { useResizeObserver } from '@wojtekmaj/react-hooks'
 import { savedDataDbType } from '../../types';
+import { Loader2 } from 'lucide-react';
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
@@ -47,7 +48,7 @@ export default function DocumentFile({ selectedFile }: { selectedFile: any}) {
      <Document
        file={selectedFile}
        onLoadSuccess={onDocumentLoadSuccess}
-       loading={() => <p>Loading document</p>}
+       loading={<Loader2 className='animate-spin m-auto text-center duration-200 text-violet-400'/>}
        className={'absolute top-0 left-0'}
        options={options}
     >

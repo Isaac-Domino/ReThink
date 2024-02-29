@@ -2,13 +2,12 @@
 'use client'
 
 import Link from 'next/link'
-import React, { ChangeEvent, FormEvent,useEffect,useState } from 'react'
-import { Inbox, Loader2, Plus, Trash } from 'lucide-react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { Plus  } from 'lucide-react'
 import Image from 'next/image'
 import Archive from '@/components/archive'
 import { UserButton, useAuth, useUser } from '@clerk/nextjs'
 import { toast } from 'sonner';
-
 import axios from 'axios';
 import {
   Dialog,
@@ -21,13 +20,15 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { redirect, useRouter } from 'next/navigation'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { useToast } from '@/components/ui/use-toast'
+import {  useRouter } from 'next/navigation'
+import { useMutation } from '@tanstack/react-query'
+
 
 
 import { UploadButton, UploadDropzone } from "@/lib/uploadthing"; 
 import "@uploadthing/react/styles.css";
+import { dark } from '@clerk/themes'
+import { Button } from '@/components/ui/button'
 
 type documentType = {
   userId: string | null | undefined,
@@ -37,13 +38,12 @@ type documentType = {
   file_key: string
 }
 
-
 export function formatURLparams(url: string ) { 
    const lastIndex = url?.substring(0, url.lastIndexOf('.'));
    return lastIndex;
 }
 
-export default function archives() {
+export default function Projects() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { isSignedIn, user, } = useUser();
     const { userId } = useAuth();
@@ -58,11 +58,10 @@ export default function archives() {
    })
 
     const { mutate, isPending } = useMutation({
-      mutationFn: async (item: documentType) => axios.post('/api/sample', item),
+      mutationFn: async (items: documentType) => axios.post('/api/store-data', items),
       onError: (err) => {
         console.log(err.message);
       },
-      
       onSuccess: () => {
        console.log('Success');
       }
@@ -79,34 +78,6 @@ export default function archives() {
     
   console.log('DATA: ', data)
   
-   async function handleSubmit (e: FormEvent<HTMLFormElement>) {
-      e.preventDefault(); 
-      console.log("submitted: ", data)
-
-       try {
-           setUploading(true);
-            console.log("meow", data);
-            if (!data) {
-              console.log("Something went wrong");
-              return;
-            }
-            
-         mutate(data, {
-           onSuccess: (result) => { 
-             
-             router.push(`/main/${result.data.id}`)
-             console.log('RESULT FROM MUTATION', result.data)
-           },
-           onError: (err) => {
-              console.log(err)
-           }
-         })
-      }
-      catch(error) {
-        console.log(error);
-      }
-  }
-
    function handleDataValue(e: ChangeEvent<HTMLInputElement>) {
       const { name, value } = e.target
       const formattedValue = value.replace(/[^a-zA-Z_\-]/g, '');  //empty string on numbers and other characters that are not hypens and underscores
@@ -117,31 +88,42 @@ export default function archives() {
    }
  
   return (
-    <div className="px-5 md:px-[55px] w-full py-4 md:py-[24px]">
-      <nav className="flex justify-between items-center">
-        <Image width={50} height={50} src={"/Logo.png"} alt={"Logo"} />
+    <div className="px-5 md:px-[55px] w-full min-h-[1000px] py-4 md:py-[24px]">
+      <nav className="flex justify-between px-2 md:px-8 items-center">
+        <Link href={"/"}>
+          <Image width={40} height={40} src={"/Logo.png"} alt={"Logo"} />
+        </Link>
 
         {/**USER AUTHENTICATION */}
         <ul className="flex gap-4 items-center">
-          <li className="font-medium text-[18px] md:text-[22px] text-primaryColor">
+          <li className="font-medium text-[18px] md:text-[20px] text-primaryColor">
             <Link href={"/"}>Home</Link>
           </li>
 
           {isSignedIn || user ? (
-            <UserButton />
+            <UserButton 
+              afterSignOutUrl="/projects"
+              appearance={{
+                baseTheme: dark,
+              }}
+              
+            />
           ) : (
-            <button className="bg-gradient-to-r from-violet-900 to-purple-500 hover:bg-violet-600 text-white px-3 rounded-sm py-2 ">
+            <Button
+              variant={"default"}
+              className="bg-gradient-to-r hover:opacity-80 duration-150 ease-in-out from-violet-500 to-purple-500 hover:bg-violet-600 text-white px-3 rounded-sm py-2 "
+            >
               <Link href={"/login"}>Login</Link>
-            </button>
+            </Button>
           )}
         </ul>
       </nav>
 
       {/**ARCHIVES */}
-      <div className="border-gray-20 shadow-lg border-[1px] rounded-md relative w-full min-h-screen mt-[50px] md:mt-[90px] mx-auto">
+      <div className="border-gray-20 max-w-[1100px] shadow-lg border-[1px] rounded-md relative w-full min-h-screen mt-[30px] md:mt-[60px] mx-auto">
         <div className="flex w-auto mt-[50px] mx-[10px] my-[15px] p-2 md:p-6 gap-8 items-start flex-col">
           <h3 className="self-center sm:text-[25px] md:text-[27px]">
-            Your archives
+            Your Projects
           </h3>
 
           {/**ARCHIVES */}
@@ -157,7 +139,7 @@ export default function archives() {
                         !isSignedIn || !user
                           ? "bg-gray-500"
                           : "bg-[#4B3F94] hover:bg-violet-700"
-                      } text-center w-[50px] h-[50px] sm:w-[80px] sm:h-[80px] duration-200 ease-in-out text-white rounded-md text-[18px]`}
+                      } text-center w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] duration-200 ease-in-out text-white rounded-md text-[18px]`}
                       type="button"
                     >
                       <Plus size={32} className="m-auto" />
@@ -169,7 +151,7 @@ export default function archives() {
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
 
-                  <form onSubmit={handleSubmit}>
+                  <form >
                     <DialogHeader>
                       <DialogTitle>Create new document</DialogTitle>
                       <DialogDescription>
@@ -185,36 +167,39 @@ export default function archives() {
                         </Label>
                         <Input
                           id="name"
-                          value={data?.name}
+                          value={data.name}
                           onChange={handleDataValue}
                           name="name"
                           className="col-span-3"
                         />             
                       </div>
-                      {data.name.length < 6 && <p className='w-full text-center font-light text-[12px] text-red-500'>The length of document must be 6 characters long and with no special characters or numbers</p>}
-              
+                    {data.name.length < 6 && <p 
+                    className='w-full text-center font-medium text-[12px] text-red-500'>The length of document name must be 6 
+                    characters long with no special characters or numbers</p>}
+
+
                       {/** DROP ZONE FILES**/}
                       <div className="p-2 bg-white rounded-xl">
                         <div>
                           {data.name.length >= 6  && 
                           <UploadDropzone
                             endpoint="documentUploader"
-                          
+                            content={{
+                              allowedContent: "Maximum file size is 32mb"
+                            }}
                             onClientUploadComplete={(res) => {
                               // Do something with the response
                               console.log("File key: ", res[0].key);
-                              
-                              toast.loading("Please wait....")
+                                                          
                               mutate({
                                 ...data, // Preserve other properties from the current state
                                 url: res[0].url,
                                 file_key: res[0].key
                               }, 
-                                
                               {
                                 onSuccess: (result) => { 
                                   toast.success("Successful")
-                                  router.push(`/main/${formatURLparams(res[0].key)}`)
+                                  router.push(`/main/${result.data.id}`)
                                   console.log('RESULT FROM MUTATION', result.data)
                                 },
                                 onError: (err) => {
@@ -223,16 +208,15 @@ export default function archives() {
                               })
                             }}
                             onUploadError={(error: Error) => {
-                              // Do something with the error.
                               toast.error(`ERROR! ${error.message}`);
                             }}  
                             
                           /> }
-                        </div>
+                         </div>
                       </div>
                     </div>
                     <DialogFooter>
-                      <p className='text-center w-full text-gray-400 font-medium text-[12px]'>Upload the document to proceed</p>
+                      <p className='text-center w-full text-gray-400 font-medium text-[12px]'>Upload document (pdf) to proceed</p>
                     </DialogFooter>
                   </form>
                 </DialogContent>
@@ -240,7 +224,7 @@ export default function archives() {
 
               {/**ARCHIVES LISTS */}
               {isSignedIn || user ? (
-                <div className="border scroll-auto w-auto min-w-full max-w-[1180px] min-h-[700px]">
+                <div className="border scroll-auto w-auto min-w-full max-w-[1180px] min-h-[550px]">
                   {/**archive items */}
                   <div className="h-auto w-fit min-w-max">
                     {/**START MAPPING ITEMS HERE */}
@@ -260,7 +244,7 @@ export default function archives() {
         <Image
           src={"/book.svg"}
           alt="book avatar"
-          width={100}
+          width={90}
           height={50}
           quality={100}
           className="absolute top-1 right-2 w-[50px] md:w-auto"
@@ -269,11 +253,11 @@ export default function archives() {
         <Image
           src={"/woman-with-book.svg"}
           alt="book avatar"
-          width={100}
+          width={90}
           height={100}
           quality={100}
           sizes="100vw"
-          className="absolute left-2 bottom-0 w-[70px] md:w-auto"
+          className="absolute left-2 bottom-0 "
         />
       </div>
     </div>

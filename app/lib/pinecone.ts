@@ -1,40 +1,48 @@
+import { utapi } from '@/server/uploadthing';
 import { Pinecone } from '@pinecone-database/pinecone';
 import axios from 'axios';
 import fs from 'fs';
+import { UTApi } from 'uploadthing/server';
+import { downloadFile } from './downloadFile';
+import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
-const pc = new Pinecone({
+const pinecone = new Pinecone({
   apiKey: process.env.PINECONE_API_KEY!,
 });
-const index = pc.index('rethink');
 
-export async function loadPDFFromEdgeStore(result: any) {
-    'download pdf from edge store'
+const index = pinecone.index('rethink');
 
-    try {
-        // Fetch the PDF file from the provided URL
-        //const response = await axios.get('', { responseType: 'stream' });
-
-        // Generate a unique filename
-        const document = `/tmp/${Date.now()}.pdf`;
-        // Create a write stream to save the PDF file
-        const writer = fs.createWriteStream(document);
-
-        // Pipe the response stream to the writer
-        result.file_link.pipe(writer);
-
-        // Wait for the writer to finish writing the file
-        await new Promise((resolve, reject) => {
-            writer.on('finish', resolve);
-            writer.on('error', reject);
-        });
-
-      console.log('PDF file downloaded and saved successfully:', document);
-    } catch (error) {
-      console.error('Error downloading PDF file:', error);
-    }
+type PDFPage = {
+  pageContent: string;
+  metadata: {
+    loc: { pageNumber: number };
+  };
 }
 
-//TOMORROW TODOS:
-/*
-   1. POSTING DATA FROM ARCHIVES THEN STORE DOCUMENT AND CREATE NEW DOC USING WRITEFILESYNC 
-*/
+export async function loadFileUrlToPinecone(file_key: string) {
+  try {
+    const filePath = await downloadFile(file_key);
+
+   
+    const loader = new PDFLoader(filePath, {
+       parsedItemSeparator: '',
+       splitPages: true
+    });
+    const pages = (await loader.load()) as PDFPage[];
+   
+    const textSplitter = new RecursiveCharacterTextSplitter({
+      chunkSize: 1000,
+      chunkOverlap: 200,
+  });
+  
+  
+    const splitPages = await textSplitter.splitDocuments(pages);
+    console.log("FILE SPLITTER: ", pages);
+   } 
+ catch (error) {
+    console.error('Error loading file to Pinecone:', error);
+}
+}
+
+
