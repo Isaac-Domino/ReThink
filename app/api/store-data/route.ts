@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getXataClient } from "../../../src/xata";
-import { redirect } from "next/dist/server/api-utils";
 import { z } from 'zod';
-import { NextApiRequest, NextApiResponse } from "next";
-import { auth, currentUser } from "@clerk/nextjs";
+import { auth,  } from "@clerk/nextjs";
 import { loadFileUrlToPinecone } from "@/lib/pinecone";
 
 const xata = getXataClient();
@@ -47,9 +45,8 @@ export async function POST(req: Request, res: Response) {
            return NextResponse.json(result , {status: 200})
          }
       catch(err) {
-      console.log(err)
-
-      return NextResponse.json(err)
+        console.log(err)
+        return NextResponse.json(err)
      }
 }
 

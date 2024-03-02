@@ -3,5 +3,11 @@ Todo:
   ✔ Update the styles and components @done(24-02-29 15:13)
   ✔ Update the dynamic in main @done(24-02-29 21:51)
   ☐ Backend continue 
-  ☐ Stale time in useQuery
-  
+  ✔ Stale time in useQuery @done(24-03-01 14:31)
+  ✔ Integrate HuggingFace inference for embedding @done(24-03-01 21:40)
+  ☐ Change the response value in projects only returning id in new column 
+  ☐ useChat ai from vercel sdk
+  ☐ Create Chats component 
+  ☐ Message stylings (role, cn)
+  ☐ create /api/chat endpoint for initiating chat to ai 
+

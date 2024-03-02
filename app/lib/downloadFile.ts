@@ -1,6 +1,6 @@
 import { utapi } from "@/server/uploadthing"
 import axios from "axios";
-import fs, { mkdir } from 'fs'
+import fs from 'fs'
 import path from 'path';
 import { mkdirp } from 'mkdirp';
 

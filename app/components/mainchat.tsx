@@ -15,6 +15,7 @@ import axios from 'axios'
 import { savedDataDbType } from '../../types'
 import { toast } from 'sonner'
 import { revalidatePath } from 'next/cache'
+import Chats from './chats'
 
 
 
@@ -29,6 +30,7 @@ export default function Main({ data }: { data: savedDataDbType}) {
   const [editing, setEditing] = useState<boolean>(false);
   const [newName, setNewName] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null!);
+
 
 
   const {mutate, isPending } = useMutation({
@@ -85,8 +87,7 @@ function handleChangeName(e: React.FormEvent) {
   return (
     <div className="w-full min-w-full overflow-x-hidden h-screen md:min-h-screen">
       <NavbarMain />
-
-      <main className="flex  flex-col md:flex-row items-start">
+      <main className="flex flex-col md:flex-row w-full items-start">
         {/**SIDEBAR */}
         <div className="border  px-4 py-4 hidden md:block min-w-[200px] w-[250px] h-screen">
           {/**NAME OF THE DOCUMENT */}
@@ -121,8 +122,8 @@ function handleChangeName(e: React.FormEvent) {
           </div>
         </div>
 
-        {/**FOR SMALLER SCREENS */}
-        <div className="flex w-full  relative mb-2 justify-between py-4 px-2 md:hidden  items-center gap-4">
+         {/**FOR SMALLER SCREENS */}
+         <div className="flex w-full relative mb-2 justify-between py-4 px-2 md:hidden  items-center gap-4">
           <Menu
             className={`md:hidden block ${menuClick ? "invisible" : "visible"}`}
             size={32}
@@ -258,40 +259,9 @@ function handleChangeName(e: React.FormEvent) {
             <span className="text-[20px] text-violet-700">Chat</span>
           </div>
 
-          <div className="absolute bottom-1 w-full max-h-[650px] overflow-y-auto h-auto px-2 py-4">
-            <div className="flex flex-col gap-[24px] w-full">
-              {/**AI CHAT */}
-              <div className="bg-[#8768a5] text-white w-fit p-2 rounded-md">
-                <p>AI CHAT</p>
-              </div>
-
-              {/**YOUR CHAT */}
-              <div className="bg-[#5484c4] self-end w-fit p-2 rounded-md text-white">
-                <p>YOUR CHAT</p>
-              </div>
-
-              <div className="bg-[#5484c4] max-w-[400px] self-end w-fit p-2 rounded-md text-white">
-                <span className="text-start overflow-wrap break-word overflow-wrap">
-                  YOUR CHAT
-                </span>
-              </div>
-            </div>
-
-            {/**USER INPUTS HERE */}
-            <div className="flex mt-[45px] items-center gap-2 min-w-full">
-              <input
-                type="text"
-                className="border-accentColor bg-white focus:outline-accentColor lg:flex-1 border rounded-full md:w-[160px] lg:w-[265px] h-[50px] indent-3"
-                placeholder="Ask any question"
-              />
-              <Send
-                color="#ffff"
-                size={32}
-                className="bg-secondaryColor md:w-[60px] lg:w-[40px] lg:h-auto rounded-lg p-2 hover:bg-[#5C87C7] cursor-pointer duration-200 ease-in-out"
-              />
-            </div>
-          </div>
-        </div>
+          {/**CHAT COMPLETION  */}
+             <Chats />
+        </div>      
       </main>
     </div>
   );
