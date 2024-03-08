@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const webpack = require("webpack");
+const webpack = require("webpack"); 
 
 const nextConfig = {
 
@@ -9,6 +9,14 @@ const nextConfig = {
 
     return config;
    },
+   images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'img.clerk.com',
+      },
+    ],
+  },
 }
 
 module.exports = nextConfig

@@ -197,10 +197,10 @@ export default function Projects() {
                                 file_key: res[0].key
                               }, 
                               {
-                                onSuccess: (result) => { 
+                                onSuccess: (result) => {  //result from the Response api
                                   toast.success("Successful")
-                                  router.push(`/main/${result.data.id}`)
-                                  console.log('RESULT FROM MUTATION', result.data)
+                                  router.push(`/main/${result.data}`)
+                                  console.log("result: ", result)
                                 },
                                 onError: (err) => {
                                    toast.error("Error "+ err.message);

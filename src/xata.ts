@@ -14,12 +14,19 @@ const tables = [
     columns: [
       { name: "name", type: "string", notNull: true, defaultValue: "null" },
       { name: "user_id", type: "string" },
-      { name: "document", type: "file[]" },
-      { name: "uid", type: "string" },
-      { name: "document_vector", type: "vector", vector: { dimension: 1536 } },
       { name: "file_link", type: "string" },
       { name: "file_key", type: "string" },
+      { name: "chat", type: "link", link: { table: "chats" } },
     ],
+  },
+  {
+    name: "chats",
+    columns: [
+      { name: "messages", type: "string" },
+      { name: "role", type: "string" },
+      { name: "document_id", type: "string" },
+    ],
+    revLinks: [{ column: "chat", table: "document" }],
   },
 ] as const;
 
@@ -35,10 +42,14 @@ export type ResponseRecord = Response & XataRecord;
 export type Document = InferredTypes["document"];
 export type DocumentRecord = Document & XataRecord;
 
+export type Chats = InferredTypes["chats"];
+export type ChatsRecord = Chats & XataRecord;
+
 export type DatabaseSchema = {
   questions: QuestionsRecord;
   Response: ResponseRecord;
   document: DocumentRecord;
+  chats: ChatsRecord;
 };
 
 const DatabaseClient = buildClient();

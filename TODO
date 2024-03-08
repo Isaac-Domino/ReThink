@@ -5,7 +5,7 @@ Todo:
   ☐ Backend continue 
   ✔ Stale time in useQuery @done(24-03-01 14:31)
   ✔ Integrate HuggingFace inference for embedding @done(24-03-01 21:40)
-  ☐ Change the response value in projects only returning id in new column 
+  ✔ Change the response value in projects only returning id in new column @done(24-03-04 08:26)
   ☐ useChat ai from vercel sdk
   ☐ Create Chats component 
   ☐ Message stylings (role, cn)

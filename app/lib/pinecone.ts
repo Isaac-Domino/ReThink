@@ -5,7 +5,7 @@ import {  Document } from '@pinecone-database/doc-splitter'
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { convertToAscii } from './convertToAscii';
 import md5 from 'md5';
-import { getEmbeddingsFromHG } from './embeddings';
+import { getEmbeddings, getEmbeddingsFromHG } from './embeddings';
 
 
 const pinecone = new Pinecone({
@@ -48,7 +48,7 @@ async function prepareDocument(page: PDFPage) {
 
 async function embedDocument(doc: Document) {
   try {
-    const embeddings = await getEmbeddingsFromHG(doc.pageContent);
+    const embeddings = await getEmbeddings(doc.pageContent);
     const hash = md5(doc.pageContent);
 
     return {

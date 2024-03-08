@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import {  usePathname } from "next/navigation";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -56,7 +55,7 @@ export default function Footer() {
           : "flex"
       }`}
     >
-      <div className="w-full flex flex-col gap-4 sm:gap-0 sm:flex-row sm:justify-between md:items-center">
+      <div className="w-full flex flex-col gap-4 sm:gap-0 md:flex-row md:justify-between md:items-center">
         <div className="flex flex-col gap-4 md:gap-[35px] items-center md:items-start">
           <div className="flex flex-row items-center gap-2">
             <Link href={"/"} className="flex gap-2">

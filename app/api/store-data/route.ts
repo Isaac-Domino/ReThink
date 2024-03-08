@@ -42,7 +42,7 @@ export async function POST(req: Request, res: Response) {
            await loadFileUrlToPinecone(file_key);
          }
            console.log("Successfully created data to the database", result);  
-           return NextResponse.json(result , {status: 200})
+           return NextResponse.json(result.id, {status: 200})
          }
       catch(err) {
         console.log(err)

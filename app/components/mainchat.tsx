@@ -32,7 +32,6 @@ export default function Main({ data }: { data: savedDataDbType}) {
   const inputRef = useRef<HTMLInputElement>(null!);
 
 
-
   const {mutate, isPending } = useMutation({
     mutationFn: async ({ item, id }: { item: string, id: string}) => axios.put('/api/store-data', { item, id }),
     
@@ -87,7 +86,7 @@ function handleChangeName(e: React.FormEvent) {
   return (
     <div className="w-full min-w-full overflow-x-hidden h-screen md:min-h-screen">
       <NavbarMain />
-      <main className="flex flex-col md:flex-row w-full items-start">
+      <main className="flex flex-row w-full items-start">
         {/**SIDEBAR */}
         <div className="border  px-4 py-4 hidden md:block min-w-[200px] w-[250px] h-screen">
           {/**NAME OF THE DOCUMENT */}
@@ -260,7 +259,7 @@ function handleChangeName(e: React.FormEvent) {
           </div>
 
           {/**CHAT COMPLETION  */}
-             <Chats />
+             <Chats fileKey={data?.file_key}/>
         </div>      
       </main>
     </div>
