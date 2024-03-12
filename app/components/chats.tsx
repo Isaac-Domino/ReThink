@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { useAuth, currentUser, useUser } from '@clerk/nextjs';
-import axios from 'axios';
+
 
 
 const Chats = ({ fileKey }: { fileKey: string | null}): JSX.Element => {
@@ -41,7 +41,7 @@ const Chats = ({ fileKey }: { fileKey: string | null}): JSX.Element => {
                 )}
               >
                 <div>
-                  <p className="text-sm">{m.content}</p>
+                  <p className="text-md">{m.content}</p>
                 </div>
               </div>
 

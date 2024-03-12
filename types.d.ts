@@ -1,16 +1,17 @@
 import { XataArrayFile } from "@xata.io/client"
 
 export type savedDataDbType  = {
-    id: string;
-    document: XataArrayFile[] | null | undefined; 
-    file_link: string | null | undefined;
+    id: string,
+    name: string,
+    document: XataArrayFile[] | null | undefined,
+    thumbnail_url: string | null,
+    file_link: string | null | undefined,
     file_key: string | null,
-    name: string;
-    user_id: string;
-    document_vector: number[];
+    user_id: string,
+    document_vector: number[],
     xata: {
-      createdAt: Date;
-      updatedAt: Date;
-      version: number;
+      createdAt: string,
+      updatedAt: string,
+      version: number,
     };
 } 

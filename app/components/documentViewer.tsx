@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useCallback } from 'react'
-import { pdfjs, Document, Page } from 'react-pdf'
+import { pdfjs, Document, Page, PageProps } from 'react-pdf'
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import { useResizeObserver } from '@wojtekmaj/react-hooks'
@@ -24,6 +24,7 @@ export default function DocumentFile({ selectedFile }: { selectedFile: any}) {
     const [numPages, setNumPages] = useState(null);
     const [containerWidth, setContainerWidth] = useState<number>();
     const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
+    
 
     //automatically resizing
     const onResize = useCallback<ResizeObserverCallback>((entries) => {

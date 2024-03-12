@@ -67,7 +67,8 @@ async function embedDocument(doc: Document) {
 }
 
 
-export async function loadFileUrlToPinecone(file_key: string) {
+
+export async function saveVectorToPinecone(file_key: string) {
   try {
     const filePath = await downloadFile(file_key);
 

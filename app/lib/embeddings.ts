@@ -22,9 +22,7 @@ const hf = new HfInference(process.env.HF_ACCESS_TOKEN);
       throw error;
    }
 }
-
 */
-
 //HUGGINGFACE INFERENCE 
 export async function getEmbeddingsFromHG(text: string) {
     try {
@@ -42,6 +40,8 @@ export async function getEmbeddingsFromHG(text: string) {
     }
 }
 
+
+
 const config = new Configuration({
    apiKey: process.env.OPENAI_API_KEY_2,
  });
@@ -51,7 +51,7 @@ const config = new Configuration({
  export async function getEmbeddings(text: string) {
    try {
      const response = await openai.createEmbedding({
-       model: "text-embedding-small",
+       model: "text-embedding-ada-002",
        input: text.replace(/\n/g, " "),
      });
      const result = await response.json();

@@ -53,7 +53,7 @@ export async function POST (req: Request) {
   try {
     
     const userQuery = messages[messages.length - 1].content;
-    const relevantDocuments = await getDocumentsFromPinecone(userQuery, embed.embeddings as number[]);
+    const relevantDocuments = await getDocumentsFromPinecone(embed.embeddings as number[]);
 
     const chatHistory = messages.map((message: any) => ({
         message: message.content,
@@ -90,7 +90,7 @@ export async function POST (req: Request) {
  */
 }
 
-async function getDocumentsFromPinecone(query: string, embed: number[]) {
+async function getDocumentsFromPinecone(embed: number[]) {
   // Query Pinecone to retrieve relevant documents based on the user's query
   // Replace this with your actual Pinecone query logic
   const relevantDocuments = await pc.index('rethink').query({

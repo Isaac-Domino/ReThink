@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { motion } from "framer-motion"
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
-import { File } from 'buffer'
 
 import DocumentFile from './documentViewer'
 import { useMutation } from '@tanstack/react-query'
@@ -88,7 +87,7 @@ function handleChangeName(e: React.FormEvent) {
       <NavbarMain />
       <main className="flex flex-row w-full items-start">
         {/**SIDEBAR */}
-        <div className="border  px-4 py-4 hidden md:block min-w-[200px] w-[250px] h-screen">
+        <div className="border  px-4 py-4 block min-w-[200px] w-[250px] h-screen">
           {/**NAME OF THE DOCUMENT */}
           <div className="h-full py-3 flex items-start justify-between flex-col">
             {!editing ?  
@@ -122,7 +121,7 @@ function handleChangeName(e: React.FormEvent) {
         </div>
 
          {/**FOR SMALLER SCREENS */}
-         <div className="flex w-full relative mb-2 justify-between py-4 px-2 md:hidden  items-center gap-4">
+         <div className=" w-full relative mb-2 justify-between py-4 px-2 hidden  items-center gap-4">
           <Menu
             className={`md:hidden block ${menuClick ? "invisible" : "visible"}`}
             size={32}
@@ -251,7 +250,7 @@ function handleChangeName(e: React.FormEvent) {
         </div>
 
         {/**CHAT BOX */}
-        <div className="border-[#C0BCD1] bg-[#f8f6fa] relative hidden md:block border md:w-[480px] min-h-screen">
+        <div className="border-[#C0BCD1] bg-[#f8f6fa] relative block border md:w-[480px] min-h-screen">
           {/**TOP */}
           <div className="flex gap-2 items-center m-4">
             <Bot size={24} className="text-violet-600" />

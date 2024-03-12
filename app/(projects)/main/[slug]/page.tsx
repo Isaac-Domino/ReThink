@@ -11,7 +11,7 @@ export default async function page({ params }: { params: { slug: string } }) {
     const data =  await getData(slug);
     const clientData = JSON.parse(JSON.stringify(data));
 
-    console.log('FILE KEY:', data?.file_key)
+    //console.log('FILE KEY:', data?.file_key)
 
     return (
          <Mainchat data={clientData} /> 

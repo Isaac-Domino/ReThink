@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getXataClient } from "../../../src/xata";
 import { z } from 'zod';
 import { auth,  } from "@clerk/nextjs";
-import { loadFileUrlToPinecone } from "@/lib/pinecone";
+import { saveVectorToPinecone } from "@/lib/pinecone";
+import { loadFileKeyToXataVector } from "@/lib/xata_vectors";
 
 const xata = getXataClient();
 
@@ -39,7 +40,7 @@ export async function POST(req: Request, res: Response) {
          })
 
          if(result.file_key) {
-           await loadFileUrlToPinecone(file_key);
+           await saveVectorToPinecone(file_key);
          }
            console.log("Successfully created data to the database", result);  
            return NextResponse.json(result.id, {status: 200})

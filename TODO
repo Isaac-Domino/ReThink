@@ -6,8 +6,9 @@ Todo:
   ✔ Stale time in useQuery @done(24-03-01 14:31)
   ✔ Integrate HuggingFace inference for embedding @done(24-03-01 21:40)
   ✔ Change the response value in projects only returning id in new column @done(24-03-04 08:26)
-  ☐ useChat ai from vercel sdk
-  ☐ Create Chats component 
-  ☐ Message stylings (role, cn)
-  ☐ create /api/chat endpoint for initiating chat to ai 
+  ✔ useChat ai from vercel sdk @done(24-03-11 20:53)
+  ✔ Create Chats component @done(24-03-11 20:53)
+  ✔ Message stylings (role, cn) @done(24-03-11 20:53)
+  ✔ create /api/chat endpoint for initiating chat to ai @done(24-03-11 20:53)
+  ☐ add user's projects to /projects
 

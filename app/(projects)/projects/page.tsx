@@ -122,7 +122,7 @@ export default function Projects() {
       {/**ARCHIVES */}
       <div className="border-gray-20 max-w-[1100px] shadow-lg border-[1px] rounded-md relative w-full min-h-screen mt-[30px] md:mt-[60px] mx-auto">
         <div className="flex w-auto mt-[50px] mx-[10px] my-[15px] p-2 md:p-6 gap-8 items-start flex-col">
-          <h3 className="self-center sm:text-[25px] md:text-[27px]">
+          <h3 className="self-center sm:text-[25px] md:text-[27px] text-[#5e5c69]">
             Your Projects
           </h3>
 
@@ -189,7 +189,7 @@ export default function Projects() {
                             }}
                             onClientUploadComplete={(res) => {
                               // Do something with the response
-                              console.log("File key: ", res[0].key);
+                              //console.log("File key: ", res[0].key);
                                                           
                               mutate({
                                 ...data, // Preserve other properties from the current state
@@ -224,9 +224,9 @@ export default function Projects() {
 
               {/**ARCHIVES LISTS */}
               {isSignedIn || user ? (
-                <div className="border scroll-auto w-auto min-w-full max-w-[1180px] min-h-[550px]">
+                <div className="border scroll-auto w-full max-w-[1180px] min-h-[550px]">
                   {/**archive items */}
-                  <div className="h-auto w-fit min-w-max">
+                  <div className="h-auto w-full min-w-max">
                     {/**START MAPPING ITEMS HERE */}
                     <Archive />
                   </div>
