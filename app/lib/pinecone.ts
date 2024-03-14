@@ -5,7 +5,7 @@ import {  Document } from '@pinecone-database/doc-splitter'
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { convertToAscii } from './convertToAscii';
 import md5 from 'md5';
-import { getEmbeddings, getEmbeddingsFromHG } from './embeddings';
+import { getEmbeddings } from './embeddings';
 
 
 const pinecone = new Pinecone({

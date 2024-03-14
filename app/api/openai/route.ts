@@ -2,6 +2,7 @@ import OpenAI from 'openai';
 import { Message, OpenAIStream, StreamingTextResponse } from 'ai';
 import { getContext } from '@/lib/context';
 import { NextResponse } from 'next/server';
+import { getXataClient } from '../../../src/xata';
  
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
@@ -10,9 +11,10 @@ const openai = new OpenAI({
  
 // IMPORTANT! Set the runtime to edge
 export const runtime = 'edge';
+const xata = getXataClient();
  
 export async function POST(req: Request) {
-  const { messages, fileKey } = await req.json();
+  const { messages, fileKey, userId, id } = await req.json();
  
   if(!fileKey) return NextResponse.json({ error: "missing file key"}, { status: 404});
   
@@ -22,8 +24,8 @@ export async function POST(req: Request) {
 
     const prompt = {
       role: "system",
-      content: `You are a helpful AI assistant that only answer related to the provided context.
-      AI is always friendly, kind, and inspiring, and he is eager to provide vivid and thoughtful responses to the user.
+      content: `You are a helpful AI assistant that can only answer related to the provided context.
+      AI is always friendly, kind, and inspiring, and he is eager to provide vivid and thoughtful responses, and suggestions to the user.
       AI has the sum of all knowledge in their brain, and is able to accurately answer nearly any question about the provided context from the document.
       START CONTEXT BLOCK
       ${context}
@@ -36,7 +38,7 @@ export async function POST(req: Request) {
     };
 
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-3.5-turbo-0125",
       max_tokens: 200,
       messages: [
         prompt,
@@ -45,10 +47,27 @@ export async function POST(req: Request) {
       stream: true,
     });
  
-  // Convert the response into a friendly text-stream
-  const stream = OpenAIStream(response);
-  // Respond with the stream
-  return new StreamingTextResponse(stream);
+    // Convert the response into a friendly text-stream
+   const stream = OpenAIStream(response, {
+     onStart: async () => {
+        await xata.db.chats.create({
+           user_id: userId,
+           role: 'user',
+           content: lastMessage.content,
+           document_id: id
+        })
+    },
+    onCompletion: async (completion) => {
+       await xata.db.chats.create({
+        user_id: userId,
+        role: 'assistant',
+        content: completion,
+        document_id: id
+     })
+    },
+   });
+   // Respond with the stream
+   return new StreamingTextResponse(stream);
   } catch (error) {
      console.log("ERROR", error);
   }

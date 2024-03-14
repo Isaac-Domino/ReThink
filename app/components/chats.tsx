@@ -1,27 +1,47 @@
 'use client'
 
-import { useChat } from 'ai/react';
+import { Message, useChat } from 'ai/react';
 import { Send } from 'lucide-react';
 import React from 'react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { useAuth, currentUser, useUser } from '@clerk/nextjs';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 
 
-const Chats = ({ fileKey }: { fileKey: string | null}): JSX.Element => {
-    const { input, handleSubmit, handleInputChange, messages, isLoading, data } = useChat( {
+const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): JSX.Element => {
+    const { userId } = useAuth();
+    const { user } = useUser()
+
+    const { data: chatdata, isLoading: loading, error } = useQuery({
+      
+      queryKey: ['chats', id],
+      queryFn: async () => {
+        const response = await axios.post<Message[]>("/api/getMessages", {
+          userId,
+          id
+        });
+        return response.data;
+      }
+   })
+
+    const { input, handleSubmit, handleInputChange, messages, isLoading, data } = useChat({
         api: '/api/openai',
         body: {
-          fileKey
+          fileKey,
+          userId,
+          id
         },
         onFinish: (res) => {
              toast.success(res.role);
              console.log("Successfully created chat");
-        }
+        },
+        initialMessages: chatdata || [],
     })
-     const { user } = useUser()
+
  
   
     return (

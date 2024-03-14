@@ -49,7 +49,7 @@ export default function Lists({ data }: { data: savedDataDbType}) {
 
   return (
     <Link
-      href={``}
+      href={`/main/${data.id}`}
       className="border flex items-center gap-8
        border-primaryColor px-4 py-2 
       max-w-auto h-auto min-h-[40px] rounded-lg 

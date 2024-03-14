@@ -23,8 +23,9 @@ const tables = [
   {
     name: "chats",
     columns: [
-      { name: "messages", type: "string" },
       { name: "role", type: "string" },
+      { name: "user_id", type: "string" },
+      { name: "content", type: "text" },
       { name: "document_id", type: "string" },
     ],
     revLinks: [{ column: "chat", table: "document" }],

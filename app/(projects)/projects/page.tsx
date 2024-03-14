@@ -2,7 +2,7 @@
 'use client'
 
 import Link from 'next/link'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent,  useState } from 'react'
 import { Plus  } from 'lucide-react'
 import Image from 'next/image'
 import Archive from '@/components/archive'
@@ -38,17 +38,11 @@ type documentType = {
   file_key: string
 }
 
-export function formatURLparams(url: string ) { 
-   const lastIndex = url?.substring(0, url.lastIndexOf('.'));
-   return lastIndex;
-}
-
 export default function Projects() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { isSignedIn, user, } = useUser();
     const { userId } = useAuth();
     const router = useRouter();
-    const [uploading, setUploading ] = useState<boolean>(false);
     const [data, setData] = useState<documentType>({
       userId: userId as string,
       name: '',
@@ -67,23 +61,22 @@ export default function Projects() {
       }
    })
 
-  useEffect(() => {
+ /* useEffect(() => {
     if (userId) {
       setData(prev => ({
         ...prev,
         userId: userId
       }));
     }
-  }, [userId]);
+  }, [userId]); */
     
-  console.log('DATA: ', data)
-  
    function handleDataValue(e: ChangeEvent<HTMLInputElement>) {
       const { name, value } = e.target
       const formattedValue = value.replace(/[^a-zA-Z_\-]/g, '');  //empty string on numbers and other characters that are not hypens and underscores
       setData(prev => ({
         ...prev,
-        [name]: formattedValue
+        [name]: formattedValue,
+        userId: userId
       }))
    }
  
@@ -224,9 +217,9 @@ export default function Projects() {
 
               {/**ARCHIVES LISTS */}
               {isSignedIn || user ? (
-                <div className="border scroll-auto w-full max-w-[1180px] min-h-[550px]">
+                <div className="border scroll-auto w-full max-w-[1180px]">
                   {/**archive items */}
-                  <div className="h-auto w-full min-w-max">
+                  <div className="max-h-[550px] overflow-y-auto w-full min-w-max">
                     {/**START MAPPING ITEMS HERE */}
                     <Archive />
                   </div>

@@ -51,10 +51,12 @@ const config = new Configuration({
  export async function getEmbeddings(text: string) {
    try {
      const response = await openai.createEmbedding({
-       model: "text-embedding-ada-002",
+       model: "text-embedding-3-small",
        input: text.replace(/\n/g, " "),
+       
      });
      const result = await response.json();
+     console.log('RESULT FROM AI: ', result)
      return result.data[0].embedding as number[];
    } catch (error) {
      console.log("error calling openai embeddings api", error);

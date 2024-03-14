@@ -8,8 +8,8 @@ export async function GET() {
 
         try {
            const data = await xata.db.document.filter({
-               user_id: userId
-           }).getAll();
+               user_id: userId,
+           }).sort('xata.updatedAt', 'desc').getAll();
       
            return NextResponse.json(data, { status: 200});
 

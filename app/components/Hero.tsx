@@ -11,34 +11,36 @@ const poppins = Poppins( {
 
 export default function Hero() {
   return (
-    <section className="mt-[80px] text-white flex items-center justify-evenly px-2 py-2 w-full">
+      <section className="mt-[20px] md:mt-[40px] text-white flex items-center justify-around  mx-auto px-2 py-2 w-full">
              {/**LEFT CONTENT */}
-               <div className={`${poppins.className} text-center items-center md:items-start flex-1 mx-auto md:mx-0 w-[220px] sm:w-auto max-w-[650px] font-bold md:text-left flex flex-col gap-6`}> 
-                 <div className="flex gap-2 flex-col max-w-[480px]">  
-                   <p className="text-[25px] sm:text-[27px]  leading-normal md:text-[35px] text-pretty ">Re 
-                    <span className="bg-gradient-to-b leading-loose from-purple-500 via-purple-400 to-purple-200 text-transparent bg-clip-text">
+               <div className={`${poppins.className} text-center items-center md:items-start  font-bold md:text-left flex flex-col gap-3`}> 
+                 <div className=" max-w-[480px] space-y-6">  
+                   <h1 className="text-[46px] leading-relaxed sm:text-[55px] md:text-[60px] font-bold ">
+                     Re 
+                    <span className="bg-gradient-to-b from-purple-500 via-purple-400 to-purple-200 text-transparent bg-clip-text">
                         Think
-                    </span>- document content searcher</p>
-                              
-                     <span className="text-pretty truncate text-ellipsis leading-loose text-sm md:text-[17px] font-light"> Stop Wasting Time, ReThink Your PDF: Quickly Find Exactly What You Need</span>               
+                    </span>
+                   </h1>       
+                     <span className="text-pretty  truncate text-ellipsis text-[24px] sm:text-[28px] md:text-[34px]  font-bold">document content searcher</span>               
                    </div>
-                         <button className="text-white text-center bg-accentColor w-[100px] sm:w-[145px] sm:h-[50px] 
-                            rounded-sm shadow-md text-[18px] md:text-[20px] 
-                             hover:bg-purple-500 transition-colors duration-150 ease-in-out h-[30px] items-center text-sm font-normal">
-                             <Link href={'/projects'}>  
-                               <span>Get started</span>
+                         <button className="text-white group text-center border border-[#C86BDC] rounded-xl w-[100px] sm:w-[145px] sm:h-[50px] 
+                             shadow-md text-[18px] md:text-[20px] 
+                             hover:bg-white transition-colors duration-150 ease-in-out h-[30px] items-center text-sm font-normal">
+                              <Link href={'/projects'}>  
+                                <span className='text-purple-200 group-hover:text-[#c86bdc]'>Get started</span>
                               </Link>
                          </button>
                  </div>
 
                 {/**RIGHT CONTENT */}
-                <div className="hidden md:block">
+                <div className="hidden md:block w-auto ">
                     <Image 
-                      width={320}
+                      width={420}
                       height={300}
-                      src={'/undraw-document.svg'}
+                      src={'/books-and-search.svg'}
                       alt="3d image"      
                       priority  
+                      className='select-none'
                     />
                 </div>
           </section> 

@@ -30,10 +30,9 @@ export default function Main({ data }: { data: savedDataDbType}) {
   const [newName, setNewName] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null!);
 
-
+ //FOR UPDATING NAME
   const {mutate, isPending } = useMutation({
     mutationFn: async ({ item, id }: { item: string, id: string}) => axios.put('/api/store-data', { item, id }),
-    
     onSuccess: (res) =>  {
       console.log(res);
     },
@@ -258,7 +257,7 @@ function handleChangeName(e: React.FormEvent) {
           </div>
 
           {/**CHAT COMPLETION  */}
-             <Chats fileKey={data?.file_key}/>
+             <Chats fileKey={data?.file_key} id={data?.id}/> 
         </div>      
       </main>
     </div>
