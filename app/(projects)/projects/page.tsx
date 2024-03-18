@@ -81,7 +81,7 @@ export default function Projects() {
    }
  
   return (
-    <div className="px-5 md:px-[55px] w-full min-h-[1000px] py-4 md:py-[24px]">
+    <div className="px-5 md:px-[55px] w-full py-4 md:py-[24px]">
       <nav className="flex justify-between px-2 md:px-8 items-center">
         <Link href={"/"}>
           <Image width={40} height={40} src={"/Logo.png"} alt={"Logo"} />
@@ -113,15 +113,15 @@ export default function Projects() {
       </nav>
 
       {/**ARCHIVES */}
-      <div className="border-gray-20 max-w-[1100px] shadow-lg border-[1px] rounded-md relative w-full min-h-screen mt-[30px] md:mt-[60px] mx-auto">
-        <div className="flex w-auto mt-[50px] mx-[10px] my-[15px] p-2 md:p-6 gap-8 items-start flex-col">
+      <div className="border-gray-20 max-w-[1100px] shadow-lg border-[1px] rounded-md relative w-full mt-[30px] min-h-[700px] max-h-screen md:mt-[50px] mx-auto">
+        <div className="flex w-auto mt-[30px] mx-[10px] p-2 md:p-6 gap-4 items-start flex-col">
           <h3 className="self-center sm:text-[25px] md:text-[27px] text-[#5e5c69]">
             Your Projects
           </h3>
 
           {/**ARCHIVES */}
           <div className="w-full h-auto">
-            <div className="flex items-start gap-8 flex-col">
+            <div className="flex items-start gap-2 flex-col">
               <Dialog>
                 <DialogTrigger asChild>
                   {/**CREATE BUTTON HERE */}
@@ -217,16 +217,16 @@ export default function Projects() {
 
               {/**ARCHIVES LISTS */}
               {isSignedIn || user ? (
-                <div className="border scroll-auto w-full max-w-[1180px]">
+                <div className="border scroll-auto w-full max-w-full">
                   {/**archive items */}
-                  <div className="max-h-[550px] overflow-y-auto w-full min-w-max">
+                  <div className="h-[460px] max-h-auto overflow-y-auto w-full min-w-full">
                     {/**START MAPPING ITEMS HERE */}
                     <Archive />
                   </div>
                 </div>
               ) : (
                 <p className="self-center mx-auto mt-[70px] text-[18px] font-normal text-[#A09EA8]">
-                  Log in to continue
+                   Log in to continue
                 </p>
               )}
             </div>

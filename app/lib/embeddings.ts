@@ -51,9 +51,8 @@ const config = new Configuration({
  export async function getEmbeddings(text: string) {
    try {
      const response = await openai.createEmbedding({
-       model: "text-embedding-3-small",
+       model: "text-embedding-ada-002",
        input: text.replace(/\n/g, " "),
-       
      });
      const result = await response.json();
      console.log('RESULT FROM AI: ', result)

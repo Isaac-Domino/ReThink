@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#sidebar {
+   width: 260px;
+}
+#maincontainer {
+     display: flex;
+     flex-direction: row;
+}
+@media screen and (max-width: 260px) {
+    #sidebar {
+        width: 100%;
+    }
+    #maincontainer {
+        flex-direction: column;
+    }
+
+}

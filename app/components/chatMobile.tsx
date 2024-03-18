@@ -1,18 +1,19 @@
-'use client'
-
-import { Message, useChat } from 'ai/react';
-import { Send } from 'lucide-react';
-import React, { useEffect, useRef } from 'react';
-import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
-import { useAuth, currentUser, useUser } from '@clerk/nextjs';
+import { useAuth, useUser } from '@clerk/nextjs';
 import { useQuery } from '@tanstack/react-query';
+import { Message } from 'ai';
+import { useChat } from 'ai/react';
 import axios from 'axios';
+import { Send } from 'lucide-react';
+import React, { useEffect, useRef } from 'react'
+import Image from 'next/image';
 
 
 
-const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): JSX.Element => {
+
+
+
+export default function ChatMobile({ fileKey, id }: { fileKey: string | null, id: string | null}) {
     const { userId } = useAuth();
     const { user } = useUser()
     const messageContainer = useRef<HTMLDivElement>(null);
@@ -51,8 +52,8 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
     return (
       <div
        ref={messageContainer}
-       className="absolute bottom-1 w-full max-h-[650px] overflow-y-auto h-auto px-2 py-4">
-        <div className="flex flex-col gap-[24px] w-full px-4">
+       className="absolute bottom-1 w-full max-h-[630px] overflow-y-scroll h-[500px]px-2 py-4">
+        <div className="flex flex-col gap-[24px] w-full">
           {/**CHAT STREAMING HERE */}
             {messages.map((m) => (
              <div key={m.id} className={cn("flex items-start", { "self-end": m.role === 'user'})}> 
@@ -67,7 +68,7 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
                 )}
               >
                 <div>
-                  <p className="text-md">{m.content}</p>
+                  <p className="text-sm md:text-md">{m.content}</p>
                 </div>
               </div>
 
@@ -88,12 +89,12 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
         {/**USER INPUTS HERE */}
         <form
           onSubmit={handleSubmit}
-          className="flex mt-[35px] items-center gap-2 min-w-full px-2"
+          className="flex overflow-x-hidden bottom-4 mt-[35px] overflow-y-hidden items-center gap-2 min-w-full px-2 w-full"
         >
           <input
             onChange={handleInputChange}
             type="text"
-            className="border-accentColor bg-white focus:outline-accentColor lg:flex-1 border rounded-full md:w-[160px] lg:w-[255px] h-[50px] indent-3"
+            className="border-accentColor bg-white focus:outline-accentColor lg:flex-1 border rounded-full w-full h-[50px] indent-3"
             placeholder="Ask any question"
             value={input}
             disabled={isLoading}
@@ -102,13 +103,10 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
          <Send
             color="#ffff"
             size={32}
-            className="bg-secondaryColor md:w-[60px] lg:w-[40px] lg:h-auto rounded-lg p-2 hover:bg-[#5C87C7] cursor-pointer duration-200 ease-in-out"
+            className="bg-secondaryColor w-[40px] h-auto rounded-lg p-2 hover:bg-[#5C87C7] cursor-pointer duration-200 ease-in-out"
           />
         </button>
         </form>
       </div>
     );
 }
-
-
-export default Chats;

@@ -35,7 +35,7 @@ const itemVariants: Variants = {
     y: 0,
     transition: {
       type: "spring",
-      bounce: 0.4,
+      bounce: 0.2,
       duration: 1
     }
   }
@@ -57,7 +57,10 @@ export default function About() {
             key={item.id}
             className="mx-auto mt-[30px] min-w-[200px] max-w-[740px] leading-5 flex items-center flex-col gap-4 px-auto "
           >
-          {<motion.div className='w-full h-full'  variants={itemVariants}>
+          {
+          <motion.div 
+           className='w-full h-full'  
+           variants={itemVariants}>
             <Accordion type="single" collapsible className={`w-full text-secondaryColor`} >
               <AccordionItem value={item.id.toString()}>
                 <AccordionTrigger>

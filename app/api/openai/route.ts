@@ -6,17 +6,24 @@ import { getXataClient } from '../../../src/xata';
  
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY_2,
+  apiKey: process.env.TOGETHER_API_KEY,
+  baseURL: 'https://api.together.xyz/v1',
 });
  
 // IMPORTANT! Set the runtime to edge
 export const runtime = 'edge';
 const xata = getXataClient();
  
+/* messages: [
+        prompt,
+        ...messages.filter((message: Message) => message.role === "user"),
+      ],*/
 export async function POST(req: Request) {
   const { messages, fileKey, userId, id } = await req.json();
+  //const { messages, fileKey } = await req.json();
  
-  if(!fileKey) return NextResponse.json({ error: "missing file key"}, { status: 404});
+  console.log('USER ID AND ID: ', userId, id);
+  if(!fileKey) return NextResponse.json({ error: "missing file key"}, { status: 404 });
   
   try {
     const lastMessage = messages[messages.length - 1];
@@ -24,7 +31,7 @@ export async function POST(req: Request) {
 
     const prompt = {
       role: "system",
-      content: `You are a helpful AI assistant that can only answer related to the provided context.
+      content: `You are a helpful AI assistant that can answer related to the provided context.
       AI is always friendly, kind, and inspiring, and he is eager to provide vivid and thoughtful responses, and suggestions to the user.
       AI has the sum of all knowledge in their brain, and is able to accurately answer nearly any question about the provided context from the document.
       START CONTEXT BLOCK
@@ -38,7 +45,7 @@ export async function POST(req: Request) {
     };
 
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo-0125",
+      model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
       max_tokens: 200,
       messages: [
         prompt,
@@ -46,7 +53,7 @@ export async function POST(req: Request) {
       ],
       stream: true,
     });
- 
+  
     // Convert the response into a friendly text-stream
    const stream = OpenAIStream(response, {
      onStart: async () => {
@@ -65,8 +72,10 @@ export async function POST(req: Request) {
         document_id: id
      })
     },
-   });
-   // Respond with the stream
+   }); 
+
+   //const stream = OpenAIStream(response);
+   
    return new StreamingTextResponse(stream);
   } catch (error) {
      console.log("ERROR", error);

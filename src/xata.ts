@@ -7,7 +7,6 @@ import type {
 } from "@xata.io/client";
 
 const tables = [
-  { name: "questions", columns: [{ name: "question", type: "string" }] },
   { name: "Response", columns: [] },
   {
     name: "document",
@@ -16,8 +15,6 @@ const tables = [
       { name: "user_id", type: "string" },
       { name: "file_link", type: "string" },
       { name: "file_key", type: "string" },
-      { name: "chat", type: "link", link: { table: "chats" } },
-      { name: "thumbnail_url", type: "string" },
     ],
   },
   {
@@ -28,7 +25,6 @@ const tables = [
       { name: "content", type: "text" },
       { name: "document_id", type: "string" },
     ],
-    revLinks: [{ column: "chat", table: "document" }],
   },
   {
     name: "vectors",
@@ -44,9 +40,6 @@ const tables = [
 export type SchemaTables = typeof tables;
 export type InferredTypes = SchemaInference<SchemaTables>;
 
-export type Questions = InferredTypes["questions"];
-export type QuestionsRecord = Questions & XataRecord;
-
 export type Response = InferredTypes["Response"];
 export type ResponseRecord = Response & XataRecord;
 
@@ -60,7 +53,6 @@ export type Vectors = InferredTypes["vectors"];
 export type VectorsRecord = Vectors & XataRecord;
 
 export type DatabaseSchema = {
-  questions: QuestionsRecord;
   Response: ResponseRecord;
   document: DocumentRecord;
   chats: ChatsRecord;

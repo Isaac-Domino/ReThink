@@ -42,26 +42,16 @@ export default function DocumentFile({ selectedFile }: { selectedFile: any}) {
         setNumPages(numPages);
         console.log(numPages);
     };
-  
-       
+
   return (
-    <div ref={setContainerRef} className='w-full h-auto relative'>
-     <Document
-       file={selectedFile}
-       onLoadSuccess={onDocumentLoadSuccess}
-       loading={<Loader2 className='animate-spin m-auto text-center duration-200 text-violet-400'/>}
-       className={'absolute top-0 left-0'}
-       options={options}
-    >
-      {Array.from(new Array(numPages), (el, index) => (
-        <Page
-          key={`page_${index + 1}`}
-          pageNumber={index + 1}
-          className={'w-full'}
-          width={containerWidth ? Math.min(containerWidth, maxWidth) : maxWidth}
-        />
-      ))}
-    </Document>
+    <div ref={setContainerRef} className='w-full h-full relative'>
+     <iframe
+        src={`https://docs.google.com/gview?url=${selectedFile}&embedded=true`} // Replace with the URL or path to your document
+        title="Document Viewer"
+        width="100%"
+        height="100%"
+        loading='lazy'
+      />
   </div>
-  )
+  ) 
 }

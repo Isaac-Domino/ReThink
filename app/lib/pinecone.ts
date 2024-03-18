@@ -7,7 +7,6 @@ import { convertToAscii } from './convertToAscii';
 import md5 from 'md5';
 import { getEmbeddings } from './embeddings';
 
-
 const pinecone = new Pinecone({
   apiKey: process.env.PINECONE_API_KEY!,
 });
@@ -93,5 +92,3 @@ export async function saveVectorToPinecone(file_key: string) {
     console.error("Error loading file to Pinecone:", error);
   }
 }
-
-

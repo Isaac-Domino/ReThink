@@ -2,9 +2,9 @@
 
 import NavbarMain from '@/components/navbar-main'
 import React, { Suspense, useEffect, useRef, useState } from 'react'
-import { Pencil, FolderClosed, FilePlus2, Menu, Bot, Send, X, MessageCircle, Loader2 } from 'lucide-react'
+import { Pencil, FolderClosed, FilePlus2, Menu, Bot, Send, X, MessageCircle, Loader2, Check } from 'lucide-react'
 import Link from 'next/link'
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 
@@ -15,8 +15,10 @@ import { savedDataDbType } from '../../types'
 import { toast } from 'sonner'
 import { revalidatePath } from 'next/cache'
 import Chats from './chats'
-
-
+import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+import ChatMobile from './chatMobile'
+import '@/styles/main.css'
 
 const menuVariants = {
   clicked: { opacity: 1, x: -6, },
@@ -29,10 +31,12 @@ export default function Main({ data }: { data: savedDataDbType}) {
   const [editing, setEditing] = useState<boolean>(false);
   const [newName, setNewName] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null!);
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
  //FOR UPDATING NAME
   const {mutate, isPending } = useMutation({
-    mutationFn: async ({ item, id }: { item: string, id: string}) => axios.put('/api/store-data', { item, id }),
+    mutationFn: async ({ item, id }: { item: string, id: string}) => axios.post('/api/changename', { item, id }),
     onSuccess: (res) =>  {
       console.log(res);
     },
@@ -55,7 +59,7 @@ export default function Main({ data }: { data: savedDataDbType}) {
     };
   }, []);
   
-  function handleMenuClick(e: React.MouseEvent) {
+  function handleMenuClick() {
     setMenuClick(prev => !prev)
     
     if(menuClick && chatClick) {
@@ -72,42 +76,73 @@ function handleChangeName(e: React.FormEvent) {
       onSuccess: (res) => {
         toast.success("Updated document name")
         console.log("RES: ", res)
-        revalidatePath(`/main/${data.id}`, 'page');
+        router.refresh();
       },
       onError: (err) => {
         toast.error("Error updating document name: "+err.message);
       }
     })
-   
- }
+  }
+
+
+  const toggleChat = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <div className="w-full min-w-full overflow-x-hidden h-screen md:min-h-screen">
+    <div className="w-full min-h-min min-w-full h-full overflow-x-hidden overflow-y-hidden ">
       <NavbarMain />
-      <main className="flex flex-row w-full items-start">
+      <main id='maincontainer' className="min-w-min w-full h-[700px]">
         {/**SIDEBAR */}
-        <div className="border  px-4 py-4 block min-w-[200px] w-[250px] h-screen">
+        <div id='sidebar' className="border flex-1 px-4 py-4 block h-full">
           {/**NAME OF THE DOCUMENT */}
           <div className="h-full py-3 flex items-start justify-between flex-col">
-            {!editing ?  
-            <div className='flex gap-2 max-w-full items-center cursor-pointer'>
-              <p className='text-[18px]'>{data.name}</p>
-              <Pencil 
-                color='black'
-                size={18}
-                onClick={() => setEditing(true)}
-              />
-           </div> : 
-          <form onSubmit={handleChangeName} className='flex gap-2 items-center max-w-full cursor-pointer'>
-             <input 
-               type="text" 
-               placeholder={data.name}
-               value={newName}
-               onChange={(e) => setNewName(e.target.value)}
-               ref={inputRef}
-               className='bg-transparent border-1 border w-full'
-             />
-          </form>}
+            {!editing ? (
+              <div className="flex gap-2 max-w-full items-center cursor-pointer">
+                <p className="text-[18px]">{data.name}</p>
+                <Pencil
+                  color="black"
+                  size={18}
+                  onClick={() => setEditing(true)}
+                />
+              </div>
+            ) : (
+              <AnimatePresence>
+              <motion.form
+                initial={{ width: 0 }}
+                animate={{ width: '100%'}}
+                exit={{ width: 0, opacity: 0 }}
+                onSubmit={handleChangeName}
+                className="flex gap-2 items-center max-w-full cursor-pointer"
+              >
+                <input
+                  type="text"
+                  placeholder={data.name}
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  ref={inputRef}
+                  className="bg-transparent border-1 rounded-xl outline-none border-purple-500 py-1 indent-2 border md:w-full w-[150px]"
+                />
+
+                <div className="flex gap-1 items-center">
+                  <button
+                    type="submit"
+                    className="p-1 bg-blue-500 rounded-full"
+                  >
+                    <Check size={18} className="text-white" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setEditing(false)}
+                    className="p-1 bg-red-500 rounded-full"
+                  >
+                    <X size={18} className=" text-white" />
+                  </button>
+                </div>
+               </motion.form>
+              </AnimatePresence>
+            )}
 
             {/**OPTIONS AVAILABLE */}
             <div className="text-gray-700 flex flex-col gap-4">
@@ -119,146 +154,105 @@ function handleChangeName(e: React.FormEvent) {
           </div>
         </div>
 
-         {/**FOR SMALLER SCREENS */}
-         <div className=" w-full relative mb-2 justify-between py-4 px-2 hidden  items-center gap-4">
-          <Menu
-            className={`md:hidden block ${menuClick ? "invisible" : "visible"}`}
-            size={32}
-            onClick={() => setMenuClick((prev) => !prev)}
-          />
-
-          <MessageCircle
-            onClick={() => setChatClick((prev) => !prev)}
-            size={40}
-            fill="#A759C2"
-            color="#A759C2"
-            className={`md:hidden block ${
-              chatClick && !menuClick ? "invisible" : "visible"
-            }`}
-          />
-
-          <motion.div
-            animate={menuClick ? "clicked" : "notclicked"}
-            variants={menuVariants}
-            transition={{ type: "tween", delay: 0.1, ease: "backInOut" }}
-            className={`w-[200px] rounded-lg absolute top-0 border bg-white z-50 h-[680px]`}
-          >
-            <X
-              className="absolute right-2 top-2"
-              size={24}
-              onClick={handleMenuClick}
-            />
-
-            {/**DOCUMENT NAME */}
-            <div className="mt-[45px] mx-2">
-              {!editing ? (
-                <div className="flex gap-2 max-w-full items-center cursor-pointer">
-                  <p className="text-[18px]">sample name</p>
-                  <Pencil
-                    color="black"
-                    size={18}
-                    onClick={() => setEditing(true)}
-                  />
-                </div>
-              ) : (
-                <form className="flex gap-2 items-center max-w-full cursor-pointer">
-                  <input
-                    type="text"
-                    placeholder="sample name"
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                    ref={inputRef}
-                    className="bg-transparent border-1 border w-full"
-                  />
-                </form>
-              )}
-            </div>
-
-            <div className="mt-[50px] h-auto w-full px-2">
-
-              {/**OPTIONS AVAILABLE */}
-              <div className="flex flex-col gap-4">
-                <Link className="flex gap-2" href={"/archives"}>
-                  <FolderClosed />
-                  <span>My Projects</span>
-                </Link>
-              </div>
-
-            </div>
-         </motion.div>
-
-
-          <motion.div
-            className={`w-[250px] absolute  ${
-              chatClick && !menuClick ? "right-0" : "right-[-400px]"
-            } duration-200 bg-[#f8f6fa] ease-linear top-0 border rounded-lg z-50 h-[680px]`}
-          >
-            <X
-              className="absolute right-2 top-2"
-              size={24}
-              onClick={() => setChatClick((prev) => !prev)}
-            />
-            {/**TOP */}
-            <div className="flex gap-2 items-center m-4">
-              <Bot size={24} className="text-violet-600" />
-              <span className="text-[20px] text-violet-700">Chat</span>
-            </div>
-
-            <div className="absolute bottom-1 w-full max-h-[650px] overflow-y-auto h-auto px-2 py-4">
-              <div className="flex flex-col gap-[24px] w-full">
-                {/**AI CHAT */}
-                <div className="bg-[#8768a5] text-wrap whitespace-normal break-words text-white w-fit p-2 rounded-md">
-                  <p className="text-sm">AI CHAT</p>
-                </div>
-
-                {/**YOUR CHAT */}
-                <div className="bg-[#3970b8] text-wrap whitespace-normal break-words self-end w-fit p-2 rounded-md text-white">
-                  <p className="text-sm"> YOUR CHAT</p>
-                </div>
-
-                <div className="bg-[#3970b8] text-wrap whitespace-normal break-words self-end w-fit p-2 rounded-md text-white">
-                  <p className="text-sm"> YOUR CHAT</p>
-                </div>
-              </div>
-
-              {/**USER INPUTS HERE */}
-              <div className="flex mt-[45px] items-center gap-2 min-w-full">
-                <input
-                  type="text"
-                  className="border-accentColor bg-white focus:outline-accentColor lg:flex-1 border rounded-full md:w-[160px] lg:w-[265px] w-[180px] h-[45px] indent-3"
-                  placeholder="Ask any question"
-                />
-                <Send
-                  color="#ffff"
-                  size={32}
-                  className="bg-secondaryColor w-[40px] h-auto md:w-[60px] lg:w-[40px] lg:h-auto rounded-lg p-2 hover:bg-[#5C87C7] cursor-pointer duration-200 ease-in-out"
-                />
-              </div>
-            </div>
-          </motion.div>
+        {/**DOCUMENT FILE */}
+        <div className="px-2 md:px-[35px] overflow-y-auto border mx-auto md:w-[850px] min-w-[160px] sm:w-[600px] max-w-[760px] min-h-full h-full max-h-full">
+          {/**MAP THE DOCUMENTS HERE */}
+          <DocumentFile selectedFile={data.file_link} />
         </div>
 
-        {/**DOCUMENT FILE */}
-        <div className="border-[#C0BCD1]  px-2 md:px-[35px] overflow-y-auto border mx-auto md:w-[850px] min-w-[360px] sm:w-[600px] max-w-[760px] h-[500px] md:h-screen ">
-          <div className="w-full  h-full">
-            {/**MAP THE DOCUMENTS HERE */}
-          
-               <DocumentFile selectedFile={data.file_link} />
-         
-          </div>
+        {/**FOR MOBILE DISPLAY CHAT */}
+        <div className="fixed bottom-5 right-5">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={toggleChat}
+            className="w-16 h-16 bg-white text-white rounded-full flex items-center justify-center border-violet-500 border hover:bg-violet-500 focus:outline-none"
+          >
+            <Image
+              src={"/chat-icon.svg"}
+              alt="chat icon"
+              width={50}
+              height={50}
+            />
+          </motion.button>
+
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                initial={{ width: 0, height: 0 }}
+                animate={{ width: 280, height: 550 }}
+                exit={{ width: 0, height: 0 }}
+                className="bg-[#f8f6fa] rounded-lg shadow-lg border border-[#C0BCD1] absolute bottom-0 right-0 md:relative z-20 overflow-hidden"
+              >
+                <div className="flex justify-between items-center px-4 py-2 bg-violet-500 text-white">
+                  <div className="flex items-center gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.972 5.972 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.48 2.091 14.487 2.091 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"
+                      />
+                    </svg>
+                    <span className="text-lg">Chat</span>
+                  </div>
+                  <button
+                    onClick={toggleChat}
+                    className="text-white hover:text-gray-300"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                {/* Add your chat messages or components here */}
+                <ChatMobile fileKey={data?.file_key} id={data?.id} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/**CHAT BOX */}
-        <div className="border-[#C0BCD1] bg-[#f8f6fa] relative block border md:w-[480px] min-h-screen">
+        <div className="border-[#C0BCD1] bg-[#f8f6fa] relative block border md:w-[480px] min-h-full">
           {/**TOP */}
-          <div className="flex gap-2 items-center m-4">
-            <Bot size={24} className="text-violet-600" />
-            <span className="text-[20px] text-violet-700">Chat</span>
+          <div className="flex gap-2 text-primaryColor w-auto items-center m-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-8 h-8"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.972 5.972 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.48 2.091 14.487 2.091 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"
+              />
+            </svg>
+            <span className="text-[20px]">Chat</span>
           </div>
 
           {/**CHAT COMPLETION  */}
-             <Chats fileKey={data?.file_key} id={data?.id}/> 
-        </div>      
+              <Chats fileKey={data?.file_key} id={data?.id} />
+        </div>
       </main>
     </div>
   );

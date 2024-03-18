@@ -13,8 +13,5 @@ export default async function page({ params }: { params: { slug: string } }) {
 
     //console.log('FILE KEY:', data?.file_key)
 
-    return (
-         <Mainchat data={clientData} /> 
-    )
-    ;
+    return <Mainchat data={clientData} />;
 }

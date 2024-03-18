@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from 'next/image'
 import React, { useRef } from "react";
 import { CheckCircle2 } from 'lucide-react';
-import { motion, useScroll } from 'framer-motion'
+import { motion, useScroll, m, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer';
 import Hero from "@/components/Hero";
 import StickyNavbar from "./StickyNavbar";
@@ -25,6 +25,23 @@ const purpose = [
     title: 'For Professionals'
   }
 ]
+
+const itemVariants = {
+    onview: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        y: { stiffness: 1000, velocity: -100 }
+      }
+    },
+    offview: {
+      y: 250,
+      opacity: 0,
+      transition: {
+        y: { stiffness: 1000 }
+      }
+    }
+};
 const features = [
   {
     icon: 
@@ -102,7 +119,7 @@ const Home = () => {
       <StickyNavbar inView={inView} />
 
       <main className="w-full z-10 px-2 sm:px-8 md:px-[80px] py-4 lg:px-[90px] min-w-full h-auto min-h-screen relative">
-        <div>
+        <div className="">
           <div ref={ref}>
             <Navbar />
           </div>
@@ -112,10 +129,10 @@ const Home = () => {
 
           <div
             className="w-full absolute top-0 left-0 
-           h-[350px] 
+           h-[320px] 
            sm:h-[430px]
            md:h-[530px]
-           lg:h-[570px] 
+           lg:h-[590px] 
            bg-gradient-to-br from-[#4d7cb1] 
            to-[#4D3FA3] 
           -z-10"
@@ -129,21 +146,22 @@ const Home = () => {
             opacity: scrollYProgress,
           }}
           transition={{ ease: "linear", delay: 1 }}
-          className="w-full mt-[60px] md:mt-[75px]  
-           h-[200px] md:h-[350px] justify-center items-center flex mb-4"
+          className="w-full mt-[60px] md:mt-[120px]  
+           h-[240px] md:h-[350px] justify-center items-center flex mb-4"
         >
           <div className="flex justify-evenly w-full items-center">
             <div className="h-auto w-[450px]  ">
               <Image
-                width={250}
-                height={250}
+                width={200}
+                height={200}
                 src={"/chatbot.svg"}
                 alt="chatbot png"
+                className="w-[140px] md:w-[200px] lg:w-[270px]"
               />
             </div>
 
             <div className="h-auto w-[550px] ">
-              <p className="md:text-[30px] text-center sm:text-[25px] text-md leading-normal text-[#2e2b41]">
+              <p className="md:text-[30px] text-[#362D73] text-center sm:text-[25px] text-md leading-normal">
                 Working with AI to enhance your prompts and for accurate
                 results.
               </p>
@@ -154,44 +172,39 @@ const Home = () => {
         {/**THIRD CONTENT*/}
         <div className="w-full mt-[20px] lg:mt-[50px] rounded-lg">
           <section className="py-[35px] px-[25px] flex flex-col items-center gap-4">
-            <div className="inline-flex items-center flex-col gap-3 h-auto">
-              <h1 className="text-[#1e1e30] font-normal leading-[45px] md:leading-[70px] text-[37px] md:text-[55px]">
-                See features in action
-              </h1>
-              <p className="text-[18px] text-balance md:text-[24px]">
-                Discover exclusive features on our site
-              </p>
+            <div className="inline-flex items-start md:items-center flex-col gap-4 h-auto">
+              <AnimatePresence>
+                <motion.h1
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1.1 }}
+                  viewport={{ once: true }}
+                  exit={{ scale: 0 }}
+                  transition={{ type: "spring" }}
+                  className="text-[#1e1e30] font-normal leading-[45px] md:leading-[70px] text-[37px] md:text-[50px]"
+                >
+                  See features in action
+                </motion.h1>
+              </AnimatePresence>
+
+               <motion.p
+                  initial={{ scale: 0 }}
+                  viewport={{ once: true }}
+                  whileInView={{ scale: 1.1 }}
+                  exit={{ scale: 0}}
+                  transition={{ type: "spring" }}
+                  className="text-[17px] text-wrap md:text-[20px]"
+                >
+                  Discover exclusive features on our site
+                </motion.p>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0.5, x: 600 }}
-              viewport={{ once: true }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ type: "spring" }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-[65px] items-center w-full"
-            >
-              {/**MAPPING THE FEATURES HERE */}
-
-              {/*features.map((item, index) => (
-                      <div
-                        key={index} className="p-[16px]
-                         shadow-md flex bg-violet-100  justify-between items-center h-[90px] rounded-lg">
-                    
-                       <div className="flex w-[250px] sm:w-[350px] md:w-[500px] max-w-[400px] gap-4 items-center">
-                           <div>
-                             {item.icon}
-                           </div>
-                           <div className="flex flex-col">
-                              <h3 className="text-[18px] md:text-xl">{item.title}</h3>
-                              <span className="font-light text-[13px] lg:text-[14px]">{item.description}</span>
-                           </div>
-                       </div>
-
-                  <div>{item.image}</div>
-                </div>
-                   )) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-[65px] items-center w-full">
               {features.map((item, index) => (
-                <div
+                <motion.div
+                  initial={"offview"}
+                  whileInView={"onview"}
+                  variants={itemVariants}
+                  viewport={{ once: true }}
                   key={index}
                   className="w-auto shadow-sm justify-center rounded-lg flex items-center py-2 px-4 h-[150px]  "
                 >
@@ -213,37 +226,43 @@ const Home = () => {
                       </p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </motion.div>
+            </div>
           </section>
         </div>
 
-        <div className="w-full h-auto mt-[55px]">
+        <div className="w-full h-auto my-[65px]">
           <div className="flex justify-evenly  items-center">
             {purpose.map((item) => (
-              <div key={item.id} className="flex items-center gap-3">
+              <motion.div 
+               initial={{ y: 100, opacity: 0 }}
+               whileInView={{ y: 0, opacity: 1 }}
+               viewport={{ once: true }}
+               transition={{ type: "spring" }}
+               key={item.id} className="flex items-center gap-3">
                 <CheckCircle2
                   color="white"
                   size={25}
-                  className="bg-secondaryColor text-md rounded-full"
+                  className="bg-secondaryColor  text-md rounded-full"
                 />
-                 <p className="font-medium text-md md:text-xl text-secondaryColor">{item.title}</p>
-                
-              </div>
+                <p className="font-medium text-sm sm:text-md md:text-xl text-secondaryColor">
+                  {item.title}
+                </p>
+              </motion.div>
             ))}
           </div>
         </div>
       </main>
 
-      <div className="w-full md:px-4 py-11   flex mx-auto justify-center items-center bg-gradient-to-tr from-[#bca7d8] to-[#464d92] mt-[75px]">
+      <div className="w-full md:px-4 py-11  flex mx-auto justify-center items-center bg-gradient-to-tr from-[#bca7d8] to-[#464d92] ">
         <div className="flex w-auto items-center space-x-[55px] md:space-x-[120px]">
           <Image
             src={"/laptop-3d.svg"}
             height={260}
             width={260}
             alt="laptop-3d.svg"
-            className="w-[200px] md:w-[260px]"
+            className="w-[200px] md:w-[260px] select-none"
           />
 
           <h1 className="text-white font-normal text-[22px] md:text-[27px] lg:text-[37px] ">

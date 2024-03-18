@@ -50,7 +50,7 @@ export default function Lists({ data }: { data: savedDataDbType}) {
   return (
     <Link
       href={`/main/${data.id}`}
-      className="border flex items-center gap-8
+      className="border flex items-center gap-4
        border-primaryColor px-4 py-2 
       max-w-auto h-auto min-h-[40px] rounded-lg 
       hover:bg-purple-50 duration-200 ease-linear transition-colors
