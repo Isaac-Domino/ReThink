@@ -22,13 +22,11 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {  useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
-
-
-
 import { UploadButton, UploadDropzone } from "@/lib/uploadthing"; 
 import "@uploadthing/react/styles.css";
 import { dark } from '@clerk/themes'
 import { Button } from '@/components/ui/button'
+import { Metadata } from 'next'
 
 type documentType = {
   userId: string | null | undefined,

@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
     /*const { userId } = auth();
     const res = await xata.db.document.filter('user_id', userId).getFirst();
 

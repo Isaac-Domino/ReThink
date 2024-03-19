@@ -2,6 +2,12 @@ import { SignUp } from "@clerk/nextjs";
 import React from "react";
 import Image from "next/image";
 import NavbarMain from "@/components/navbar-main";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata ={ 
+    title: 'Sign up',
+}
 
 const RegisterPage = () => {
   return (

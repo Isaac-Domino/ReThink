@@ -1,8 +1,29 @@
 
-import React, { Suspense } from 'react'
+import React from 'react' 
 import Mainchat from '@/components/mainchat';
-import { Loader2 } from 'lucide-react';
 import { getData } from '@/lib/getData';
+import { Metadata, ResolvingMetadata } from 'next';
+import { getXataClient } from '../../../../src/xata';
+
+
+type Props = {
+    params: { id: string }
+}
+
+const xata = getXataClient();
+
+export async function generateMetadata({ params }: Props ): Promise<Metadata> {
+    // read route params
+    const id = params.id
+   
+    // fetch data
+    const data = await xata.db.document.filter('id', id).getFirst();
+
+    return {
+      title: data?.file_key,
+      description: data?.id
+    }
+ }
 
 
 export default async function page({ params }: { params: { slug: string } }) {

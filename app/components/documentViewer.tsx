@@ -20,7 +20,7 @@ const maxWidth = 1290;
 const resizeObserverOptions = {};
 
 
-export default function DocumentFile({ selectedFile }: { selectedFile: any}) {
+export default function DocumentFile({ selectedFile }: { selectedFile: string | null | undefined }) {
     const [numPages, setNumPages] = useState(null);
     const [containerWidth, setContainerWidth] = useState<number>();
     const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);

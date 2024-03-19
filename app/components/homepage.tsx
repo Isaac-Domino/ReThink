@@ -9,7 +9,7 @@ import { motion, useScroll, m, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer';
 import Hero from "@/components/Hero";
 import StickyNavbar from "./StickyNavbar";
-import About from "./About";
+
 
 const purpose = [
   {
