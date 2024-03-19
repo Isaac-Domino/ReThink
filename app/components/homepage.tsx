@@ -118,7 +118,7 @@ const Home = () => {
     >
       <StickyNavbar inView={inView} />
 
-      <main className="w-full z-10 px-2 sm:px-8 md:px-[80px] py-4 lg:px-[90px] min-w-full h-auto min-h-screen relative">
+      <main className="w-full z-10 px-2 sm:px-8 md:px-[80px] py-4 lg:px-[90px] min-w-full h-auto min-h-full relative">
         <div className="">
           <div ref={ref}>
             <Navbar />

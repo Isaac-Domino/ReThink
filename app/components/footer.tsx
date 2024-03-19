@@ -47,7 +47,7 @@ export default function Footer() {
   };
   return (
     <main
-      className={`w-full relative bottom-0 bg-[#24202b] text-gray-400 text-xs md:text-[18px] py-8 px-2 md:px-12  ${
+      className={`w-full min-w-full relative bottom-0 bg-[#24202b] text-gray-400 text-xs md:text-[18px] py-8 px-2 md:px-12  ${
         pathname.includes("/login") ||
         pathname.includes("/register") ||
         pathname.includes("/main")

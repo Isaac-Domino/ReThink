@@ -55,7 +55,7 @@ export default function Projects() {
         console.log(err.message);
       },
       onSuccess: () => {
-       console.log('Success');
+       console.log('Successful Please wait...');
       }
    })
 
@@ -79,7 +79,7 @@ export default function Projects() {
    }
  
   return (
-    <div className="px-5 md:px-[55px] w-full py-4 md:py-[24px]">
+    <div className="px-5 md:px-[55px] w-full min-h-full py-4 md:py-[24px]">
       <nav className="flex justify-between px-2 md:px-8 items-center">
         <Link href={"/"}>
           <Image width={40} height={40} src={"/Logo.png"} alt={"Logo"} />

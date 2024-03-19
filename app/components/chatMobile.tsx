@@ -52,13 +52,13 @@ export default function ChatMobile({ fileKey, id }: { fileKey: string | null, id
     return (
       <div
        ref={messageContainer}
-       className="absolute bottom-1 w-full max-h-[630px] overflow-y-scroll h-[500px]px-2 py-4">
+       className="absolute bottom-1 w-full max-h-[630px] overflow-y-scroll h-[500px] px-2 py-4">
         <div className="flex flex-col gap-[24px] w-full">
           {/**CHAT STREAMING HERE */}
             {messages.map((m) => (
              <div key={m.id} className={cn("flex items-start", { "self-end": m.role === 'user'})}> 
               {/**CHAT BOX */}
-              <div
+              <div 
                 className={cn(
                   "text-wrap mx-2 whitespace-normal break-words text-white w-fit p-2 rounded-md",
                   {

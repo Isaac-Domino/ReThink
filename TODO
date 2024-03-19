@@ -12,3 +12,9 @@ Todo:
   ✔ create /api/chat endpoint for initiating chat to ai @done(24-03-11 20:53)
   ☐ add user's projects to /projects
 
+Todolist to improve system ui and performance: 
+  ☐ add Skeleton loader when loading main chat
+  ☐ Ui responsiveness in main chat 
+  ☐ Ui in homepage 
+  ☐ 
+

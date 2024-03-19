@@ -1,23 +1,23 @@
 'use client'
 
 import { X } from 'lucide-react'
-import React, { useState } from 'react'
+import React  from 'react'
 import { savedDataDbType } from '../../types'
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
-import { revalidatePath } from 'next/cache';
+import { useRouter } from 'next/navigation';
 
 
 
 export default function Lists({ data }: { data: savedDataDbType}) {
    const { mutate, error, isPending } = useMutation({
-       mutationFn: async (id: string) => axios.delete('/api/projects', { data: id }),
-       onError: (error: any) => console.log(error),
-       onSuccess: () => toast.success('Succesfully deleted')
+       mutationFn: async (id: string) => axios.post('/api/projects', { id }),
+       onError: (error: any) => console.log(error)
    })
+   const router = useRouter();
 
    function formatDate(date: string) {
      const newDate = new Date(date);
@@ -32,7 +32,7 @@ export default function Lists({ data }: { data: savedDataDbType}) {
        return formatDateTime;
    }
    
-   async function deleteFile (id: string, e: React.MouseEvent) {
+   function deleteFile (id: string, e: React.MouseEvent) {
      e.stopPropagation();
      e.preventDefault();
 
@@ -42,10 +42,12 @@ export default function Lists({ data }: { data: savedDataDbType}) {
        mutate(id, {
          onSuccess: () => {
            console.log('Done deleted!');
+           toast.success(`${data.name} Deleted successfully!`);
+           router.prefetch('/projects');
          }
        })
       //revalidatePath('/projects', 'page');
-   }
+   } 
 
   return (
     <Link
@@ -64,7 +66,7 @@ export default function Lists({ data }: { data: savedDataDbType}) {
         </p>
       </div>
 
-      <button className='cursor-pointer hover:scale-105' onClick={(e) =>  deleteFile(data.id, e)}>
+      <button className='cursor-pointer hover:scale-110' onClick={(e) =>  deleteFile(data.id!, e)}>
         <X size={24} cursor={"pointer"} />
       </button>
 

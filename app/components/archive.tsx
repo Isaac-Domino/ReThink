@@ -2,14 +2,12 @@ import React from 'react'
 import Lists, { DeleteDialog } from './lists';
 import { useQuery } from '@tanstack/react-query';
 import { Loader, Loader2 } from 'lucide-react';
+import axios from 'axios';
 
 export default function Archive() {
   const { isPending, error, data } = useQuery({
     queryKey: ['projects'],
-    queryFn: () =>
-      fetch('/api/projects').then((res) =>
-        res.json(),
-      ),
+    queryFn: () => axios.get('/api/projects', { withXSRFToken: true}).then((res) => res.data)
   })
 
   return (
