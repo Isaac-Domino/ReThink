@@ -13,8 +13,8 @@ Todo:
   ☐ add user's projects to /projects
 
 Todolist to improve system ui and performance: 
-  ☐ add Skeleton loader when loading main chat
-  ☐ Ui responsiveness in main chat 
+  ✔ add Skeleton loader when loading main chat @done(24-03-21 16:55)
+  ✔ Ui responsiveness in main chat @done(24-03-21 16:55)
   ☐ Ui in homepage 
-  ☐ 
+  ☐ real time update on /projects
 

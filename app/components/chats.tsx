@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { useAuth, currentUser, useUser } from '@clerk/nextjs';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import Skeleton from 'react-loading-skeleton';
 
 
 
@@ -51,7 +52,7 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
     return (
       <div
        ref={messageContainer}
-       className="absolute bottom-1 w-full max-h-[650px] overflow-y-auto h-auto px-2 py-4">
+       className="absolute bottom-1 w-full h-[600px] overflow-y-scroll lg:h-[630px] px-2 py-4">
         <div className="flex flex-col gap-[24px] w-full px-4">
           {/**CHAT STREAMING HERE */}
             {messages.map((m) => (
@@ -67,7 +68,7 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
                 )}
               >
                 <div>
-                  <p className="text-md">{m.content}</p>
+                 {isLoading ? <Skeleton count={m.content.length} width={100} height={20}/> : <p className="text-md">{m.content}</p>}
                 </div>
               </div>
 

@@ -6,6 +6,9 @@ import React from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import '@/styles/main.css'
+import Link from 'next/link'
+import { FolderClosed } from 'lucide-react' 
+import Chats from '@/components/chats'
 import ChatSkeleton from '@/components/ChatSkeleton'
 
 export default function Loading() {

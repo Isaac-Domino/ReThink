@@ -90,19 +90,19 @@ function handleChangeName(e: React.FormEvent) {
   };
 
   return (
-    <div className="w-full min-h-min min-w-full h-full overflow-x-hidden overflow-y-hidden ">
+    <div className="w-full min-h-screen min-w-full h-screen overflow-x-hidden overflow-y-hidden ">
       <NavbarMain />
-      <main id='maincontainer' className="min-w-min w-full h-[700px]">
+      <main id='maincontainer' className="min-w-min w-full h-[700px] sm:h-full">
         {/**SIDEBAR */}
-        <div id='sidebar' className="border flex-1 px-4 py-4 block h-full">
+        <div id='sidebar' className="border w-full px-4 py-4 block h-full">
           {/**NAME OF THE DOCUMENT */}
-          <div className="h-full py-3 flex items-start justify-between flex-col">
+          <div id='sidebar-content' className="py-3">
             {!editing ? (
-              <div className="flex gap-2 max-w-full items-center cursor-pointer">
-                <p className="text-[18px]">{data.name}</p>
+              <div className="flex text-gray-700 gap-1 w-full max-w-full items-center cursor-pointer">
+                <p className="text-[16px] md:text-[18px] max-w-[150px] w-fit">{data.name}</p>
                 <Pencil
-                  color="black"
-                  size={18}
+                  size={20}
+                  className='text-[16px] md:text-[18px]'
                   onClick={() => setEditing(true)}
                 />
               </div>
@@ -145,17 +145,17 @@ function handleChangeName(e: React.FormEvent) {
             )}
 
             {/**OPTIONS AVAILABLE */}
-            <div className="text-gray-700 flex flex-col gap-4">
-              <Link className="flex gap-2" href={"/projects"}>
-                <FolderClosed />
-                <span>My Projects</span>
+            <div className="text-gray-700 flex flex-col gap-1">
+              <Link className="flex items-center gap-2" href={"/projects"}>
+                <FolderClosed size={22} className='text-[16px] md:text-[20px]'/>
+                <span className='text-[16px] md:text-[18px]'>My Projects</span>
               </Link>
             </div>
           </div>
         </div>
 
         {/**DOCUMENT FILE */}
-        <div className="px-2 md:px-[35px] overflow-y-auto border mx-auto md:w-[850px] min-w-[160px] sm:w-[600px] max-w-[760px] min-h-full h-full max-h-full">
+        <div className="px-2 md:px-[15px] overflow-y-auto border mx-auto w-full  md:w-[600px] lg:w-[640px] xl:w-[700px] max-w-[720px] min-h-full h-full max-h-full">
           {/**MAP THE DOCUMENTS HERE */}
           <DocumentFile selectedFile={data.file_link} />
         </div>
@@ -182,7 +182,7 @@ function handleChangeName(e: React.FormEvent) {
                 initial={{ width: 0, height: 0 }}
                 animate={{ width: 280, height: 550 }}
                 exit={{ width: 0, height: 0 }}
-                className="bg-[#f8f6fa] rounded-lg shadow-lg border border-[#C0BCD1] absolute bottom-0 right-0 md:relative z-20 overflow-hidden"
+                className="bg-[#f8f6fa] rounded-lg block lg:hidden shadow-lg border border-[#C0BCD1] absolute bottom-0 right-0 md:relative z-20 overflow-hidden"
               >
                 <div className="flex justify-between items-center px-4 py-2 bg-violet-500 text-white">
                   <div className="flex items-center gap-2">
@@ -230,9 +230,9 @@ function handleChangeName(e: React.FormEvent) {
         </div>
 
         {/**CHAT BOX */}
-        <div className="border-[#C0BCD1] bg-[#f8f6fa] relative block border md:w-[480px] min-h-full">
+        <div className="border-[#C0BCD1] bg-[#f8f6fa] relative hidden lg:block border w-[490px] min-h-[92%] h-[92%]">
           {/**TOP */}
-          <div className="flex gap-2 text-primaryColor w-auto items-center m-4">
+          <div className="flex gap-2 text-primaryColor z-10 w-auto items-center m-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
