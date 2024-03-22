@@ -115,6 +115,7 @@ const Home = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ ease: "easeOut", type: "tween" }}
+      className="relative min-h-full overflow-y-clip"
     >
       <StickyNavbar inView={inView} />
 
@@ -132,11 +133,15 @@ const Home = () => {
            h-[320px] 
            sm:h-[430px]
            md:h-[530px]
-           lg:h-[590px] 
+           lg:h-[610px] 
+           bg-blend-darken
            bg-gradient-to-br from-[#4d7cb1] 
+           via-[#6654ad]
            to-[#4D3FA3] 
-          -z-10"
-          />
+           flex items-center -z-10 justify-center"
+          >
+              
+            </div>
         </div>
 
         {/**SECOND CONTENT */}
@@ -255,7 +260,7 @@ const Home = () => {
         </div>
       </main>
 
-      <div className="w-full md:px-4 py-11  flex mx-auto justify-center items-center bg-gradient-to-tr from-[#bca7d8] to-[#464d92] ">
+      <div className="w-full md:px-4 py-12 mt-12  flex mx-auto justify-center items-center ">
         <div className="flex w-auto items-center space-x-[55px] md:space-x-[120px]">
           <Image
             src={"/laptop-3d.svg"}
@@ -270,6 +275,13 @@ const Home = () => {
           </h1>
         </div>
       </div>
+
+
+    {/**CIRCLE BACKGROUND */}
+      <div className="absolute bottom-[-200px] blur-sm bg-blend-soft-light w-full max-w-full h-[1350px] rounded-t-[600px] -z-20  bg-gradient-to-b from-[#F9EDF8] via-[#96A4EE] to-[#804da7] opacity-[15%]" />
+      <div className="absolute bottom-[-200px] blur-md bg-blend-soft-light w-full max-w-full h-[1250px] rounded-t-[600px]  -z-20 bg-gradient-to-b from-[#F9EDF8] via-[#96A4EE] to-[#804da7] opacity-[20%]" />
+      <div className="absolute bottom-[-200px] blur-lg bg-blend-light w-full max-w-full h-[1160px] rounded-t-[600px]  -z-20 bg-gradient-to-b from-[#F9EDF8] via-[#96A4EE] to-[#804da7] opacity-[30%]" /> 
+      <div className="absolute bottom-[-200px] blur-xl bg-blend-light w-full max-w-full h-[860px] rounded-t-[600px]  -z-20 bg-gradient-to-b from-[#F9EDF8] via-[#96A4EE] to-[#804da7] opacity-[50%]" /> 
     </motion.div>
   );
 };

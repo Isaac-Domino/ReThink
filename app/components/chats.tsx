@@ -68,7 +68,7 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
                 )}
               >
                 <div>
-                 {isLoading ? <Skeleton count={m.content.length} width={100} height={20}/> : <p className="text-md">{m.content}</p>}
+                  <p className="text-md">{m.content}</p>
                 </div>
               </div>
 
