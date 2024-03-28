@@ -56,14 +56,8 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
       >
 
       <div
-<<<<<<< HEAD
        className="w-full h-full items-end self-end overflow-y-scroll relative bottom-0 px-2 py-4 ">
         <div className="flex flex-col gap-[24px] h-auto w-full px-4">
-=======
-       ref={messageContainer}
-       className="absolute bottom-1 w-full h-[200px] overflow-y-scroll lg:h-[525px] px-2 py-4">
-        <div className="flex flex-col gap-[24px] w-full px-4">
->>>>>>> f3fde64e4ac2fb81de2c8d1d653ef18b8d99141c
           {/**CHAT STREAMING HERE */}
             {messages.map((m) => (
              <div key={m.id} className={cn("flex items-start", { "self-end": m.role === 'user'})}> 
