@@ -133,7 +133,7 @@ const Home = () => {
            h-[320px] 
            sm:h-[430px]
            md:h-[530px]
-           lg:h-[610px] 
+           lg:h-[570px] 
            bg-blend-darken
            bg-gradient-to-br from-[#4d7cb1] 
            via-[#6654ad]
@@ -151,22 +151,21 @@ const Home = () => {
             opacity: scrollYProgress,
           }}
           transition={{ ease: "linear", delay: 1 }}
-          className="w-full mt-[60px] md:mt-[120px]  
+          className="w-full mt-[60px] md:mt-[70px]  
            h-[240px] md:h-[350px] justify-center items-center flex mb-4"
         >
           <div className="flex justify-evenly w-full items-center">
-            <div className="h-auto w-[450px]  ">
               <Image
-                width={200}
-                height={200}
+                width={170}
+                height={170}
                 src={"/chatbot.svg"}
                 alt="chatbot png"
-                className="w-[140px] md:w-[200px] lg:w-[270px]"
+                className="w-[140px] md:w-[190px] lg:w-[230px]"
               />
-            </div>
+   
 
-            <div className="h-auto w-[550px] ">
-              <p className="md:text-[30px] text-[#362D73] text-center sm:text-[25px] text-md leading-normal">
+            <div className="h-auto w-[45%]">
+              <p className="text-[#362D73] text-center sm:text-[25px]  text-md leading-normal">
                 Working with AI to enhance your prompts and for accurate
                 results.
               </p>
@@ -197,7 +196,7 @@ const Home = () => {
                   whileInView={{ scale: 1.1 }}
                   exit={{ scale: 0}}
                   transition={{ type: "spring" }}
-                  className="text-[17px] text-wrap md:text-[20px]"
+                  className="text-[17px] text-wrap md:text-[25px]"
                 >
                   Discover exclusive features on our site
                 </motion.p>
@@ -237,7 +236,7 @@ const Home = () => {
           </section>
         </div>
 
-        <div className="w-full h-auto my-[65px]">
+        <div className="w-full h-auto my-[15px] md:my-[50px] lg:my-[60px]">
           <div className="flex justify-evenly  items-center">
             {purpose.map((item) => (
               <motion.div 
@@ -248,10 +247,9 @@ const Home = () => {
                key={item.id} className="flex items-center gap-3">
                 <CheckCircle2
                   color="white"
-                  size={25}
-                  className="bg-secondaryColor  text-md rounded-full"
+                  className="bg-secondaryColor size-[18px] sm:size-[20px] md:size-[25px] lg:size[27px]  text-md rounded-full"
                 />
-                <p className="font-medium text-sm sm:text-md md:text-xl text-secondaryColor">
+                <p className="font-medium text-[10px] sm:text-md md:text-xl text-secondaryColor">
                   {item.title}
                 </p>
               </motion.div>
@@ -260,14 +258,14 @@ const Home = () => {
         </div>
       </main>
 
-      <div className="w-full md:px-4 py-12 mt-12  flex mx-auto justify-center items-center ">
+      <div className="w-full md:px-4 py-12 mt-2 lg:mt-12 flex mx-auto justify-center items-center ">
         <div className="flex w-auto items-center space-x-[55px] md:space-x-[120px]">
           <Image
             src={"/laptop-3d.svg"}
             height={260}
             width={260}
             alt="laptop-3d.svg"
-            className="w-[200px] md:w-[260px] select-none"
+            className="w-[170px] md:w-[260px] select-none"
           />
 
           <h1 className="text-white font-normal text-[22px] md:text-[27px] lg:text-[37px] ">

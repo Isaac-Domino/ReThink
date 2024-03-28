@@ -11,17 +11,17 @@ const poppins = Poppins( {
 
 export default function Hero() {
   return (
-      <section className="mt-[20px] md:mt-[40px] text-white flex items-center justify-around  mx-auto px-2 py-2 w-full">
+      <section className="mt-[20px] md:mt-[30px] text-white flex items-center justify-around  mx-auto px-2 py-2 w-full">
              {/**LEFT CONTENT */}
-               <div className={`${poppins.className} text-center items-center md:items-start  font-bold md:text-left  max-w-[400px] flex flex-col gap-3`}> 
+               <div className={`${poppins.className} text-center items-center md:items-start  font-bold md:text-left  max-w-[300px] flex flex-col gap-3`}> 
                  <div className="w-full">  
-                   <h1 className="text-[46px] leading-relaxed sm:text-[55px] md:text-[66px] font-bold ">
+                   <h1 className="text-[46px] leading-relaxed sm:text-[55px] font-bold ">
                      Re 
                     <span className="bg-gradient-to-b from-purple-500 via-purple-400 to-purple-200 text-transparent bg-clip-text">
                         Think
                     </span>
                    </h1>       
-                     <span className="break-words text-wrap truncate text-[24px] sm:text-[28px] max-w-full md:text-[32px] font-medium">document content searcher</span>               
+                     <span className="break-words text-wrap truncate text-[24px] sm:text-[28px] max-w-full font-medium">document content searcher</span>               
                    </div>
                          <button className="text-white group text-center border border-[#C86BDC] rounded-xl w-[100px] sm:w-[145px] h-[40px] sm:h-[50px] 
                              shadow-md text-[18px] md:text-[20px] 
@@ -35,7 +35,7 @@ export default function Hero() {
                 {/**RIGHT CONTENT */}
                 <div className="hidden md:flex flex-col w-auto ">
                     <Image 
-                      width={425}
+                      width={400}
                       height={400}
                       src={'/books-and-search.svg'}
                       alt="3d image"      
@@ -43,7 +43,7 @@ export default function Hero() {
                       className='select-none '
                     />
 
-               <p className="self-end text-white mb-4 text-[10px] smL:text-[14px] md:text-[16px] font-light max-w-[400px] ">
+               <p className="self-end text-white mb-46 text-[10px] sm:text-[14px] font-light max-w-[400px] ">
                   Stop Wasting Time,  ReThink Your PDF: Quickly Find Exactly What You Need
               </p>
                 </div>

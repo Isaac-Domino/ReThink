@@ -1,15 +1,9 @@
 import { auth } from "@clerk/nextjs";
 import { getXataClient } from "../../../src/xata";
 import { NextResponse } from "next/server";
-import { NextApiRequest, NextApiResponse } from "next";
-
 
 
 export async function GET() {
-    /*const { userId } = auth();
-    const res = await xata.db.document.filter('user_id', userId).getFirst();
-
-    return NextResponse.json(res); */
     const { userId } = auth();
     const xata = getXataClient();
   

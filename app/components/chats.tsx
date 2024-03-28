@@ -50,10 +50,14 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
    }, [messages])
   
     return (
+      <div 
+      ref={messageContainer}
+      className='overflow-y-auto flex flex-col gap-3 h-full'
+      >
+
       <div
-       ref={messageContainer}
-       className="absolute bottom-1 w-full h-[600px] overflow-y-scroll lg:h-[630px] px-2 py-4">
-        <div className="flex flex-col gap-[24px] w-full px-4">
+       className="w-full h-full items-end self-end overflow-y-scroll relative bottom-0 px-2 py-4 ">
+        <div className="flex flex-col gap-[24px] h-auto w-full px-4">
           {/**CHAT STREAMING HERE */}
             {messages.map((m) => (
              <div key={m.id} className={cn("flex items-start", { "self-end": m.role === 'user'})}> 
@@ -86,11 +90,13 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
             {isLoading && <div className='self-end text-start text-sm left-0 flex items-start text-gray-400 w-full'>Waiting for response.....</div>}
         </div>
 
-        {/**USER INPUTS HERE */}
-        <form
+
+      </div>
+          {/**USER INPUTS HERE */}
+          <form
           onSubmit={handleSubmit}
-          className="flex mt-[35px] items-center gap-2 min-w-full px-2"
-        >
+          className="flex items-start overflow-hidden mb-[10px] h-[150px] w-full  gap-2 min-w-full px-2"
+          >
           <input
             onChange={handleInputChange}
             type="text"
@@ -107,7 +113,7 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
           />
         </button>
         </form>
-      </div>
+    </div>
     );
 }
 

@@ -11,7 +11,6 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 
-
 export default function Lists({ data }: { data: savedDataDbType}) {
    const { mutate, error, isPending } = useMutation({
        mutationFn: async (id: string) => axios.post('/api/projects', { id }),
@@ -43,7 +42,7 @@ export default function Lists({ data }: { data: savedDataDbType}) {
          onSuccess: () => {
            console.log('Done deleted!');
            toast.success(`${data.name} Deleted successfully!`);
-           router.prefetch('/projects');
+           router.refresh();
          }
        })
       //revalidatePath('/projects', 'page');

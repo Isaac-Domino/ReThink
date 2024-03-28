@@ -10,9 +10,6 @@ import Image from 'next/image';
 
 
 
-
-
-
 export default function ChatMobile({ fileKey, id }: { fileKey: string | null, id: string | null}) {
     const { userId } = useAuth();
     const { user } = useUser()
@@ -50,9 +47,12 @@ export default function ChatMobile({ fileKey, id }: { fileKey: string | null, id
    }, [messages])
   
     return (
-      <div
-       ref={messageContainer}
-       className="absolute bottom-1 w-full max-h-[630px] overflow-y-scroll h-[500px] px-2 py-4">
+     <div 
+     ref={messageContainer}
+     className='overflow-y-auto flex flex-col gap-3'
+     >
+     <div
+       className="w-full overflow-y-scroll relative bottom-0 h-full px-2 py-4">
         <div className="flex flex-col gap-[24px] w-full">
           {/**CHAT STREAMING HERE */}
             {messages.map((m) => (
@@ -86,10 +86,15 @@ export default function ChatMobile({ fileKey, id }: { fileKey: string | null, id
             {isLoading && <div className='self-end text-start text-sm left-0 flex items-start text-gray-400 w-full'>Waiting for response.....</div>}
         </div>
 
-        {/**USER INPUTS HERE */}
-        <form
+       
+      </div>
+
+       {/**USER INPUTS HERE */}
+       <form
           onSubmit={handleSubmit}
-          className="flex overflow-x-hidden bottom-4 mt-[35px] overflow-y-hidden items-center gap-2 min-w-full px-2 w-full"
+          className="flex 
+            overflow-hidden 
+            bottom-4 mt-[2px]  h-[70px] items-center gap-2 min-w-full px-2 w-full"
         >
           <input
             onChange={handleInputChange}
@@ -107,6 +112,6 @@ export default function ChatMobile({ fileKey, id }: { fileKey: string | null, id
           />
         </button>
         </form>
-      </div>
+    </div>
     );
 }

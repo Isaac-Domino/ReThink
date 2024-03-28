@@ -2,17 +2,13 @@
 import React from 'react' 
 import Mainchat from '@/components/mainchat';
 import { getData } from '@/lib/getData';
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 import { getXataClient } from '../../../../src/xata';
 
 
-type Props = {
-    params: { id: string }
-}
-
 const xata = getXataClient();
 
-export async function generateMetadata({ params }: Props ): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
     // read route params
     const id = params.id
    

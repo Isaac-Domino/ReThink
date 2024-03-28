@@ -2,7 +2,7 @@
 Todo:
   ✔ Update the styles and components @done(24-02-29 15:13)
   ✔ Update the dynamic in main @done(24-02-29 21:51)
-  ☐ Backend continue 
+  ✔ Backend continue @done(24-03-28 21:31)
   ✔ Stale time in useQuery @done(24-03-01 14:31)
   ✔ Integrate HuggingFace inference for embedding @done(24-03-01 21:40)
   ✔ Change the response value in projects only returning id in new column @done(24-03-04 08:26)
@@ -10,7 +10,7 @@ Todo:
   ✔ Create Chats component @done(24-03-11 20:53)
   ✔ Message stylings (role, cn) @done(24-03-11 20:53)
   ✔ create /api/chat endpoint for initiating chat to ai @done(24-03-11 20:53)
-  ☐ add user's projects to /projects
+  ✔ add user's projects to /projects @done(24-03-28 21:31)
 
 Todolist to improve system ui and performance: 
   ✔ add Skeleton loader when loading main chat @done(24-03-21 16:55)

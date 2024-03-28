@@ -155,13 +155,14 @@ function handleChangeName(e: React.FormEvent) {
         </div>
 
         {/**DOCUMENT FILE */}
-        <div className="px-2 md:px-[15px] overflow-y-auto border mx-auto w-full  md:w-[600px] lg:w-[640px] xl:w-[700px] max-w-[720px] min-h-full h-full max-h-full">
+        <div className="px-2 md:px-[15px] overflow-y-auto border mx-auto w-full
+          md:w-[600px] lg:w-[640px] xl:w-[700px] max-w-[720px] min-h-full h-full max-h-full">
           {/**MAP THE DOCUMENTS HERE */}
           <DocumentFile selectedFile={data.file_link} />
         </div>
 
         {/**FOR MOBILE DISPLAY CHAT */}
-        <div className="fixed bottom-5 right-5">
+        <div className="bottom-5 lg:hidden fixed right-5">
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -182,9 +183,11 @@ function handleChangeName(e: React.FormEvent) {
                 initial={{ width: 0, height: 0 }}
                 animate={{ width: 280, height: 550 }}
                 exit={{ width: 0, height: 0 }}
-                className="bg-[#f8f6fa] rounded-lg block lg:hidden shadow-lg border border-[#C0BCD1] absolute bottom-0 right-0 md:relative z-20 overflow-hidden"
+                className="bg-[#f8f6fa] rounded-lg flex flex-col justify-between lg:hidden
+                   shadow-lg border border-[#C0BCD1] absolute 
+                  bottom-0 right-0 md:relative z-20 h-full overflow-hidden"
               >
-                <div className="flex justify-between items-center px-4 py-2 bg-violet-500 text-white">
+                <div className="flex h-[60px] justify-between items-center px-4 py-2 bg-violet-500 text-white">
                   <div className="flex items-center gap-2">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -222,17 +225,17 @@ function handleChangeName(e: React.FormEvent) {
                     </svg>
                   </button>
                 </div>
-                {/* Add your chat messages or components here */}
-                <ChatMobile fileKey={data?.file_key} id={data?.id} />
+                {/* Add your chat messages or components here */}          
+                   <ChatMobile fileKey={data?.file_key} id={data?.id} />
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
         {/**CHAT BOX */}
-        <div className="border-[#C0BCD1] bg-[#f8f6fa] relative hidden lg:block border w-[490px] min-h-[92%] h-[92%]">
+        <div className="border-[#C0BCD1] bg-[#f8f6fa] hidden lg:flex flex-col border w-[490px] h-full min-h-full">
           {/**TOP */}
-          <div className="flex gap-2 text-primaryColor z-10 w-auto items-center m-4">
+          <div className="flex gap-2 text-primaryColor w-auto z-50  items-center m-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
