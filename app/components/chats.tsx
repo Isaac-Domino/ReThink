@@ -52,7 +52,7 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
     return (
       <div
        ref={messageContainer}
-       className="absolute bottom-1 w-full h-[600px] overflow-y-scroll lg:h-[630px] px-2 py-4">
+       className="absolute bottom-1 w-full h-[200px] overflow-y-scroll lg:h-[525px] px-2 py-4">
         <div className="flex flex-col gap-[24px] w-full px-4">
           {/**CHAT STREAMING HERE */}
             {messages.map((m) => (
