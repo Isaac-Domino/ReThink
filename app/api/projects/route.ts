@@ -3,6 +3,7 @@ import { getXataClient } from "../../../src/xata";
 import { NextResponse } from "next/server";
 import { utapi } from "@/server/uploadthing";
 import { Pinecone } from "@pinecone-database/pinecone";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
         const xata = getXataClient();
@@ -21,6 +22,7 @@ export async function GET() {
         }
 }
 
+{/**DELETING DOCUMENT */}
 export async function POST (req: Request, res: Response) {
    const xata = getXataClient();
    const { userId } = auth();
@@ -40,8 +42,11 @@ export async function POST (req: Request, res: Response) {
          await utapi.deleteFiles(data?.file_key as string);
 
          //DELETE EMBEDDINGS FROM PINECONE
+        if(index.namespace(data?.file_key as string)) {
          await index.namespace(data?.file_key as string).deleteAll();
+          } 
       }
+      revalidatePath('/projects');
       return NextResponse.json(data, { status: 200 });
 
    } catch (error) {

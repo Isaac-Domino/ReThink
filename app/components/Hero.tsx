@@ -27,7 +27,7 @@ export default function Hero() {
                              shadow-md text-[18px] md:text-[20px] 
                              hover:bg-white transition-colors duration-150 ease-in-out items-center text-sm font-normal">
                               <Link href={'/projects'}>  
-                                <span className='text-purple-200 text-md md:text-lg group-hover:text-[#c86bdc]'>Get started</span>
+                                <span className='text-purple-100 text-md md:text-lg group-hover:text-[#c86bdc]'>Get started</span>
                               </Link>
                          </button>
                  </div>

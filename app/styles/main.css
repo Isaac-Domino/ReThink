@@ -1,6 +1,5 @@
 #sidebar {
-   width: 230px;
-
+   width: 220px;
 }
 #maincontainer {
      display: flex;
@@ -25,6 +24,7 @@
     #sidebar-content {
         flex-direction: row;
         align-items: center;
+        justify-content: space-around;
         width: 100%;
         max-height: 200px;
     }
@@ -38,6 +38,6 @@
 
 @media screen and (min-width: 900px) {
     #sidebar {
-        width: 220px;
+        width: 200px;
     }
 }

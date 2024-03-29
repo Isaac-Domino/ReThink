@@ -43,8 +43,8 @@ const Navbar = () => {
       <div>
         <Link href={"/"}>
           <Image
-            width={35}
-            height={35}
+            width={30}
+            height={30}
             alt={"Logo"}
             src={"/Logo white.png"}
             className=""
@@ -66,6 +66,7 @@ const Navbar = () => {
                     colorSuccess: "green",
                   },
                   baseTheme: dark,
+
                 }}
                 showName={true}
             />

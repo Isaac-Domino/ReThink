@@ -20,7 +20,7 @@ export default function NavbarMain() {
           <Link href={"/"}>
             <Image
               src={"/Logo white with text.png"}
-              width={45}
+              width={45} 
               height={45}
               alt="Logo white with text"
             />

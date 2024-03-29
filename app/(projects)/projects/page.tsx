@@ -39,6 +39,7 @@ type documentType = {
 export default function Projects() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { isSignedIn, user, } = useUser();
+    const [ uploading, setUploading] = useState<boolean>(false); 
     const { userId } = useAuth();
     const router = useRouter();
     const [data, setData] = useState<documentType>({
@@ -49,7 +50,7 @@ export default function Projects() {
       file_key: ''
    })
 
-    const { mutate, isPending } = useMutation({
+    const { mutate, isPending, isSuccess } = useMutation({
       mutationFn: async (items: documentType) => axios.post('/api/store-data', items),
       onError: (err) => {
         console.log(err.message);
@@ -82,12 +83,12 @@ export default function Projects() {
     <div className="px-5 md:px-[55px] w-full min-h-full py-4 md:py-[24px]">
       <nav className="flex justify-between px-2 md:px-8 items-center">
         <Link href={"/"}>
-          <Image width={40} height={40} src={"/Logo.png"} alt={"Logo"} />
+          <Image width={35} height={35} src={"/Logo.png"} alt={"Logo"} />
         </Link>
 
         {/**USER AUTHENTICATION */}
         <ul className="flex gap-4 items-center">
-          <li className="font-medium text-[18px] md:text-[20px] text-primaryColor">
+          <li className="font-medium text-[18px] md:text-[20px] text-[#7f5fad]">
             <Link href={"/"}>Home</Link>
           </li>
 
@@ -95,7 +96,7 @@ export default function Projects() {
             <UserButton 
               afterSignOutUrl="/projects"
               appearance={{
-                baseTheme: dark,
+                baseTheme: dark,  
               }}
               
             />
@@ -111,14 +112,16 @@ export default function Projects() {
       </nav>
 
       {/**ARCHIVES */}
-      <div className="border-gray-20 max-w-[1100px] shadow-lg border-[1px] rounded-md relative w-full mt-[30px] min-h-[700px] max-h-screen md:mt-[50px] mx-auto">
+      <div className="border-gray-20 
+               max-w-[1100px] shadow-lg border-[1px] rounded-md relative w-full mt-[30px] 
+               min-h-[750px] max-h-screen md:mt-[50px] mx-auto">
         <div className="flex w-auto mt-[30px] mx-[10px] p-2 md:p-6 gap-4 items-start flex-col">
-          <h3 className="self-center sm:text-[25px] md:text-[27px] text-[#5e5c69]">
+          <h3 className="self-center text-[18px] sm:text-[25px] md:text-[27px] text-[#5e5c69]">
             Your Projects
           </h3>
 
           {/**ARCHIVES */}
-          <div className="w-full h-auto">
+          <div className="w-full h-auto ">
             <div className="flex items-start gap-2 flex-col">
               <Dialog>
                 <DialogTrigger asChild>
@@ -162,6 +165,7 @@ export default function Projects() {
                           onChange={handleDataValue}
                           name="name"
                           className="col-span-3"
+                          disabled={uploading || isSuccess}  
                         />             
                       </div>
                     {data.name.length < 6 && <p 
@@ -176,12 +180,15 @@ export default function Projects() {
                           <UploadDropzone
                             endpoint="documentUploader"
                             content={{
-                              allowedContent: "Maximum file size is 32mb"
+                              allowedContent: "Maximum file size is 32mb",
+                            }}
+                            onUploadProgress={() => {
+                              setUploading(true)    
                             }}
                             onClientUploadComplete={(res) => {
                               // Do something with the response
-                              //console.log("File key: ", res[0].key);
-                                                          
+                              //console.log("File key: ", res[0].key);     
+                              setUploading(false)           
                               mutate({
                                 ...data, // Preserve other properties from the current state
                                 url: res[0].url,
@@ -215,9 +222,9 @@ export default function Projects() {
 
               {/**ARCHIVES LISTS */}
               {isSignedIn || user ? (
-                <div className="border scroll-auto w-full max-w-full">
+                <div className="overflow-y-clip w-full max-w-full">
                   {/**archive items */}
-                  <div className="h-[460px] max-h-auto overflow-y-auto w-full min-w-full">
+                  <div className="max-h-[550px] overflow-y-auto w-full min-w-full">
                     {/**START MAPPING ITEMS HERE */}
                     <Archive />
                   </div>

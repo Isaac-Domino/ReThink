@@ -13,7 +13,8 @@ import { useRouter } from 'next/navigation';
 
 export default function Lists({ data }: { data: savedDataDbType}) {
    const { mutate, error, isPending } = useMutation({
-       mutationFn: async (id: string) => axios.post('/api/projects', { id }),
+       mutationFn: async (id: string) => axios.post('/api/projects', { id }, ),
+       onSuccess: ()  => router.refresh(), 
        onError: (error: any) => console.log(error)
    })
    const router = useRouter();
@@ -42,7 +43,6 @@ export default function Lists({ data }: { data: savedDataDbType}) {
          onSuccess: () => {
            console.log('Done deleted!');
            toast.success(`${data.name} Deleted successfully!`);
-           router.refresh();
          }
        })
       //revalidatePath('/projects', 'page');

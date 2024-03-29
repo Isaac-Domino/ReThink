@@ -165,7 +165,7 @@ const Home = () => {
    
 
             <div className="h-auto w-[45%]">
-              <p className="text-[#362D73] text-center sm:text-[25px]  text-md leading-normal">
+              <p className="text-[#362D73] text-center sm:text-[25px] md:text-[30px] text-md leading-normal">
                 Working with AI to enhance your prompts and for accurate
                 results.
               </p>
@@ -176,7 +176,7 @@ const Home = () => {
         {/**THIRD CONTENT*/}
         <div className="w-full mt-[20px] lg:mt-[50px] rounded-lg">
           <section className="py-[35px] px-[25px] flex flex-col items-center gap-4">
-            <div className="inline-flex items-start md:items-center flex-col gap-4 h-auto">
+            <div className="inline-flex items-start sm:items-center flex-col gap-4 h-auto">
               <AnimatePresence>
                 <motion.h1
                   initial={{ scale: 0 }}
@@ -184,7 +184,7 @@ const Home = () => {
                   viewport={{ once: true }}
                   exit={{ scale: 0 }}
                   transition={{ type: "spring" }}
-                  className="text-[#1e1e30] font-normal leading-[45px] md:leading-[70px] text-[37px] md:text-[50px]"
+                  className="text-[#1e1e30] leading-normal sm:leading-[70px] font-normal text-[35px] sm:text-[50px]"
                 >
                   See features in action
                 </motion.h1>
@@ -202,7 +202,7 @@ const Home = () => {
                 </motion.p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-[65px] items-center w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-[20px] lg:mt-[65px] items-center w-full">
               {features.map((item, index) => (
                 <motion.div
                   initial={"offview"}

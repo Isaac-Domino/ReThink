@@ -1,13 +1,10 @@
 "use client"
 
 import NavbarMain from '@/components/navbar-main'
-import React, { Suspense, useEffect, useRef, useState } from 'react'
-import { Pencil, FolderClosed, FilePlus2, Menu, Bot, Send, X, MessageCircle, Loader2, Check } from 'lucide-react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { Pencil, FolderClosed, X, Check } from 'lucide-react'
 import Link from 'next/link'
 import { AnimatePresence, motion } from "framer-motion"
-import 'react-pdf/dist/Page/TextLayer.css';
-import 'react-pdf/dist/Page/AnnotationLayer.css';
-
 import DocumentFile from './documentViewer'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
@@ -84,6 +81,12 @@ function handleChangeName(e: React.FormEvent) {
     })
   }
 
+  function formatName (e: ChangeEvent<HTMLInputElement>) {
+    const { value } = e.target
+    const formattedValue = value.replace(/[^a-zA-Z_\-]/g, '');
+    setNewName(formattedValue);
+  } 
+
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -99,7 +102,7 @@ function handleChangeName(e: React.FormEvent) {
           <div id='sidebar-content' className="py-3">
             {!editing ? (
               <div className="flex text-gray-700 gap-1 w-full max-w-full items-center cursor-pointer">
-                <p className="text-[16px] md:text-[18px] max-w-[150px] w-fit">{data.name}</p>
+                <p className="text-[16px] break-words md:text-[18px] max-w-full w-fit">{data.name}</p>
                 <Pencil
                   size={20}
                   className='text-[16px] md:text-[18px]'
@@ -113,13 +116,13 @@ function handleChangeName(e: React.FormEvent) {
                 animate={{ width: '100%'}}
                 exit={{ width: 0, opacity: 0 }}
                 onSubmit={handleChangeName}
-                className="flex gap-2 items-center max-w-full cursor-pointer"
+                className="flex gap-2 items-center max-w-full  cursor-pointer"
               >
                 <input
                   type="text"
                   placeholder={data.name}
                   value={newName}
-                  onChange={(e) => setNewName(e.target.value)}
+                  onChange={formatName}
                   ref={inputRef}
                   className="bg-transparent border-1 rounded-xl outline-none border-purple-500 py-1 indent-2 border md:w-full w-[150px]"
                 />
@@ -127,6 +130,7 @@ function handleChangeName(e: React.FormEvent) {
                 <div className="flex gap-1 items-center">
                   <button
                     type="submit"
+                    onSubmit={handleChangeName}
                     className="p-1 bg-blue-500 rounded-full"
                   >
                     <Check size={18} className="text-white" />
@@ -145,7 +149,7 @@ function handleChangeName(e: React.FormEvent) {
             )}
 
             {/**OPTIONS AVAILABLE */}
-            <div className="text-gray-700 flex flex-col gap-1">
+            <div className="text-gray-700  min-w-[150px] items-center flex flex-col gap-1">
               <Link className="flex items-center gap-2" href={"/projects"}>
                 <FolderClosed size={22} className='text-[16px] md:text-[20px]'/>
                 <span className='text-[16px] md:text-[18px]'>My Projects</span>
@@ -167,7 +171,9 @@ function handleChangeName(e: React.FormEvent) {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={toggleChat}
-            className="w-16 h-16 bg-white text-white rounded-full flex items-center justify-center border-violet-500 border hover:bg-violet-500 focus:outline-none"
+            className={`w-16 ${isOpen ? 'hidden' : 'block'} h-16 bg-white text-white
+                  rounded-full flex items-center justify-center 
+                  border-violet-500 border hover:bg-violet-500 focus:outline-none`}
           >
             <Image
               src={"/chat-icon.svg"}
@@ -185,7 +191,7 @@ function handleChangeName(e: React.FormEvent) {
                 exit={{ width: 0, height: 0 }}
                 className="bg-[#f8f6fa] rounded-lg flex flex-col justify-between lg:hidden
                    shadow-lg border border-[#C0BCD1] absolute 
-                  bottom-0 right-0 md:relative z-20 h-full overflow-hidden"
+                  bottom-0 right-0 z-20 h-full overflow-hidden"
               >
                 <div className="flex h-[60px] justify-between items-center px-4 py-2 bg-violet-500 text-white">
                   <div className="flex items-center gap-2">

@@ -12,8 +12,7 @@ import axios from 'axios';
 import Skeleton from 'react-loading-skeleton';
 
 
-
-const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): JSX.Element => {
+export default function Chats ({ fileKey, id }: { fileKey: string | null, id: string | null}): JSX.Element  {
     const { userId } = useAuth();
     const { user } = useUser()
     const messageContainer = useRef<HTMLDivElement>(null);
@@ -30,7 +29,7 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
       }
    })
 
-    const { input, handleSubmit, handleInputChange, messages, isLoading, data } = useChat({
+    const { input, handleSubmit, handleInputChange, messages, isLoading, data , } = useChat({
         api: '/api/openai',
         body: {
           fileKey,
@@ -51,13 +50,13 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
   
     return (
       <div 
-      ref={messageContainer}
-      className='overflow-y-auto flex flex-col gap-3 h-full'
+      className='overflow-y-auto flex flex-col gap-3 h-full '
       >
 
       <div
-       className="w-full h-full items-end self-end overflow-y-scroll relative bottom-0 px-2 py-4 ">
-        <div className="flex flex-col gap-[24px] h-auto w-full px-4">
+       ref={messageContainer}
+       className="w-full h-full items-end self-end align-items-end overflow-y-scroll relative bottom-0 px-2 py-4 ">
+        <div className="flex flex-col  gap-[24px] h-auto w-full px-4">
           {/**CHAT STREAMING HERE */}
             {messages.map((m) => (
              <div key={m.id} className={cn("flex items-start", { "self-end": m.role === 'user'})}> 
@@ -95,7 +94,7 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
           {/**USER INPUTS HERE */}
           <form
           onSubmit={handleSubmit}
-          className="flex items-start overflow-hidden mb-[10px] h-[150px] w-full  gap-2 min-w-full px-2"
+          className="flex items-start justify-center overflow-hidden mb-[10px] h-[150px] w-full  gap-2 min-w-full px-2"
           >
           <input
             onChange={handleInputChange}
@@ -105,7 +104,7 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
             value={input}
             disabled={isLoading}
           />
-        <button type='submit' disabled={isLoading}>
+        <button type='submit' className={`self-start ${isLoading ? 'opacity-70' : 'opacity-100'}`} disabled={isLoading}>
          <Send
             color="#ffff"
             size={32}
@@ -118,4 +117,3 @@ const Chats = ({ fileKey, id }: { fileKey: string | null, id: string | null}): J
 }
 
 
-export default Chats;
